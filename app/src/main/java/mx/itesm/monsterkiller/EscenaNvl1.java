@@ -15,7 +15,7 @@ public class EscenaNvl1 extends EscenaBase{
 
     @Override
     public void cargarRecursos() {
-        regionFondo = cargarImagen("");
+        regionFondo = cargarImagen("FondoPrincipal.jpg");
     }
 
     @Override
@@ -25,27 +25,28 @@ public class EscenaNvl1 extends EscenaBase{
     }
 
     @Override
-    public void onBackKeyPressed() {
+    public TipoEscena onBackKeyPressed() {
         // Regresar al menú principal
         admEscenas.crearEscenaMenu();
         admEscenas.setEscena(TipoEscena.ESCENA_MENU);
-        admEscenas.liberarEscenaCreditos();
+        admEscenas.liberarEscenaIntrucciones();
+        return null;
     }
 
-        @Override
-        public TipoEscena getTipoEscena() {
-            return TipoEscena.ESCENA_NVL1;
-        }
+    @Override
+    public TipoEscena getTipoEscena() {
+        return TipoEscena.ESCENA_NVL1;
+    }
 
-        @Override
-        public void liberarEscena() {
-            this.detachSelf();
-            this.dispose();
-        }
+    @Override
+    public void liberarEscena() {
+        this.detachSelf();
+        this.dispose();
+    }
 
-        @Override
-        public void liberarRecursos() {
-            regionFondo.getTexture().unload();
-            regionFondo = null;
-        }
+    @Override
+    public void liberarRecursos() {
+        regionFondo.getTexture().unload();
+        regionFondo = null;
+    }
 }

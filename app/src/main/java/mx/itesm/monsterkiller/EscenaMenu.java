@@ -40,11 +40,11 @@ public class EscenaMenu extends EscenaBase
     @Override
     public void cargarRecursos() {
         // Fondo
-        regionFondo = cargarImagen("pantalla_menu_inicio.jpg");
+        regionFondo = cargarImagen("FondoPrincipal.jpg");
         // Botones del menú
         regionBtnIntrucciones = cargarImagen("btnAcercaDe.png");
-        regionBtnJugar = cargarImagen("btnJugar.png");
-        regionBtnCreditos = cargarImagen("crds.jpg");
+        regionBtnJugar = cargarImagen("BotonPlay2.png");
+        regionBtnCreditos = cargarImagen("BotonCredits.png");
     }
 
     @Override

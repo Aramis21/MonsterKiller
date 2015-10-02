@@ -128,21 +128,21 @@ public class AdministradorEscenas
         escenaCreditos = null;
     }
 
-/*
+
     //*** Crea la escena de JUEGO
-    public void crearEscenaJuego() {
+    public void crearEscenaNvl1() {
         // Carga los recursos
-        admRecursos.cargarRecursosJuego();
+        //admRecursos.cargarRecursosEscenaNvl1();
         //escenaJuego = new EscenaJuego();
     }
 
     //*** Libera la escena de JUEGO
-    public void liberarEscenaJuego() {
-        admRecursos.liberarRecursosJuego();
-        escenaJuego.liberarEscena();
-        escenaJuego = null;
+    public void liberarEscenaNvl1() {
+        //admRecursos.liberarRecursosEscenaNvl1();
+        //escenaJuego.liberarEscena();
+        //escenaJuego = null;
     }
-
+/*
     //*** Crea la escena de Juego Dos
     public void crearEscenaJuegoDos() {
         // Carga los recursos
