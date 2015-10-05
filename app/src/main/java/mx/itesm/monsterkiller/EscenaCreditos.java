@@ -15,7 +15,7 @@ public class EscenaCreditos extends EscenaBase {
 
     @Override
     public void cargarRecursos() {
-        regionFondo = cargarImagen("FondoCredits");
+        regionFondo = cargarImagen("FondoCredits.jpg");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class EscenaCreditos extends EscenaBase {
         // Regresar al menú principal
         admEscenas.crearEscenaMenu();
         admEscenas.setEscena(TipoEscena.ESCENA_MENU);
-        admEscenas.liberarEscenaIntrucciones();
+        admEscenas.liberarEscenaCreditos();
         return null;
     }
 

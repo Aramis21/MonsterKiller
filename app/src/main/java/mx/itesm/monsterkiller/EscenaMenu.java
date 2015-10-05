@@ -22,6 +22,7 @@ public class EscenaMenu extends EscenaBase
     private ITextureRegion regionBtnIntrucciones;
     private ITextureRegion regionBtnJugar;
     private ITextureRegion regionBtnCreditos;
+    private ITextureRegion regionBtnOpciones;
 
     // Sprites sobre la escena
     private Sprite spriteFondo;
@@ -32,19 +33,23 @@ public class EscenaMenu extends EscenaBase
     private final int OPCION_INSTRUCCIONES = 0;
     private final int OPCION_JUGAR = 1;
     private final int OPCION_CREDITOS = 2;
+    private final int OPCION_OPCIONES = 3;
+
     // Botones de cada opción
     private ButtonSprite btnIntrucciones;
     private ButtonSprite btnJugar;
     private ButtonSprite btnCreditos;
+    private ButtonSprite btnOpciones;
 
     @Override
     public void cargarRecursos() {
         // Fondo
         regionFondo = cargarImagen("FondoPrincipal.jpg");
         // Botones del menú
-        regionBtnIntrucciones = cargarImagen("btnAcercaDe.png");
-        regionBtnJugar = cargarImagen("BotonPlay2.png");
+        regionBtnIntrucciones = cargarImagen("BotonPlay.png");
+        regionBtnJugar = cargarImagen("BotonPlay.png");
         regionBtnCreditos = cargarImagen("BotonCredits.png");
+        regionBtnOpciones = cargarImagen("BotonOptions.png");
     }
 
     @Override
@@ -58,17 +63,19 @@ public class EscenaMenu extends EscenaBase
         setBackgroundEnabled(true);
 
         // Mostrar un recuadro atrás del menú
-        agregarFondoMenu();
+        //agregarFondoMenu();
         // Mostrar opciones de menú
         agregarMenu();
     }
 
+    /*
     private void agregarFondoMenu() {
         Rectangle cuadro = new Rectangle(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2,
                 0.75f*ControlJuego.ANCHO_CAMARA, 0.75f*ControlJuego.ALTO_CAMARA, actividadJuego.getVertexBufferObjectManager());
         cuadro.setColor(0.8f, 0.8f, 0.8f, 0.4f);
         attachChild(cuadro);
     }
+    */
 
     private void agregarMenu() {
         // Crea el objeto que representa el menú
@@ -79,11 +86,13 @@ public class EscenaMenu extends EscenaBase
         IMenuItem opcionIntrucciones = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_INSTRUCCIONES, regionBtnIntrucciones, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
         IMenuItem opcionJugar = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_JUGAR, regionBtnJugar, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
         IMenuItem opcionCreditos = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_CREDITOS, regionBtnCreditos, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
+        IMenuItem opcionOpciones = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_OPCIONES, regionBtnOpciones, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
 
         // Agrega las opciones al menú
         menu.addMenuItem(opcionIntrucciones);
         menu.addMenuItem(opcionJugar);
         menu.addMenuItem(opcionCreditos);
+        menu.addMenuItem(opcionOpciones);
 
         // Termina la configuración
         menu.buildAnimations();
@@ -93,6 +102,7 @@ public class EscenaMenu extends EscenaBase
         opcionIntrucciones.setPosition(-200, 0);
         opcionJugar.setPosition(200, 0);
         opcionCreditos.setPosition(0, -200 );
+        opcionOpciones.setPosition(0, 200);
 
         // Registra el Listener para atender las opciones
         menu.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {
@@ -109,13 +119,20 @@ public class EscenaMenu extends EscenaBase
                         break;
 
                     case OPCION_JUGAR:
-                        // Mostrar la pantalla de juego
-
+                        admEscenas.crearEscenaNvl1();
+                        admEscenas.setEscena(TipoEscena.ESCENA_NVL1);
+                        admEscenas.liberarEscenaMenu();
                         break;
 
                     case OPCION_CREDITOS:
                         admEscenas.crearEscenaCreditos();
                         admEscenas.setEscena(TipoEscena.ESCENA_CREDITOS);
+                        admEscenas.liberarEscenaMenu();
+                        break;
+
+                    case OPCION_OPCIONES:
+                        admEscenas.crearEscenaOpciones();
+                        admEscenas.setEscena(TipoEscena.ESCENA_OPCIONES);
                         admEscenas.liberarEscenaMenu();
                         break;
 

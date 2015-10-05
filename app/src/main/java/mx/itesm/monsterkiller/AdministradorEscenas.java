@@ -17,6 +17,7 @@ public class AdministradorEscenas
     private EscenaBase escenaIntrucciones;
     private EscenaBase escenaCreditos;
     private EscenaBase escenaNvl1;
+    private EscenaBase escenaOpciones;
 
     // El tipo de escena que se está mostrando
     private TipoEscena tipoEscenaActual = TipoEscena.ESCENA_SPLASH;
@@ -76,16 +77,22 @@ public class AdministradorEscenas
                 break;
             case ESCENA_NVL1:
                 setEscenaBase(escenaNvl1);
+                break;
+            case ESCENA_OPCIONES:
+                setEscenaBase(escenaOpciones);
+                break;
         }
     }
 
     //*** Crea la escena de Splash
+
     public void crearEscenaSplash() {
         // Carga los recursos
         escenaSplash = new EscenaSplash();
     }
 
     //*** Libera la escena de Splash
+
     public void liberarEscenaSplash() {
         escenaSplash.liberarEscena();
         escenaSplash = null;
@@ -93,68 +100,77 @@ public class AdministradorEscenas
 
     // ** MENU
     //*** Crea la escena de MENU
+
     public void crearEscenaMenu() {
         // Carga los recursos
         escenaMenu = new EscenaMenu();
     }
 
     //*** Libera la escena de MENU
+
     public void liberarEscenaMenu() {
         escenaMenu.liberarEscena();
         escenaMenu = null;
     }
 
     //*** Crea la escena de Acerca De
+
     public void crearEscenaIntrucciones() {
         // Carga los recursos
         escenaIntrucciones = new EscenaInstrucciones();
     }
 
     //*** Libera la escena de AcercDe
+
     public void liberarEscenaIntrucciones() {
         escenaIntrucciones.liberarEscena();
         escenaIntrucciones = null;
     }
 
     //***Crea la escena Creditos
+
     public void crearEscenaCreditos(){
         //Cargar los recursos
         escenaCreditos = new EscenaCreditos();
     }
 
     //***Libera la escena Creditos
+
     public void liberarEscenaCreditos(){
         escenaCreditos.liberarEscena();
         escenaCreditos = null;
     }
 
 
-    //*** Crea la escena de JUEGO
+    //*** Crea la escena de Nvl1
+
     public void crearEscenaNvl1() {
         // Carga los recursos
         //admRecursos.cargarRecursosEscenaNvl1();
         //escenaJuego = new EscenaJuego();
     }
 
-    //*** Libera la escena de JUEGO
+    //*** Libera la escena de Nvl1
+
     public void liberarEscenaNvl1() {
         //admRecursos.liberarRecursosEscenaNvl1();
         //escenaJuego.liberarEscena();
         //escenaJuego = null;
     }
-/*
-    //*** Crea la escena de Juego Dos
-    public void crearEscenaJuegoDos() {
-        // Carga los recursos
-        admRecursos.cargarRecursosJuegoDos();
-        //escenaJuegoDos = new EscenaJuegoDos();
+
+    //*** Crea la escena de Opciones
+
+    public void crearEscenaOpciones() {
+         //Carga los recursos
+         escenaOpciones = new EscenaOpciones();
     }
 
     //*** Libera la escena de Juego Dos
-    public void liberarEscenaJuegoDos() {
-        admRecursos.liberarRecursosJuegoDos();
-        escenaJuegoDos.liberarEscena();
-        escenaJuegoDos = null;
+
+    public void liberarEscenaOpciones() {
+        //admRecursos.liberarRecursosEscenaOpciones();
+        //escenaOpciones.liberarEscena();
+        //escenaOpciones = null;
     }
-*/
+
 }

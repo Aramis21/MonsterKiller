@@ -1,27 +1,42 @@
 package mx.itesm.monsterkiller;
 
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.sensor.acceleration.AccelerationData;
+import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 /**
  * Created by Aramis on 28/09/15.
  */
-public class EscenaNvl1 extends EscenaBase{
+public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
-    // Regiones para imágenes
+    // Fondo
     private ITextureRegion regionFondo;
+
+    //Sprite animado - monsters
+
+
     // Sprite para el fondo
     private Sprite spriteFondo;
+
+    //Energía del personaje
+    private int energia = 100;
+
+    //Fin del juego
+    private ITextureRegion regionFin;
 
     @Override
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoPrincipal.jpg");
+        regionFin = cargarImagen("");
     }
 
     @Override
     public void crearEscena() {
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondo);
         attachChild(spriteFondo);
+
+        //actividadJuego.getEngine().enableAccelerationSensor(actividadJuego,this);
     }
 
     @Override
@@ -29,8 +44,15 @@ public class EscenaNvl1 extends EscenaBase{
         // Regresar al menú principal
         admEscenas.crearEscenaMenu();
         admEscenas.setEscena(TipoEscena.ESCENA_MENU);
-        admEscenas.liberarEscenaIntrucciones();
+        admEscenas.liberarEscenaNvl1();
         return null;
+    }
+
+    @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {
+        float dx = pAccelerationData.getX();
+    }
+
+    @Override public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
     }
 
     @Override
@@ -40,12 +62,16 @@ public class EscenaNvl1 extends EscenaBase{
 
     @Override
     public void liberarEscena() {
+        liberarRecursos();
         this.detachSelf();
         this.dispose();
     }
 
     @Override
     public void liberarRecursos() {
+        //Detiene el acelerometro
+        actividadJuego.getEngine().disableAccelerationSensor(actividadJuego);
+
         regionFondo.getTexture().unload();
         regionFondo = null;
     }
