@@ -15,8 +15,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
  *
  * @author Roberto Martínez Román
  */
-public class EscenaMenu extends EscenaBase
-{
+public class EscenaMenu extends EscenaBase {
     // Regiones para las imágenes de la escena
     private ITextureRegion regionFondo;
     private ITextureRegion regionBtnIntrucciones;
@@ -46,9 +45,9 @@ public class EscenaMenu extends EscenaBase
         // Fondo
         regionFondo = cargarImagen("FondoPrincipal.jpg");
         // Botones del menú
-        regionBtnIntrucciones = cargarImagen("BotonPlay.png");
+        regionBtnIntrucciones = cargarImagen("BotonInstrucciones.png");
         regionBtnJugar = cargarImagen("BotonPlay.png");
-        regionBtnCreditos = cargarImagen("BotonCredits.png");
+        regionBtnCreditos = cargarImagen("BotonCredits2.png");
         regionBtnOpciones = cargarImagen("BotonOptions.png");
     }
 
@@ -99,10 +98,10 @@ public class EscenaMenu extends EscenaBase
         menu.setBackgroundEnabled(false);   // Completamente transparente
 
         // Ubicar las opciones DENTRO del menú. El centro del menú es (0,0)
-        opcionIntrucciones.setPosition(-200, 0);
-        opcionJugar.setPosition(200, 0);
-        opcionCreditos.setPosition(0, -200 );
-        opcionOpciones.setPosition(0, 200);
+        opcionIntrucciones.setPosition(0, -210);
+        opcionJugar.setPosition(0, 70);
+        opcionCreditos.setPosition(-200, -70 );
+        opcionOpciones.setPosition(200, -70);
 
         // Registra el Listener para atender las opciones
         menu.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {

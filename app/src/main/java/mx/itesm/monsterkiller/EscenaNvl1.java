@@ -23,20 +23,19 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private int energia = 100;
 
     //Fin del juego
-    private ITextureRegion regionFin;
+    //private ITextureRegion regionFin;
 
     @Override
     public void cargarRecursos() {
-        regionFondo = cargarImagen("FondoPrincipal.jpg");
-        regionFin = cargarImagen("");
+        regionFondo = cargarImagen("FondoNvl1.jpg");
+        //regionFin = cargarImagen("");
     }
 
     @Override
     public void crearEscena() {
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondo);
         attachChild(spriteFondo);
-
-        //actividadJuego.getEngine().enableAccelerationSensor(actividadJuego,this);
+        actividadJuego.getEngine().enableAccelerationSensor(actividadJuego, this);
     }
 
     @Override

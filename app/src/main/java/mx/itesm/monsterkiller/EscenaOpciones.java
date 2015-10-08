@@ -6,11 +6,10 @@ import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 /**
- * Created by Aramis on 03/10/15.
+ * Created by Aramis on 07/10/15.
  */
 public class EscenaOpciones extends EscenaBase {
 
@@ -21,12 +20,13 @@ public class EscenaOpciones extends EscenaBase {
     private ITextureRegion regionBtnLogros;
     private ITextureRegion regionBtnScores;
 
-    // Sprite para el fondo
+    //Sprite para el fondo
     private Sprite spriteFondo;
 
-    // Un menú de tipo SceneMenu
-    private MenuScene menu;     // Contenedor de las opciones
-    // Constantes para cada opción
+    //Menu de tipo SceneMenu
+    private MenuScene menu; //contenedor de las opciones
+
+    //Constantes para cada opcion del menu
     private final int OPCION_MUSICON = 0;
     private final int OPCION_MUSICOFF= 1;
     private final int OPCION_LOGROS = 2;
@@ -64,18 +64,18 @@ public class EscenaOpciones extends EscenaBase {
         return null;
     }
 
-    private void agregarMenu() {
-        // Crea el objeto que representa el menú
+    private void agregarMenu(){
+        //Crear el objeto que representa el menu
         menu = new MenuScene(actividadJuego.camara);
-        // Centrado en la pantalla
-        menu.setPosition(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2);
-        // Crea las opciones (por ahora, acerca de y jugar)
+        //Centrado en la pantalla
+        menu.setPosition(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2);
+        //Crea las opciones
         IMenuItem opcionMusicOn = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_MUSICON, regionBtnMusicOn, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
         IMenuItem opcionMusicOff = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_MUSICOFF, regionBtnMusicOff, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
         IMenuItem opcionLogros = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_LOGROS, regionBtnLogros, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
         IMenuItem opcionScores = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_SCORES, regionBtnScores, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
 
-        // Agrega las opciones al menú
+        //Agregar las opciones
         menu.addMenuItem(opcionMusicOff);
         menu.addMenuItem(opcionMusicOn);
         menu.addMenuItem(opcionLogros);
@@ -87,56 +87,10 @@ public class EscenaOpciones extends EscenaBase {
 
         // Ubicar las opciones DENTRO del menú. El centro del menú es (0,0)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         opcionMusicOff.setPosition(-200, 0);
         opcionMusicOn.setPosition(200, 0);
-        opcionLogros.setPosition(0, -200 );
-        opcionScores.setPosition(0, 200);
+        opcionLogros.setPosition(-200, -200);
+        opcionScores.setPosition(200, -200);
 
         // Registra el Listener para atender las opciones
         menu.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {
@@ -144,7 +98,7 @@ public class EscenaOpciones extends EscenaBase {
             public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem,
                                              float pMenuItemLocalX, float pMenuItemLocalY) {
                 // El parámetro pMenuItem indica la opción oprimida
-                switch(pMenuItem.getID()) {
+                switch (pMenuItem.getID()) {
                     case OPCION_MUSICOFF:
                         // QUITAR SONIDO
 
@@ -193,5 +147,6 @@ public class EscenaOpciones extends EscenaBase {
         regionFondo.getTexture().unload();
         regionFondo = null;
     }
+
 
 }

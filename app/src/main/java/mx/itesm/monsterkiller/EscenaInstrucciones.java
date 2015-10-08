@@ -6,8 +6,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 /**
  * Created by rmroman on 11/09/15.
  */
-public class EscenaInstrucciones extends EscenaBase
-{
+public class EscenaInstrucciones extends EscenaBase {
     // Regiones para imágenes
     private ITextureRegion regionFondo;
     // Sprite para el fondo

@@ -5,8 +5,7 @@ import org.andengine.engine.Engine;
 /**
  * Administra la escena que se verá en la pantalla
  */
-public class AdministradorEscenas
-{
+public class AdministradorEscenas {
     // Instancia única
     private static final AdministradorEscenas INSTANCE = new AdministradorEscenas();
     protected ControlJuego actividadJuego;
@@ -146,8 +145,7 @@ public class AdministradorEscenas
 
     public void crearEscenaNvl1() {
         // Carga los recursos
-        //admRecursos.cargarRecursosEscenaNvl1();
-        //escenaJuego = new EscenaJuego();
+        escenaNvl1 = new EscenaNvl1();
     }
 
     //*** Libera la escena de Nvl1

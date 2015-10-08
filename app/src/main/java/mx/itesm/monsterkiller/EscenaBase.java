@@ -19,8 +19,7 @@ import java.io.IOException;
  *
  * @author Roberto Martínez Román
  */
-public abstract class EscenaBase extends Scene
-{
+public abstract class EscenaBase extends Scene {
     // Variable protegida para que se pueda acceder desde las subclases
     // Administrador de escenas
     protected AdministradorEscenas admEscenas;
