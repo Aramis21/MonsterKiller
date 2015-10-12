@@ -151,9 +151,8 @@ public class AdministradorEscenas {
     //*** Libera la escena de Nvl1
 
     public void liberarEscenaNvl1() {
-        //admRecursos.liberarRecursosEscenaNvl1();
-        //escenaJuego.liberarEscena();
-        //escenaJuego = null;
+        escenaNvl1.liberarEscena();
+        escenaNvl1 = null;
     }
 
     //*** Crea la escena de Opciones
@@ -166,9 +165,8 @@ public class AdministradorEscenas {
     //*** Libera la escena de Juego Dos
 
     public void liberarEscenaOpciones() {
-        //admRecursos.liberarRecursosEscenaOpciones();
-        //escenaOpciones.liberarEscena();
-        //escenaOpciones = null;
+        escenaOpciones.liberarEscena();
+        escenaOpciones = null;
     }
 
 }

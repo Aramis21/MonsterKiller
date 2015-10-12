@@ -42,10 +42,10 @@ public class EscenaOpciones extends EscenaBase {
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoOpciones.jpg");
 
-        regionBtnMusicOff = cargarImagen("BotonMusicOff.png");
-        regionBtnMusicOn = cargarImagen("BotonMusicOn.png");
-        regionBtnLogros = cargarImagen("BotonLogros.png");
-        regionBtnScores = cargarImagen("BotonScores.png");
+        regionBtnMusicOff = cargarImagen("BotonMusicOff2.png");
+        regionBtnMusicOn = cargarImagen("BotonMusicOn2.png");
+        regionBtnLogros = cargarImagen("BotonLogros2.png");
+        regionBtnScores = cargarImagen("BotonScores2.png");
     }
 
     @Override
@@ -60,7 +60,7 @@ public class EscenaOpciones extends EscenaBase {
         // Regresar al menú principal
         admEscenas.crearEscenaMenu();
         admEscenas.setEscena(TipoEscena.ESCENA_MENU);
-        admEscenas.liberarEscenaCreditos();
+        admEscenas.liberarEscenaOpciones();
         return null;
     }
 

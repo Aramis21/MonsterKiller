@@ -45,10 +45,10 @@ public class EscenaMenu extends EscenaBase {
         // Fondo
         regionFondo = cargarImagen("FondoPrincipal.jpg");
         // Botones del menú
-        regionBtnIntrucciones = cargarImagen("BotonInstrucciones.png");
-        regionBtnJugar = cargarImagen("BotonPlay.png");
+        regionBtnIntrucciones = cargarImagen("BotonInstrucciones2.png");
+        regionBtnJugar = cargarImagen("BotonPlay2.png");
         regionBtnCreditos = cargarImagen("BotonCredits2.png");
-        regionBtnOpciones = cargarImagen("BotonOptions.png");
+        regionBtnOpciones = cargarImagen("BotonOpciones2.png");
     }
 
     @Override
@@ -98,8 +98,8 @@ public class EscenaMenu extends EscenaBase {
         menu.setBackgroundEnabled(false);   // Completamente transparente
 
         // Ubicar las opciones DENTRO del menú. El centro del menú es (0,0)
-        opcionIntrucciones.setPosition(0, -210);
-        opcionJugar.setPosition(0, 70);
+        opcionIntrucciones.setPosition(0, -220);
+        opcionJugar.setPosition(0, 80);
         opcionCreditos.setPosition(-200, -70 );
         opcionOpciones.setPosition(200, -70);
 
