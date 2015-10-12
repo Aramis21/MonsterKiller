@@ -10,8 +10,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+<<<<<<< Updated upstream
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/org.andengine" />
+=======
+>>>>>>> Stashed changes
           </set>
         </option>
       </GradleProjectSettings>
