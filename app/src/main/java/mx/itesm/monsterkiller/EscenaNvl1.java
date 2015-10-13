@@ -49,10 +49,20 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {
         float dx = pAccelerationData.getX();
-        spriteFondo.setX(spriteFondo.getX() + (dx * -2));
-        if ( dx > 640 || dx <-640 ) {
-            actividadJuego.getEngine().disableAccelerationSensor(actividadJuego);
+        float nx = spriteFondo.getX() - 2*dx; //nueva posición
+        if (dx < 0){
+            //izquierda
+            if (nx < spriteFondo.getWidth()/2){
+                spriteFondo.setX(nx);
+            }
+            else{
+                //derecha
+                if (nx >spriteFondo.getWidth()/2-ControlJuego.ANCHO_CAMARA){
+                    spriteFondo.setX(nx);
+                }
+            }
         }
+
     }
 
     @Override public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
