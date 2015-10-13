@@ -49,6 +49,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {
         float dx = pAccelerationData.getX();
+        spriteFondo.setX(spriteFondo.getX() + (dx * -2));
+        if ( dx > 640 || dx <-640 ) {
+            actividadJuego.getEngine().disableAccelerationSensor(actividadJuego);
+        }
     }
 
     @Override public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
