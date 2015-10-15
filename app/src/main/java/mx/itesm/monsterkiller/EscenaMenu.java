@@ -118,8 +118,8 @@ public class EscenaMenu extends EscenaBase {
                         break;
 
                     case OPCION_JUGAR:
-                        admEscenas.crearEscenaNvl1();
-                        admEscenas.setEscena(TipoEscena.ESCENA_NVL1);
+                        admEscenas.crearEscenaNiveles();
+                        admEscenas.setEscena(TipoEscena.ESCENA_NVLS);
                         admEscenas.liberarEscenaMenu();
                         break;
 

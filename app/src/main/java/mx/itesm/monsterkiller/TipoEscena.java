@@ -11,5 +11,6 @@ public enum TipoEscena {
     ESCENA_INSTRUCCIONES,
     ESCENA_CREDITOS,
     ESCENA_OPCIONES,
+    ESCENA_NVLS,
     ESCENA_NVL1
 }

@@ -17,6 +17,7 @@ public class AdministradorEscenas {
     private EscenaBase escenaCreditos;
     private EscenaBase escenaNvl1;
     private EscenaBase escenaOpciones;
+    private EscenaBase escenaNiveles;
 
     // El tipo de escena que se está mostrando
     private TipoEscena tipoEscenaActual = TipoEscena.ESCENA_SPLASH;
@@ -80,6 +81,9 @@ public class AdministradorEscenas {
             case ESCENA_OPCIONES:
                 setEscenaBase(escenaOpciones);
                 break;
+            case ESCENA_NVLS:
+                setEscenaBase(escenaNiveles);
+                break;
         }
     }
 
@@ -138,6 +142,19 @@ public class AdministradorEscenas {
     public void liberarEscenaCreditos(){
         escenaCreditos.liberarEscena();
         escenaCreditos = null;
+    }
+
+    //Crear Escena Niveles
+
+    public void crearEscenaNiveles(){
+        escenaNiveles = new MapaNiveles();
+    }
+
+    //Liberar escena Niveles
+
+    public void liberarEscenaNiveles(){
+        escenaNiveles.liberarEscena();
+        escenaNiveles = null;
     }
 
 
