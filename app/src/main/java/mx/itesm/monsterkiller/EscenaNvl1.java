@@ -18,11 +18,26 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     // Fondo
     private ITextureRegion regionFondo;
 
+    //Fondo negro
+    private ITextureRegion regionFondoSombra;
+
+    //Baterias
+    private ITextureRegion regionBateria5;
+    private ITextureRegion regionBateria4;
+    private ITextureRegion regionBateria3;
+    private ITextureRegion regionBateria2;
+    private ITextureRegion regionBateria1;
+    private ITextureRegion regionBateria0;
+
     //Sprite animado - monsters
 
 
     // Sprite para el fondo
     private Sprite spriteFondo;
+    private Sprite spriteFondoSombra;
+
+    //Sprite bateria
+    private Sprite spriteBateria;
 
     //Banderas
     private boolean juegoCorriendo = true;
@@ -31,8 +46,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private int energia = 100;
 
     //Controles
-    private ITexture regionBtnShoot;
-    private ITexture regionBtnCollect;
+    private ITextureRegion regionBtnShoot;
+    private ITextureRegion regionBtnCollect;
 
     // Escena de PAUSA
     private CameraScene escenaPausa;    // La escena que se muestra al hacer pausa
@@ -45,38 +60,97 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     @Override
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoNvl1.jpg");
+        regionFondoSombra = cargarImagen("Sombra.png");
         //regionFin = cargarImagen("");
 
         //Controles
         regionBtnShoot = cargarImagen("BotShoot.png");
         regionBtnCollect = cargarImagen("BotCollect.png");
 
+        //bateria
+        regionBateria5 = cargarImagen("PIlaMax.png");
+        regionBateria4 = cargarImagen("PilaCasi.png");
+        regionBateria3 = cargarImagen("PilaMed.png");
+        regionBateria2 = cargarImagen("PilaBaja.png");
+        regionBateria1 = cargarImagen("PIlaMuerta.png");
+        regionBateria0 = cargarImagen("NoPila2.png");
+
+
         // Pausa
-        regionBtnPausa = cargarImagen("BotonHome2.png");
-        regionPausa = cargarImagen("FondoPausa.jpg");
+        regionBtnPausa = cargarImagen("PauseBotonJuego.png");
+        regionPausa = cargarImagen("PauseChica.jpg");
     }
 
     @Override
     public void crearEscena() {
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
         attachChild(spriteFondo);
+        spriteFondoSombra = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondoSombra);
+        attachChild(spriteFondoSombra);
         actividadJuego.getEngine().enableAccelerationSensor(actividadJuego, this);
+        //spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria5);
+        //attachChild(spriteBateria);
+
+        float t = getSecondsElapsedTotal();
+        if (t >=0f){
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria5);
+            attachChild(spriteBateria);
+        }
+        if (t >= .10f){
+            //regionBateria = cargarImagen("PilaCasi.png");
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria4);
+            attachChild(spriteBateria);
+        }
+        if (t >= .20f){
+            //regionBateria = cargarImagen("PilaMed.png");
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria3);
+            attachChild(spriteBateria);
+        }
+        if (t >= .30f){
+            //regionBateria = cargarImagen("PilaBaja.png");
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria2);
+            attachChild(spriteBateria);
+        }
+        if (t >= .40f){
+            //regionBateria = cargarImagen("PIlaMuerta.png");
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria1);
+            attachChild(spriteBateria);
+        }
+        if (t >= .50f){
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria0);
+            attachChild(spriteBateria);
+        }
+
 
         //Crear botón SHOOT y agregarlo a la escena
-        Sprite btnShoot = new Sprite(regionBtnShoot.getWidth(),ControlJuego.ALTO_CAMARA-regionBtnShoot.getHeight(), regionBtnShoot, actividadJuego.getVertexBufferObjectManager()){
+        Sprite btnShoot = new Sprite (ControlJuego.ANCHO_CAMARA - regionBtnShoot.getWidth()+100, regionBtnCollect.getHeight()-70, regionBtnShoot, actividadJuego.getVertexBufferObjectManager()){
             @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pSceneTouchEvent.isActionDown()) {
+            public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
+                if (pSceneTounchEvent.isActionDown()){
                     pausarJuego();
                 }
-                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+                return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
             }
         };
         attachChild(btnShoot);
         registerTouchArea(btnShoot);
 
+        //Crear botón COLLECT y agregarlo a la escena
+        Sprite btnCollect = new Sprite (regionBtnCollect.getWidth()-100,  regionBtnCollect.getHeight()-70, regionBtnCollect, actividadJuego.getVertexBufferObjectManager()){
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
+                if (pSceneTounchEvent.isActionDown()){
+                    pausarJuego();
+                }
+                return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        attachChild(btnCollect);
+        registerTouchArea(btnCollect);
+
+
         // Crea el botón de PAUSA y lo agrega a la escena
-        Sprite btnPausa = new Sprite(regionBtnPausa.getWidth()-100, ControlJuego.ALTO_CAMARA - regionBtnPausa.getHeight()+50, regionBtnPausa, actividadJuego.getVertexBufferObjectManager()) {
+        Sprite btnPausa = new Sprite(ControlJuego.ANCHO_CAMARA - regionBtnPausa.getWidth(), ControlJuego.ALTO_CAMARA - regionBtnPausa.getHeight(), regionBtnPausa, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
@@ -104,6 +178,38 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             juegoCorriendo = true;
         }
     }
+    /*
+    private void perderPila(){
+       float t = getSecondsElapsedTotal();
+        if (t >=0f){
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria5);
+            attachChild(spriteBateria);
+        }
+        if (t >= .10f){
+            //regionBateria = cargarImagen("PilaCasi.png");
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria4);
+            attachChild(spriteBateria);
+        }
+        if (t >= .20f){
+            //regionBateria = cargarImagen("PilaMed.png");
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria3);
+            attachChild(spriteBateria);
+        }
+        if (t >= .30f){
+            //regionBateria = cargarImagen("PilaBaja.png");
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria2);
+            attachChild(spriteBateria);
+        }
+        if (t >= .40f){
+            //regionBateria = cargarImagen("PIlaMuerta.png");
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria1);
+            attachChild(spriteBateria);
+        }
+        if (t >= .50f){
+            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria0);
+            attachChild(spriteBateria);
+        }
+    }*/
 
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
@@ -126,17 +232,35 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {
         float dx = pAccelerationData.getX();
-        float nx = spriteFondo.getX() - 2*dx;  // Nueva posición
+        float nx = spriteFondo.getX() - dx;  // Nueva posición
+        float dy = pAccelerationData.getY();
+        float ny = spriteFondoSombra.getY() - dy;
+        float somx = spriteFondoSombra.getX()-dx;
 
         if (dx<0) {
             // Izquierda
             if ( nx<spriteFondo.getWidth()/2 ) {
                 spriteFondo.setX(nx);
+                spriteFondoSombra.setX(somx);
+
             }
         } else {
-            // derecha
+            // Derecha
             if ( nx>spriteFondo.getWidth()/2-ControlJuego.ANCHO_CAMARA) {
                 spriteFondo.setX(nx);
+                spriteFondoSombra.setX(somx);
+            }
+        }
+
+        if (ny<0){
+
+            if (nx<spriteFondoSombra.getHeight()/2){
+                spriteFondoSombra.setY(ny);
+            }
+        }else{
+
+            if(ny>spriteFondoSombra.getHeight()/2 - ControlJuego.ALTO_CAMARA){
+                spriteFondoSombra.setY(ny);
             }
         }
 
