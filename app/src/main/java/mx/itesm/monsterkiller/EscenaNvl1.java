@@ -29,21 +29,28 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private ITextureRegion regionBateria1;
     private ITextureRegion regionBateria0;
 
-    //Sprite animado - monsters
-
+    //timepo
+    private float tiempo;
 
     // Sprite para el fondo
     private Sprite spriteFondo;
     private Sprite spriteFondoSombra;
 
     //Sprite bateria
-    private Sprite spriteBateria;
+    private Sprite spriteBateria5;
+    private Sprite spriteBateria4;
+    private Sprite spriteBateria3;
+    private Sprite spriteBateria2;
+    private Sprite spriteBateria1;
+    private Sprite spriteBateria0;
 
     //Banderas
     private boolean juegoCorriendo = true;
-
-    //Energía del personaje
-    private int energia = 100;
+    private boolean bat4Visible = false;
+    private boolean bat3Visible = false;
+    private boolean bat2Visible = false;
+    private boolean bat1Visible = false;
+    private boolean bat0Visible = false;
 
     //Controles
     private ITextureRegion regionBtnShoot;
@@ -53,6 +60,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private CameraScene escenaPausa;    // La escena que se muestra al hacer pausa
     private ITextureRegion regionPausa;
     private ITextureRegion regionBtnPausa;
+    private ITextureRegion regionBtnHome;
+    private ITextureRegion regionBtnReanudar;
 
     //Fin del juego
     //private ITextureRegion regionFin;
@@ -64,21 +73,23 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         //regionFin = cargarImagen("");
 
         //Controles
-        regionBtnShoot = cargarImagen("BotShoot.png");
-        regionBtnCollect = cargarImagen("BotCollect.png");
+        regionBtnShoot = cargarImagen("BotShoot1.png");
+        regionBtnCollect = cargarImagen("BotCollect1.png");
 
         //bateria
-        regionBateria5 = cargarImagen("PIlaMax.png");
-        regionBateria4 = cargarImagen("PilaCasi.png");
-        regionBateria3 = cargarImagen("PilaMed.png");
-        regionBateria2 = cargarImagen("PilaBaja.png");
-        regionBateria1 = cargarImagen("PIlaMuerta.png");
-        regionBateria0 = cargarImagen("NoPila2.png");
+        regionBateria5 = cargarImagen("Llena.png");
+        regionBateria4 = cargarImagen("Llena2.png");
+        regionBateria3 = cargarImagen("Media.png");
+        regionBateria2 = cargarImagen("media2.png");
+        regionBateria1 = cargarImagen("Muerta.png");
+        regionBateria0 = cargarImagen("Empty.png");
 
 
         // Pausa
         regionBtnPausa = cargarImagen("PauseBotonJuego.png");
-        regionPausa = cargarImagen("PauseChica.jpg");
+        regionPausa = cargarImagen("PauseChica.png");
+        regionBtnHome = cargarImagen("BotonHome2.png");
+        regionBtnReanudar =  cargarImagen("BotonHome2.png");
     }
 
     @Override
@@ -88,38 +99,13 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         spriteFondoSombra = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondoSombra);
         attachChild(spriteFondoSombra);
         actividadJuego.getEngine().enableAccelerationSensor(actividadJuego, this);
-        //spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria5);
-        //attachChild(spriteBateria);
-
-        float t = getSecondsElapsedTotal();
-        if (t >=0f){
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria5);
-            attachChild(spriteBateria);
-        }
-        if (t >= .10f){
-            //regionBateria = cargarImagen("PilaCasi.png");
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria4);
-            attachChild(spriteBateria);
-        }
-        if (t >= .20f){
-            //regionBateria = cargarImagen("PilaMed.png");
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria3);
-            attachChild(spriteBateria);
-        }
-        if (t >= .30f){
-            //regionBateria = cargarImagen("PilaBaja.png");
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria2);
-            attachChild(spriteBateria);
-        }
-        if (t >= .40f){
-            //regionBateria = cargarImagen("PIlaMuerta.png");
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria1);
-            attachChild(spriteBateria);
-        }
-        if (t >= .50f){
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight()+50, regionBateria0);
-            attachChild(spriteBateria);
-        }
+        spriteBateria5 = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria5);
+        attachChild(spriteBateria5);
+        spriteBateria4 = cargarSprite(regionBateria4.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria4.getHeight(), regionBateria4);
+        spriteBateria3 = cargarSprite(regionBateria3.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria3.getHeight(), regionBateria3);
+        spriteBateria2 = cargarSprite(regionBateria2.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria2.getHeight(), regionBateria2);
+        spriteBateria1 = cargarSprite(regionBateria1.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria1.getHeight(), regionBateria1);
+        spriteBateria0 = cargarSprite(regionBateria0.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria0.getHeight(), regionBateria0);
 
 
         //Crear botón SHOOT y agregarlo a la escena
@@ -166,7 +152,14 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         escenaPausa = new CameraScene(actividadJuego.camara);
         Sprite fondoPausa = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionPausa);
         escenaPausa.attachChild(fondoPausa);
+        Sprite botonHome = cargarSprite(regionPausa.getWidth()-200, regionPausa.getHeight()-300, regionBtnHome);
+        escenaPausa.attachChild(botonHome);
+        Sprite botonReanudar = cargarSprite(regionPausa.getWidth()-200, regionPausa.getHeight()-500, regionBtnReanudar);
+        escenaPausa.attachChild(botonReanudar);
         escenaPausa.setBackgroundEnabled(false);
+
+        //tiempo
+        tiempo = 0;
     }
 
     private void pausarJuego() {
@@ -178,38 +171,37 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             juegoCorriendo = true;
         }
     }
-    /*
+
     private void perderPila(){
-       float t = getSecondsElapsedTotal();
-        if (t >=0f){
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria5);
-            attachChild(spriteBateria);
+        if (tiempo <= 10f){
         }
-        if (t >= .10f){
-            //regionBateria = cargarImagen("PilaCasi.png");
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria4);
-            attachChild(spriteBateria);
+        if (tiempo > 10f && tiempo <=20f && !bat4Visible){
+            detachChild(spriteBateria5);
+            attachChild(spriteBateria4);
+            bat4Visible = true;
         }
-        if (t >= .20f){
-            //regionBateria = cargarImagen("PilaMed.png");
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria3);
-            attachChild(spriteBateria);
+        if (tiempo > 20f && tiempo <=30f && !bat3Visible){
+            detachChild(spriteBateria4);
+            attachChild(spriteBateria3);
+            bat3Visible = true;
         }
-        if (t >= .30f){
-            //regionBateria = cargarImagen("PilaBaja.png");
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria2);
-            attachChild(spriteBateria);
+        if (tiempo > 30f && tiempo <=40f && !bat2Visible){
+            detachChild(spriteBateria3);
+            attachChild(spriteBateria2);
+            bat2Visible = true;
         }
-        if (t >= .40f){
-            //regionBateria = cargarImagen("PIlaMuerta.png");
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria1);
-            attachChild(spriteBateria);
+        if (tiempo >40f && tiempo <= 50f && !bat1Visible){
+            detachChild(spriteBateria2);
+            attachChild(spriteBateria1);
+            bat1Visible = true;
         }
-        if (t >= .50f){
-            spriteBateria = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria0);
-            attachChild(spriteBateria);
+        if (tiempo >50f && tiempo <=60f && !bat0Visible){
+            detachChild(spriteBateria1);
+            attachChild(spriteBateria0);
+            bat0Visible = true;
         }
-    }*/
+
+    }
 
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
@@ -218,6 +210,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         if (!juegoCorriendo) {
             return;
         }
+
+        tiempo= tiempo + pSecondsElapsed;
+        perderPila();
 
     }
 
@@ -232,37 +227,42 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {
         float dx = pAccelerationData.getX();
-        float nx = spriteFondo.getX() - dx;  // Nueva posición
-        float dy = pAccelerationData.getY();
-        float ny = spriteFondoSombra.getY() - dy;
-        float somx = spriteFondoSombra.getX()-dx;
+        float nx = spriteFondo.getX() - dx*5;  // Nueva posición de la habitacion
+        float nxs = spriteFondoSombra.getX() - dx;
+        float dy = pAccelerationData.getY()+6;
+        float ny = spriteFondoSombra.getY() - dy; //nueva posición del fondo negro
+        Log.i("acelerometro", "dy=" + dy);
 
-        if (dx<0) {
+        if (dx < 0) {
             // Izquierda
-            if ( nx<spriteFondo.getWidth()/2 ) {
+            if (nx < spriteFondo.getWidth() / 2) {
                 spriteFondo.setX(nx);
-                spriteFondoSombra.setX(somx);
+                if (nxs < spriteFondoSombra.getWidth()/2 - ControlJuego.ANCHO_CAMARA) {
+                    spriteFondoSombra.setX(nxs);
+                }
 
             }
         } else {
             // Derecha
-            if ( nx>spriteFondo.getWidth()/2-ControlJuego.ANCHO_CAMARA) {
+            if (nx > spriteFondo.getWidth() / 2 - ControlJuego.ANCHO_CAMARA) {
                 spriteFondo.setX(nx);
-                spriteFondoSombra.setX(somx);
+                if (nxs > spriteFondoSombra.getWidth()/2 - ControlJuego.ANCHO_CAMARA){
+                    spriteFondoSombra.setX(nxs);
+                }
             }
         }
 
-        if (ny<0){
-
-            if (nx<spriteFondoSombra.getHeight()/2){
+        if (dy > 0) {
+            if (ny > 200) {
                 spriteFondoSombra.setY(ny);
             }
-        }else{
+        } else {
 
-            if(ny>spriteFondoSombra.getHeight()/2 - ControlJuego.ALTO_CAMARA){
+            if (ny < ControlJuego.ALTO_CAMARA - 200) {
                 spriteFondoSombra.setY(ny);
             }
         }
+
 
     }
 
