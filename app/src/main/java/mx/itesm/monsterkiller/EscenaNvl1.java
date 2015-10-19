@@ -18,6 +18,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     // Fondo
     private ITextureRegion regionFondo;
 
+<<<<<<< Updated upstream
     //Fondo negro
     private ITextureRegion regionFondoSombra;
 
@@ -31,6 +32,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     //timepo
     private float tiempo;
+=======
+    //Sprite animado - monsters
+
+>>>>>>> Stashed changes
 
     // Sprite para el fondo
     private Sprite spriteFondo;
@@ -66,9 +71,28 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     //Fin del juego
     //private ITextureRegion regionFin;
 
+    //Banderas
+    private boolean juegoCorriendo = true;
+
+    //Energía del personaje
+    private int energia = 100;
+
+    //Controles
+    private ITexture regionBtnShoot;
+    private ITexture regionBtnCollect;
+
+    // Escena de PAUSA
+    private CameraScene escenaPausa;    // La escena que se muestra al hacer pausa
+    private ITextureRegion regionPausa;
+    private ITextureRegion regionBtnPausa;
+
+    //Fin del juego
+    //private ITextureRegion regionFin;
+
     @Override
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoNvl1.jpg");
+<<<<<<< Updated upstream
         regionFondoSombra = cargarImagen("Sombra.png");
         //regionFin = cargarImagen("");
 
@@ -90,12 +114,24 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionPausa = cargarImagen("PauseChica.png");
         regionBtnHome = cargarImagen("BotonHome2.png");
         regionBtnReanudar =  cargarImagen("BotonHome2.png");
+=======
+        //regionFin = cargarImagen("");
+
+        //Controles
+        regionBtnShoot = cargarImagen("BotShoot.png");
+        regionBtnCollect = cargarImagen("BotCollect.png");
+
+        // Pausa
+        regionBtnPausa = cargarImagen("BotonHome2.png");
+        regionPausa = cargarImagen("FondoPausa.jpg");
+>>>>>>> Stashed changes
     }
 
     @Override
     public void crearEscena() {
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
         attachChild(spriteFondo);
+<<<<<<< Updated upstream
         spriteFondoSombra = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondoSombra);
         attachChild(spriteFondoSombra);
         actividadJuego.getEngine().enableAccelerationSensor(actividadJuego, this);
@@ -116,11 +152,24 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
                     pausarJuego();
                 }
                 return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+=======
+        actividadJuego.getEngine().enableAccelerationSensor(actividadJuego, this);
+
+        //Crear botón SHOOT y agregarlo a la escena
+        Sprite btnShoot = new Sprite(regionBtnShoot.getWidth(),ControlJuego.ALTO_CAMARA-regionBtnShoot.getHeight(), regionBtnShoot, actividadJuego.getVertexBufferObjectManager()){
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionDown()) {
+                    pausarJuego();
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+>>>>>>> Stashed changes
             }
         };
         attachChild(btnShoot);
         registerTouchArea(btnShoot);
 
+<<<<<<< Updated upstream
         //Crear botón COLLECT y agregarlo a la escena
         Sprite btnCollect = new Sprite (regionBtnCollect.getWidth()-100,  regionBtnCollect.getHeight()-70, regionBtnCollect, actividadJuego.getVertexBufferObjectManager()){
             @Override
@@ -137,6 +186,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
         // Crea el botón de PAUSA y lo agrega a la escena
         Sprite btnPausa = new Sprite(ControlJuego.ANCHO_CAMARA - regionBtnPausa.getWidth(), ControlJuego.ALTO_CAMARA - regionBtnPausa.getHeight(), regionBtnPausa, actividadJuego.getVertexBufferObjectManager()) {
+=======
+        // Crea el botón de PAUSA y lo agrega a la escena
+        Sprite btnPausa = new Sprite(regionBtnPausa.getWidth()-100, ControlJuego.ALTO_CAMARA - regionBtnPausa.getHeight()+50, regionBtnPausa, actividadJuego.getVertexBufferObjectManager()) {
+>>>>>>> Stashed changes
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
@@ -152,6 +205,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         escenaPausa = new CameraScene(actividadJuego.camara);
         Sprite fondoPausa = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionPausa);
         escenaPausa.attachChild(fondoPausa);
+<<<<<<< Updated upstream
         Sprite botonHome = cargarSprite(regionPausa.getWidth()-200, regionPausa.getHeight()-300, regionBtnHome);
         escenaPausa.attachChild(botonHome);
         Sprite botonReanudar = cargarSprite(regionPausa.getWidth()-200, regionPausa.getHeight()-500, regionBtnReanudar);
@@ -160,6 +214,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
         //tiempo
         tiempo = 0;
+=======
+        escenaPausa.setBackgroundEnabled(false);
+>>>>>>> Stashed changes
     }
 
     private void pausarJuego() {
@@ -172,6 +229,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         }
     }
 
+<<<<<<< Updated upstream
     private void perderPila(){
         if (tiempo <= 10f){
         }
@@ -203,6 +261,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     }
 
+=======
+>>>>>>> Stashed changes
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
         super.onManagedUpdate(pSecondsElapsed);
@@ -211,9 +271,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             return;
         }
 
+<<<<<<< Updated upstream
         tiempo= tiempo + pSecondsElapsed;
         perderPila();
 
+=======
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -227,6 +290,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {
         float dx = pAccelerationData.getX();
+<<<<<<< Updated upstream
         float nx = spriteFondo.getX() - dx*5;  // Nueva posición de la habitacion
         float nxs = spriteFondoSombra.getX() - dx;
         float dy = pAccelerationData.getY()+6;
@@ -264,6 +328,22 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         }
 
 
+=======
+        float nx = spriteFondo.getX() - 2*dx;  // Nueva posición
+
+        if (dx<0) {
+            // Izquierda
+            if ( nx<spriteFondo.getWidth()/2 ) {
+                spriteFondo.setX(nx);
+            }
+        } else {
+            // derecha
+            if ( nx>spriteFondo.getWidth()/2-ControlJuego.ANCHO_CAMARA) {
+                spriteFondo.setX(nx);
+            }
+        }
+
+>>>>>>> Stashed changes
     }
 
     @Override public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
