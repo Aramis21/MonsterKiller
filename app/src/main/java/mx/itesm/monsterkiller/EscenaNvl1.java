@@ -29,18 +29,15 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private ITextureRegion regionBateria1;
     private ITextureRegion regionBateria0;
 
+    //Contador
+    private ITextureRegion regionContador;
+
     //timepo
     private float tiempo;
 
     // Sprite para el fondo
     private Sprite spriteFondo;
     private Sprite spriteFondoSombra;
-
-    //Contador
-    private ITextureRegion regionContador;
-
-    //Sprite contador
-    private Sprite spriteContador;
 
     //Sprite bateria
     private Sprite spriteBateria5;
@@ -49,6 +46,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private Sprite spriteBateria2;
     private Sprite spriteBateria1;
     private Sprite spriteBateria0;
+
+    //Contador
+    private Sprite spriteContador;
 
     //Banderas
     private boolean juegoCorriendo = true;
@@ -74,7 +74,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     @Override
     public void cargarRecursos() {
-        regionFondo = cargarImagen("FondoNvl1.jpg");
+        regionFondo = cargarImagen("cuartonino-luz.png");
         regionFondoSombra = cargarImagen("Sombra.png");
         //regionFin = cargarImagen("");
 
@@ -90,8 +90,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionBateria1 = cargarImagen("Muerta.png");
         regionBateria0 = cargarImagen("Empty.png");
 
-        //Contador de montruos
-        regionContador = cargarImagen("ContadorMons.png")
+        //contador
+        regionContador = cargarImagen("ContadorMons.png");
 
 
         // Pausa
@@ -116,7 +116,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         spriteBateria1 = cargarSprite(regionBateria1.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria1.getHeight(), regionBateria1);
         spriteBateria0 = cargarSprite(regionBateria0.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria0.getHeight(), regionBateria0);
 
-        spriteContador = cargarSprite(regionContador.getWidth())
+        spriteContador = cargarSprite(ControlJuego.ANCHO_CAMARA - regionContador.getWidth(), ControlJuego.ALTO_CAMARA - regionContador.getHeight(), regionContador);
+        attachChild(spriteContador);
 
 
         //Crear botón SHOOT y agregarlo a la escena
@@ -242,7 +243,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         float nxs = spriteFondoSombra.getX() - dx;
         float dy = pAccelerationData.getY()+6;
         float ny = spriteFondoSombra.getY() - dy; //nueva posición del fondo negro
-        //Log.i("acelerometro", "dy=" + dy);
+        Log.i("acelerometro", "dy=" + dy);
 
         if (dx < 0) {
             // Izquierda
