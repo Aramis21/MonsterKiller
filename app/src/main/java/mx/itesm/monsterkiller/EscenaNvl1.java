@@ -36,6 +36,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private Sprite spriteFondo;
     private Sprite spriteFondoSombra;
 
+    //Contador
+    private ITextureRegion regionContador;
+
+    //Sprite contador
+    private Sprite spriteContador;
+
     //Sprite bateria
     private Sprite spriteBateria5;
     private Sprite spriteBateria4;
@@ -84,12 +90,15 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionBateria1 = cargarImagen("Muerta.png");
         regionBateria0 = cargarImagen("Empty.png");
 
+        //Contador de montruos
+        regionContador = cargarImagen("ContadorMons.png")
+
 
         // Pausa
         regionBtnPausa = cargarImagen("PauseBotonJuego.png");
         regionPausa = cargarImagen("PauseChica.png");
         regionBtnHome = cargarImagen("BotonHome2.png");
-        regionBtnReanudar =  cargarImagen("BotonHome2.png");
+        regionBtnReanudar =  cargarImagen("BackBot.png");
     }
 
     @Override
@@ -106,6 +115,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         spriteBateria2 = cargarSprite(regionBateria2.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria2.getHeight(), regionBateria2);
         spriteBateria1 = cargarSprite(regionBateria1.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria1.getHeight(), regionBateria1);
         spriteBateria0 = cargarSprite(regionBateria0.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria0.getHeight(), regionBateria0);
+
+        spriteContador = cargarSprite(regionContador.getWidth())
 
 
         //Crear botón SHOOT y agregarlo a la escena
@@ -231,7 +242,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         float nxs = spriteFondoSombra.getX() - dx;
         float dy = pAccelerationData.getY()+6;
         float ny = spriteFondoSombra.getY() - dy; //nueva posición del fondo negro
-        Log.i("acelerometro", "dy=" + dy);
+        //Log.i("acelerometro", "dy=" + dy);
 
         if (dx < 0) {
             // Izquierda
