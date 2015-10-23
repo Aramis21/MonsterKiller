@@ -1,23 +1,25 @@
 package mx.itesm.monsterkiller;
 
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 /**
  * Created by Aramis on 14/10/15.
  */
 public class Monstruos {
 
-    private Sprite spriteMonster;
+    private AnimatedSprite spriteMonster;
 
-    public Monstruos(Sprite sprite) {
+    public Monstruos(AnimatedSprite sprite) {
         spriteMonster = sprite;
     }
 
-    public Sprite getSpriteMonster(){
+    public AnimatedSprite getSpriteMonster(){
         return spriteMonster;
     }
 
-    public void setSpriteMonster (Sprite spriteMonster){
+    public void setAnimatedSpriteMonster (AnimatedSprite spriteMonster){
         this.spriteMonster = spriteMonster;
     }
 

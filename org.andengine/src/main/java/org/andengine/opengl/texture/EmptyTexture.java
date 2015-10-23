@@ -45,7 +45,7 @@ public class EmptyTexture extends Texture{
 	}
 
 	public EmptyTexture(final TextureManager pTextureManager, final int pWidth, final int pHeight, final TextureOptions pTextureOptions) {
-		this(pTextureManager, pWidth, pHeight, pTextureOptions, (ITextureStateListener) null);
+		this(pTextureManager, pWidth, pHeight, pTextureOptions, null);
 	}
 
 	public EmptyTexture(final TextureManager pTextureManager, final int pWidth, final int pHeight, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) {
@@ -53,7 +53,7 @@ public class EmptyTexture extends Texture{
 	}
 
 	public EmptyTexture(final TextureManager pTextureManager, final int pWidth, final int pHeight, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions) {
-		this(pTextureManager, pWidth, pHeight, pPixelFormat, pTextureOptions, (ITextureStateListener) null);
+		this(pTextureManager, pWidth, pHeight, pPixelFormat, pTextureOptions, null);
 	}
 
 	public EmptyTexture(final TextureManager pTextureManager, final int pWidth, final int pHeight, final PixelFormat pPixelFormat, final TextureOptions pTextureOptions, final ITextureStateListener pTextureStateListener) {

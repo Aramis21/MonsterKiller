@@ -55,14 +55,14 @@ public class DeviceNotSupportedException extends AndEngineException {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static enum DeviceNotSupportedCause {
+	public enum DeviceNotSupportedCause {
 		// ===========================================================
 		// Elements
 		// ===========================================================
 
 		GLES2_UNSUPPORTED,
 		CODEPATH_INCOMPLETE,
-		EGLCONFIG_NOT_FOUND;
+		EGLCONFIG_NOT_FOUND
 
 		// ===========================================================
 		// Constants

@@ -183,7 +183,7 @@ public abstract class PVRCCZTexture extends PVRTexture {
 		// ===========================================================
 	}
 
-	public static enum CCZCompressionFormat {
+	public enum CCZCompressionFormat {
 		// ===========================================================
 		// Elements
 		// ===========================================================
@@ -207,7 +207,7 @@ public abstract class PVRCCZTexture extends PVRTexture {
 		// Constructors
 		// ===========================================================
 
-		private CCZCompressionFormat(final short pID) {
+		CCZCompressionFormat(final short pID) {
 			this.mID = pID;
 		}
 

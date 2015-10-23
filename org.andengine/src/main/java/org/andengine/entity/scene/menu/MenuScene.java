@@ -217,7 +217,7 @@ public class MenuScene extends CameraScene implements IOnAreaTouchListener, IOnS
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IOnMenuItemClickListener {
+	public interface IOnMenuItemClickListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -226,6 +226,6 @@ public class MenuScene extends CameraScene implements IOnAreaTouchListener, IOnS
 		// Methods
 		// ===========================================================
 
-		public boolean onMenuItemClicked(final MenuScene pMenuScene, final IMenuItem pMenuItem, final float pMenuItemLocalX, final float pMenuItemLocalY);
+		boolean onMenuItemClicked(final MenuScene pMenuScene, final IMenuItem pMenuItem, final float pMenuItemLocalX, final float pMenuItemLocalY);
 	}
 }

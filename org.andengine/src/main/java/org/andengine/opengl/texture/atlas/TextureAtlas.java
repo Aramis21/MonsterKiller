@@ -88,7 +88,7 @@ public abstract class TextureAtlas<T extends ITextureAtlasSource> extends Textur
 	@Deprecated
 	@Override
 	public void setTextureStateListener(final ITextureStateListener pTextureStateListener) {
-		super.setTextureStateListener((ITextureAtlasStateListener<T>)pTextureStateListener);
+		super.setTextureStateListener(pTextureStateListener);
 	}
 
 	@Override

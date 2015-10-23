@@ -18,5 +18,5 @@ public interface IInputStreamOpener {
 	// Methods
 	// ===========================================================
 
-	public InputStream open() throws IOException;
+	InputStream open() throws IOException;
 }

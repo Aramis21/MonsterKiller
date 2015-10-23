@@ -357,7 +357,7 @@ public class AnimatedSprite extends TiledSprite {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IAnimationListener {
+	public interface IAnimationListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -370,19 +370,19 @@ public class AnimatedSprite extends TiledSprite {
 		 * @param pAnimatedSprite
 		 * @param pInitialLoopCount is {@link AnimatedSprite#LOOP_CONTINUOUS} when {@link AnimatedSprite} loops infinitely.
 		 */
-		public void onAnimationStarted(final AnimatedSprite pAnimatedSprite, final int pInitialLoopCount);
+		void onAnimationStarted(final AnimatedSprite pAnimatedSprite, final int pInitialLoopCount);
 		/**
 		 * @param pAnimatedSprite
 		 * @param pOldFrameIndex equals {@link AnimatedSprite#FRAMEINDEX_INVALID}, the first time {@link IAnimationListener#onAnimationFrameChanged(AnimatedSprite, int, int)} is called.
 		 * @param pNewFrameIndex the new frame index of the currently active animation.
 		 */
-		public void onAnimationFrameChanged(final AnimatedSprite pAnimatedSprite, final int pOldFrameIndex, final int pNewFrameIndex);
+		void onAnimationFrameChanged(final AnimatedSprite pAnimatedSprite, final int pOldFrameIndex, final int pNewFrameIndex);
 		/**
 		 * @param pAnimatedSprite
 		 * @param pRemainingLoopCount is {@link AnimatedSprite#LOOP_CONTINUOUS} when {@link AnimatedSprite} loops infinitely.
 		 * @param pInitialLoopCount is {@link AnimatedSprite#LOOP_CONTINUOUS} when {@link AnimatedSprite} loops infinitely.
 		 */
-		public void onAnimationLoopFinished(final AnimatedSprite pAnimatedSprite, final int pRemainingLoopCount, final int pInitialLoopCount);
-		public void onAnimationFinished(final AnimatedSprite pAnimatedSprite);
+		void onAnimationLoopFinished(final AnimatedSprite pAnimatedSprite, final int pRemainingLoopCount, final int pInitialLoopCount);
+		void onAnimationFinished(final AnimatedSprite pAnimatedSprite);
 	}
 }

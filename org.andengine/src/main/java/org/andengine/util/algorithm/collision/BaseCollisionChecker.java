@@ -164,11 +164,8 @@ public final class BaseCollisionChecker {
 			 * if one vertex of the one vertices is contained by all of the other vertices. */
 			if (BaseCollisionChecker.checkContains(pVerticesA, pVertexCountA, VertexUtils.getVertex(pVerticesB, pVertexOffsetXB, pVertexStrideB, 0), VertexUtils.getVertex(pVerticesB, pVertexOffsetYB, pVertexStrideB, 0))) {
 				return true;
-			} else if (BaseCollisionChecker.checkContains(pVerticesB, pVertexCountB, VertexUtils.getVertex(pVerticesA, pVertexOffsetXA, pVertexStrideA, 0), VertexUtils.getVertex(pVerticesA, pVertexOffsetYA, pVertexStrideA, 0))) {
-				return true;
-			} else {
-				return false;
-			}
+			} else
+				return BaseCollisionChecker.checkContains(pVerticesB, pVertexCountB, VertexUtils.getVertex(pVerticesA, pVertexOffsetXA, pVertexStrideA, 0), VertexUtils.getVertex(pVerticesA, pVertexOffsetYA, pVertexStrideA, 0));
 		}
 	}
 
@@ -209,10 +206,7 @@ public final class BaseCollisionChecker {
 		final float vertexB1Y = VertexUtils.getVertex(pVerticesB, pVertexOffsetYB, pVertexStrideB, pVertexCountB - 1);
 		final float vertexB2X = VertexUtils.getVertex(pVerticesB, pVertexOffsetXB, pVertexStrideB, 0);
 		final float vertexB2Y = VertexUtils.getVertex(pVerticesB, pVertexOffsetYB, pVertexStrideB, 0);
-		if (LineCollisionChecker.checkLineCollision(vertexA1X, vertexA1Y, vertexA2X, vertexA2Y, vertexB1X, vertexB1Y, vertexB2X, vertexB2Y)) {
-			return true;
-		}
-		return false;
+		return LineCollisionChecker.checkLineCollision(vertexA1X, vertexA1Y, vertexA2X, vertexA2Y, vertexB1X, vertexB1Y, vertexB2X, vertexB2Y);
 	}
 
 	/**

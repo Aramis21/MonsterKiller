@@ -94,13 +94,13 @@ public class RadialGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static enum RadialGradientDirection {
+	public enum RadialGradientDirection {
 		// ===========================================================
 		// Elements
 		// ===========================================================
 
 		INSIDE_OUT,
-		OUTSIDE_IN;
+		OUTSIDE_IN
 
 		// ===========================================================
 		// Constants

@@ -126,7 +126,7 @@ public class RenderTexture extends Texture {
 	 * @param pGLState
 	 * @throws RenderTextureInitializationException when this {@link RenderTexture} could not be initialized. The {@link GLException} contains the error code. When this exception is throw, all cleanup will be automatically performed through {@link #destroy(GLState)}.
 	 */
-	public void init(final GLState pGLState) throws GLFrameBufferException, GLException {
+	public void init(final GLState pGLState) throws GLException {
 		this.savePreviousFramebufferObjectID(pGLState);
 
 		try {

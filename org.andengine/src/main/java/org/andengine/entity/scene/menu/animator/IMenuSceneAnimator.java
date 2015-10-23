@@ -20,17 +20,17 @@ public interface IMenuSceneAnimator {
 	// Methods
 	// ===========================================================
 
-	public float getOffsetX();
-	public void setOffsetX(final float pOffsetX);
-	public float getOffsetY();
-	public void setOffsetY(final float pOffsetY);
-	public float getMenuItemSpacing();
-	public void setMenuItemSpacing(final float pMenuItemSpacing);
-	public HorizontalAlign getHorizontalAlign();
-	public void setHorizontalAlign(final HorizontalAlign pHorizontalAlign);
-	public VerticalAlign getVerticalAlign();
-	public void setVerticalAlign(final VerticalAlign pVerticalAlign);
+	float getOffsetX();
+	void setOffsetX(final float pOffsetX);
+	float getOffsetY();
+	void setOffsetY(final float pOffsetY);
+	float getMenuItemSpacing();
+	void setMenuItemSpacing(final float pMenuItemSpacing);
+	HorizontalAlign getHorizontalAlign();
+	void setHorizontalAlign(final HorizontalAlign pHorizontalAlign);
+	VerticalAlign getVerticalAlign();
+	void setVerticalAlign(final VerticalAlign pVerticalAlign);
 
-	public void buildMenuSceneAnimations(final MenuScene pMenuScene);
-	public void resetMenuSceneAnimations(final MenuScene pMenuScene);
+	void buildMenuSceneAnimations(final MenuScene pMenuScene);
+	void resetMenuSceneAnimations(final MenuScene pMenuScene);
 }

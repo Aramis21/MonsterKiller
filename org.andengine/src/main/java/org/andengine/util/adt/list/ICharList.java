@@ -15,12 +15,12 @@ public interface ICharList {
 	// Methods
 	// ===========================================================
 
-	public boolean isEmpty();
-	public char get(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public void add(final char pItem);
-	public void add(final int pIndex, final char pItem) throws ArrayIndexOutOfBoundsException;
-	public char remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public int size();
-	public void clear();
-	public char[] toArray();
+	boolean isEmpty();
+	char get(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	void add(final char pItem);
+	void add(final int pIndex, final char pItem) throws ArrayIndexOutOfBoundsException;
+	char remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	int size();
+	void clear();
+	char[] toArray();
 }

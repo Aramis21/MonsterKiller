@@ -14,7 +14,7 @@ public enum VerticalAlign {
 
 	TOP,
 	CENTER,
-	BOTTOM;
+	BOTTOM
 
 	// ===========================================================
 	// Constants

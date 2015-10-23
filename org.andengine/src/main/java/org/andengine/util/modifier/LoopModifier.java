@@ -44,7 +44,7 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 	}
 
 	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount) {
-		this(pModifier, pLoopCount, null, (IModifierListener<T>) null);
+		this(pModifier, pLoopCount, null, null);
 	}
 
 	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final IModifierListener<T> pModifierListener) {
@@ -52,7 +52,7 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 	}
 
 	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final ILoopModifierListener<T> pLoopModifierListener) {
-		this(pModifier, pLoopCount, pLoopModifierListener, (IModifierListener<T>) null);
+		this(pModifier, pLoopCount, pLoopModifierListener, null);
 	}
 
 	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final ILoopModifierListener<T> pLoopModifierListener, final IModifierListener<T> pModifierListener) {
@@ -176,7 +176,7 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 	// ===========================================================
 
 	public interface ILoopModifierListener<T> {
-		public void onLoopStarted(final LoopModifier<T> pLoopModifier, final int pLoop, final int pLoopCount);
-		public void onLoopFinished(final LoopModifier<T> pLoopModifier, final int pLoop, final int pLoopCount);
+		void onLoopStarted(final LoopModifier<T> pLoopModifier, final int pLoop, final int pLoopCount);
+		void onLoopFinished(final LoopModifier<T> pLoopModifier, final int pLoop, final int pLoopCount);
 	}
 }

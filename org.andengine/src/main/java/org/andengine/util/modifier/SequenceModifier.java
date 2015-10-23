@@ -187,7 +187,7 @@ public class SequenceModifier<T> extends BaseModifier<T> implements IModifierLis
 	// ===========================================================
 
 	public interface ISubSequenceModifierListener<T> {
-		public void onSubSequenceStarted(final IModifier<T> pModifier, final T pItem, final int pIndex);
-		public void onSubSequenceFinished(final IModifier<T> pModifier, final T pItem, final int pIndex);
+		void onSubSequenceStarted(final IModifier<T> pModifier, final T pItem, final int pIndex);
+		void onSubSequenceFinished(final IModifier<T> pModifier, final T pItem, final int pIndex);
 	}
 }

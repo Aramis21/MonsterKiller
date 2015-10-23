@@ -18,6 +18,6 @@ public interface IGradientVertexBufferObject extends IVertexBufferObject {
 	// Methods
 	// ===========================================================
 
-	public void onUpdateColor(final Gradient pGradient);
-	public void onUpdateVertices(final Gradient pGradient);
+	void onUpdateColor(final Gradient pGradient);
+	void onUpdateVertices(final Gradient pGradient);
 }

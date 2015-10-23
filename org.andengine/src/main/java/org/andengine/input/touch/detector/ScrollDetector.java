@@ -165,7 +165,7 @@ public class ScrollDetector extends BaseDetector {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IScrollDetectorListener {
+	public interface IScrollDetectorListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -174,8 +174,8 @@ public class ScrollDetector extends BaseDetector {
 		// Methods
 		// ===========================================================
 
-		public void onScrollStarted(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
-		public void onScroll(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
-		public void onScrollFinished(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
+		void onScrollStarted(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
+		void onScroll(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
+		void onScrollFinished(final ScrollDetector pScollDetector, final int pPointerID, final float pDistanceX, final float pDistanceY);
 	}
 }

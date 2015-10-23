@@ -194,7 +194,7 @@ public abstract class BaseOnScreenControl extends HUD implements IOnSceneTouchLi
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IOnScreenControlListener {
+	public interface IOnScreenControlListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -208,6 +208,6 @@ public abstract class BaseOnScreenControl extends HUD implements IOnSceneTouchLi
 		 * @param pValueX between <code>-1</code> (left) to <code>1</code> (right).
 		 * @param pValueY between <code>-1</code> (up) to <code>1</code> (down).
 		 */
-		public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY);
+		void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY);
 	}
 }

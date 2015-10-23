@@ -15,12 +15,12 @@ public interface IDoubleList {
 	// Methods
 	// ===========================================================
 
-	public boolean isEmpty();
-	public double get(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public void add(final double pItem);
-	public void add(final int pIndex, final double pItem) throws ArrayIndexOutOfBoundsException;
-	public double remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public int size();
-	public void clear();
-	public double[] toArray();
+	boolean isEmpty();
+	double get(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	void add(final double pItem);
+	void add(final int pIndex, final double pItem) throws ArrayIndexOutOfBoundsException;
+	double remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	int size();
+	void clear();
+	double[] toArray();
 }

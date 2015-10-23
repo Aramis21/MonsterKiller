@@ -328,7 +328,7 @@ public abstract class PVRTexture extends Texture {
 		// ===========================================================
 	}
 
-	public static enum PVRTextureFormat {
+	public enum PVRTextureFormat {
 		// ===========================================================
 		// Elements
 		// ===========================================================
@@ -362,7 +362,7 @@ public abstract class PVRTexture extends Texture {
 		// Constructors
 		// ===========================================================
 
-		private PVRTextureFormat(final int pID, final boolean pCompressed, final PixelFormat pPixelFormat) {
+		PVRTextureFormat(final int pID, final boolean pCompressed, final PixelFormat pPixelFormat) {
 			this.mID = pID;
 			this.mCompressed = pCompressed;
 			this.mPixelFormat = pPixelFormat;

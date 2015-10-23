@@ -18,5 +18,5 @@ public interface IEntityLoaderListener {
 	// Methods
 	// ===========================================================
 
-	public void onEntityLoaded(final IEntity pEntity, final Attributes pAttributes);
+	void onEntityLoaded(final IEntity pEntity, final Attributes pAttributes);
 }

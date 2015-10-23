@@ -432,7 +432,7 @@ public class GLState {
 		return GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER);
 	}
 
-	public void checkFramebufferStatus() throws GLFrameBufferException, GLException {
+	public void checkFramebufferStatus() throws GLException {
 		final int framebufferStatus = this.getFramebufferStatus();
 		switch (framebufferStatus) {
 			case GLES20.GL_FRAMEBUFFER_COMPLETE:

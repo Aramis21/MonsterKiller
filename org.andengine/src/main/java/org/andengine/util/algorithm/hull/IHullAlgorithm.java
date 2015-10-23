@@ -25,5 +25,5 @@ public interface IHullAlgorithm {
 	 * @param pStride the stride between each vertex.
 	 * @return
 	 */
-	public int computeHull(final float[] pVertices, final int pVertexCount, final int pVertexOffsetX, final int pVertexOffsetY, final int pStride);
+	int computeHull(final float[] pVertices, final int pVertexCount, final int pVertexOffsetX, final int pVertexOffsetY, final int pStride);
 }

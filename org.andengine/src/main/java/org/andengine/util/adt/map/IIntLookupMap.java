@@ -15,7 +15,7 @@ public interface IIntLookupMap<T> {
 	// Methods
 	// ===========================================================
 
-	public void add(final T pItem, final int pValue);
-	public T item(final int pValue);
-	public int value(final T pItem);
+	void add(final T pItem, final int pValue);
+	T item(final int pValue);
+	int value(final T pItem);
 }

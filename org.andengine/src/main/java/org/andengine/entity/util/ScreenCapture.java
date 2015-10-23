@@ -109,7 +109,7 @@ public class ScreenCapture extends Entity implements IScreenGrabberCallback {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IScreenCaptureCallback {
+	public interface IScreenCaptureCallback {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -118,7 +118,7 @@ public class ScreenCapture extends Entity implements IScreenGrabberCallback {
 		// Methods
 		// ===========================================================
 
-		public void onScreenCaptured(final String pFilePath);
-		public void onScreenCaptureFailed(final String pFilePath, final Exception pException);
+		void onScreenCaptured(final String pFilePath);
+		void onScreenCaptureFailed(final String pFilePath, final Exception pException);
 	}
 }

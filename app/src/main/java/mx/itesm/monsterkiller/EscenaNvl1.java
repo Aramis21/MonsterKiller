@@ -14,6 +14,7 @@ import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 /**
  * Created by Aramis on 28/09/15.
@@ -34,6 +35,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private ITextureRegion regionBateria1;
     private ITextureRegion regionBateria0;
 
+    //Monstruos
+    private TiledTextureRegion regionMonstruo;
+
     //Contador
     private ITextureRegion regionContador;
 
@@ -41,7 +45,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private Text textoPuntaje;
     private IFont fontMonster;
 
-    //timepo
+    //Tiempo
     private float tiempo;
 
     // Sprite para el fondo
@@ -99,11 +103,14 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionBateria1 = cargarImagen("Muerta.png");
         regionBateria0 = cargarImagen("Empty.png");
 
+        //Monstruos
+        regionMonstruo = cargarImagenMosaico("Monster1.png", 1280,244,1,6 );
+
         //contador
         regionContador = cargarImagen("ContadorMons.png");
 
         //font
-        fontMonster = cargarFont("Alice and the Wicked Monster.ttf");
+        fontMonster = cargarFont("Fonts/Alice and the Wicked Monster.ttf");
 
 
         // Pausa
@@ -129,12 +136,13 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     @Override
     public void crearEscena() {
-        agregarTexto();
+
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
         attachChild(spriteFondo);
         spriteFondoSombra = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondoSombra);
         attachChild(spriteFondoSombra);
         actividadJuego.getEngine().enableAccelerationSensor(actividadJuego, this);
+
         spriteBateria5 = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria5);
         attachChild(spriteBateria5);
         spriteBateria4 = cargarSprite(regionBateria4.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria4.getHeight(), regionBateria4);
@@ -145,6 +153,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
         spriteContador = cargarSprite(ControlJuego.ANCHO_CAMARA - regionContador.getWidth(), ControlJuego.ALTO_CAMARA - regionContador.getHeight(), regionContador);
         attachChild(spriteContador);
+        agregarTexto();
 
 
         //Crear botón SHOOT y agregarlo a la escena
@@ -204,6 +213,11 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private void agregarTexto() {
         textoPuntaje = new Text(100,ControlJuego.ALTO_CAMARA/2,fontMonster,"Inicio",actividadJuego.getVertexBufferObjectManager());
         attachChild(textoPuntaje);
+    }
+
+    private void agregarMonstruos(){
+
+
     }
 
     private void pausarJuego() {

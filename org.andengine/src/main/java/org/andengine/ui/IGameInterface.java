@@ -22,26 +22,26 @@ public interface IGameInterface {
 	// Methods
 	// ===========================================================
 
-	public EngineOptions onCreateEngineOptions();
-	public Engine onCreateEngine(final EngineOptions pEngineOptions);
+	EngineOptions onCreateEngineOptions();
+	Engine onCreateEngine(final EngineOptions pEngineOptions);
 
-	public void onCreateResources(final OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException;
-	public void onCreateScene(final OnCreateSceneCallback pOnCreateSceneCallback) throws IOException;
-	public void onPopulateScene(final Scene pScene, final OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException;
+	void onCreateResources(final OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException;
+	void onCreateScene(final OnCreateSceneCallback pOnCreateSceneCallback) throws IOException;
+	void onPopulateScene(final Scene pScene, final OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException;
 
-	public void onReloadResources() throws IOException;
-	public void onDestroyResources() throws IOException;
+	void onReloadResources() throws IOException;
+	void onDestroyResources() throws IOException;
 
-	public void onGameCreated();
-	public void onResumeGame();
-	public void onPauseGame();
-	public void onGameDestroyed();
+	void onGameCreated();
+	void onResumeGame();
+	void onPauseGame();
+	void onGameDestroyed();
 
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface OnCreateResourcesCallback {
+	interface OnCreateResourcesCallback {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -50,10 +50,10 @@ public interface IGameInterface {
 		// Methods
 		// ===========================================================
 
-		public void onCreateResourcesFinished();
+		void onCreateResourcesFinished();
 	}
 
-	public static interface OnCreateSceneCallback {
+	interface OnCreateSceneCallback {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -62,10 +62,10 @@ public interface IGameInterface {
 		// Methods
 		// ===========================================================
 
-		public void onCreateSceneFinished(final Scene pScene);
+		void onCreateSceneFinished(final Scene pScene);
 	}
 
-	public static interface OnPopulateSceneCallback {
+	interface OnPopulateSceneCallback {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -74,6 +74,6 @@ public interface IGameInterface {
 		// Methods
 		// ===========================================================
 
-		public void onPopulateSceneFinished();
+		void onPopulateSceneFinished();
 	}
 }

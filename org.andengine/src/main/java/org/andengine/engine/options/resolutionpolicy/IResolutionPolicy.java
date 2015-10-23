@@ -17,13 +17,13 @@ public interface IResolutionPolicy {
 	// Methods
 	// ===========================================================
 
-	public void onMeasure(final Callback pResolutionPolicyCallback, final int pWidthMeasureSpec, final int pHeightMeasureSpec);
+	void onMeasure(final Callback pResolutionPolicyCallback, final int pWidthMeasureSpec, final int pHeightMeasureSpec);
 
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface Callback {
+	interface Callback {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -32,6 +32,6 @@ public interface IResolutionPolicy {
 		// Methods
 		// ===========================================================
 
-		public void onResolutionChanged(final int pWidth, final int pHeight);
+		void onResolutionChanged(final int pWidth, final int pHeight);
 	}
 }

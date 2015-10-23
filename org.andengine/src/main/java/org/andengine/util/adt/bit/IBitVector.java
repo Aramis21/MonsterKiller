@@ -18,36 +18,36 @@ public interface IBitVector {
 	// Methods
 	// ===========================================================
 
-	public int getSize();
-	public int getBit(final int pIndex) throws IllegalArgumentException;
-	public void setBit(final int pIndex) throws IllegalArgumentException;
-	public void clearBit(final int pIndex) throws IllegalArgumentException;
-	public void setBit(final int pIndex, final boolean pTrue) throws IllegalArgumentException;
+	int getSize();
+	int getBit(final int pIndex) throws IllegalArgumentException;
+	void setBit(final int pIndex) throws IllegalArgumentException;
+	void clearBit(final int pIndex) throws IllegalArgumentException;
+	void setBit(final int pIndex, final boolean pTrue) throws IllegalArgumentException;
 	boolean getBitAsBoolean(int pIndex) throws IllegalArgumentException;
 
-	public byte getByte(final int pIndex) throws IllegalArgumentException;
-	public void setByte(final int pIndex, final byte pByte) throws IllegalArgumentException;
+	byte getByte(final int pIndex) throws IllegalArgumentException;
+	void setByte(final int pIndex, final byte pByte) throws IllegalArgumentException;
 
-	public short getShort(final int pIndex) throws IllegalArgumentException;
-	public void setShort(final int pIndex, final short pShort) throws IllegalArgumentException;
+	short getShort(final int pIndex) throws IllegalArgumentException;
+	void setShort(final int pIndex, final short pShort) throws IllegalArgumentException;
 
-	public int getInt(final int pIndex) throws IllegalArgumentException;
-	public void setInt(final int pIndex, final int pInt) throws IllegalArgumentException;
+	int getInt(final int pIndex) throws IllegalArgumentException;
+	void setInt(final int pIndex, final int pInt) throws IllegalArgumentException;
 
-	public long getLong(final int pIndex) throws IllegalArgumentException;
-	public void setLong(final int pIndex, final long pLong) throws IllegalArgumentException;
+	long getLong(final int pIndex) throws IllegalArgumentException;
+	void setLong(final int pIndex, final long pLong) throws IllegalArgumentException;
 
-	public int getBits(final int pIndex, final int pLength) throws IllegalArgumentException;
-	public void setBits(final int pIndex, final byte pBits, final int pBitIndex, final int pBitCount) throws IllegalArgumentException;
-	public void setBits(final int pIndex, final short pBits, final int pBitIndex, final int pBitCount) throws IllegalArgumentException;
-	public void setBits(final int pIndex, final int pBits, final int pBitIndex, final int pBitCount) throws IllegalArgumentException;
+	int getBits(final int pIndex, final int pLength) throws IllegalArgumentException;
+	void setBits(final int pIndex, final byte pBits, final int pBitIndex, final int pBitCount) throws IllegalArgumentException;
+	void setBits(final int pIndex, final short pBits, final int pBitIndex, final int pBitCount) throws IllegalArgumentException;
+	void setBits(final int pIndex, final int pBits, final int pBitIndex, final int pBitCount) throws IllegalArgumentException;
 
-	public long getLongBits(int pIndex, int pLength) throws IllegalArgumentException;
+	long getLongBits(int pIndex, int pLength) throws IllegalArgumentException;
 
-	public byte[] toByteArray();
+	byte[] toByteArray();
 
-	public void save(final DataOutputStream pDataOutputStream) throws IOException;
+	void save(final DataOutputStream pDataOutputStream) throws IOException;
 
-	public void clear();
-	public void fill(final byte pByte);
+	void clear();
+	void fill(final byte pByte);
 }

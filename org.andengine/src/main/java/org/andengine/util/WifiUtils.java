@@ -396,7 +396,7 @@ public final class WifiUtils {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static enum WifiHotspotState {
+	public enum WifiHotspotState {
 		// ===========================================================
 		// Elements
 		// ===========================================================

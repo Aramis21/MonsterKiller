@@ -15,12 +15,12 @@ public interface IByteList {
 	// Methods
 	// ===========================================================
 
-	public boolean isEmpty();
-	public byte get(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public void add(final byte pItem);
-	public void add(final int pIndex, final byte pItem) throws ArrayIndexOutOfBoundsException;
-	public byte remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public int size();
-	public void clear();
-	public byte[] toArray();
+	boolean isEmpty();
+	byte get(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	void add(final byte pItem);
+	void add(final int pIndex, final byte pItem) throws ArrayIndexOutOfBoundsException;
+	byte remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	int size();
+	void clear();
+	byte[] toArray();
 }

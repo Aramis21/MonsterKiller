@@ -115,7 +115,7 @@ public class ClickDetector extends BaseDetector {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IClickDetectorListener {
+	public interface IClickDetectorListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -124,6 +124,6 @@ public class ClickDetector extends BaseDetector {
 		// Methods
 		// ===========================================================
 
-		public void onClick(final ClickDetector pClickDetector, final int pPointerID, final float pSceneX, final float pSceneY);
+		void onClick(final ClickDetector pClickDetector, final int pPointerID, final float pSceneX, final float pSceneY);
 	}
 }

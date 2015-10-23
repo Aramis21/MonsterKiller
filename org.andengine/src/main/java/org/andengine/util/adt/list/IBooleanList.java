@@ -15,12 +15,12 @@ public interface IBooleanList {
 	// Methods
 	// ===========================================================
 
-	public boolean isEmpty();
-	public boolean get(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public void add(final boolean pItem);
-	public void add(final int pIndex, final boolean pItem) throws ArrayIndexOutOfBoundsException;
-	public boolean remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public int size();
-	public void clear();
-	public int[] toArray();
+	boolean isEmpty();
+	boolean get(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	void add(final boolean pItem);
+	void add(final int pIndex, final boolean pItem) throws ArrayIndexOutOfBoundsException;
+	boolean remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	int size();
+	void clear();
+	int[] toArray();
 }

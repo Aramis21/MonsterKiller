@@ -20,7 +20,7 @@ public interface IEntityLoader<T extends IEntityLoaderData> {
 	// Methods
 	// ===========================================================
 
-	public String[] getEntityNames();
+	String[] getEntityNames();
 
 	/**
 	 * @param pEntityName
@@ -30,5 +30,5 @@ public interface IEntityLoader<T extends IEntityLoaderData> {
 	 * @return
 	 * @throws IOException
 	 */
-	public IEntity onLoadEntity(final String pEntityName, final IEntity pParent, final Attributes pAttributes, final T pEntityLoaderData) throws IOException;
+	IEntity onLoadEntity(final String pEntityName, final IEntity pParent, final Attributes pAttributes, final T pEntityLoaderData) throws IOException;
 }

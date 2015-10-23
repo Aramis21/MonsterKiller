@@ -18,6 +18,6 @@ public interface ILineChainVertexBufferObject extends IVertexBufferObject {
 	// Methods
 	// ===========================================================
 
-	public void onUpdateColor(final LineChain pLineChain);
-	public void onUpdateVertices(final LineChain pLineChain);
+	void onUpdateColor(final LineChain pLineChain);
+	void onUpdateVertices(final LineChain pLineChain);
 }

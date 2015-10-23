@@ -14,7 +14,7 @@ public enum HorizontalAlign {
 
 	LEFT,
 	CENTER,
-	RIGHT;
+	RIGHT
 
 	// ===========================================================
 	// Constants

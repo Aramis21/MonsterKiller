@@ -15,7 +15,7 @@ public interface IFactorialProvider {
 	// Methods
 	// ===========================================================
 
-	public int factorial(final int n);
+	int factorial(final int n);
 
 	// ===========================================================
 	// Inner and Anonymous Classes

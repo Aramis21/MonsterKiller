@@ -15,12 +15,12 @@ public interface IIntList {
 	// Methods
 	// ===========================================================
 
-	public boolean isEmpty();
-	public int get(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public void add(final int pItem);
-	public void add(final int pIndex, final int pItem) throws ArrayIndexOutOfBoundsException;
-	public int remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
-	public int size();
-	public void clear();
-	public int[] toArray();
+	boolean isEmpty();
+	int get(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	void add(final int pItem);
+	void add(final int pIndex, final int pItem) throws ArrayIndexOutOfBoundsException;
+	int remove(final int pIndex) throws ArrayIndexOutOfBoundsException;
+	int size();
+	void clear();
+	int[] toArray();
 }

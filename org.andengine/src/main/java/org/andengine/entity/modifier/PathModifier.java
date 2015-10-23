@@ -187,7 +187,7 @@ public class PathModifier extends EntityModifier {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface IPathModifierListener {
+	public interface IPathModifierListener {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -196,10 +196,10 @@ public class PathModifier extends EntityModifier {
 		// Fields
 		// ===========================================================
 
-		public void onPathStarted(final PathModifier pPathModifier, final IEntity pEntity);
-		public void onPathWaypointStarted(final PathModifier pPathModifier, final IEntity pEntity, final int pWaypointIndex);
-		public void onPathWaypointFinished(final PathModifier pPathModifier, final IEntity pEntity, final int pWaypointIndex);
-		public void onPathFinished(final PathModifier pPathModifier, final IEntity pEntity);
+		void onPathStarted(final PathModifier pPathModifier, final IEntity pEntity);
+		void onPathWaypointStarted(final PathModifier pPathModifier, final IEntity pEntity, final int pWaypointIndex);
+		void onPathWaypointFinished(final PathModifier pPathModifier, final IEntity pEntity, final int pWaypointIndex);
+		void onPathFinished(final PathModifier pPathModifier, final IEntity pEntity);
 	}
 
 	public static class Path {

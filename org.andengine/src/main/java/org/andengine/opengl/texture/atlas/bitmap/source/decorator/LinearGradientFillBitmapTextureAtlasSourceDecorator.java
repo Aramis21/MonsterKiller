@@ -83,7 +83,7 @@ public class LinearGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static enum LinearGradientDirection {
+	public enum LinearGradientDirection {
 		// ===========================================================
 		// Elements
 		// ===========================================================
@@ -114,7 +114,7 @@ public class LinearGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 		// Constructors
 		// ===========================================================
 
-		private LinearGradientDirection(final int pFromX, final int pFromY, final int pToX, final int pToY) {
+		LinearGradientDirection(final int pFromX, final int pFromY, final int pToX, final int pToY) {
 			this.mFromX = pFromX;
 			this.mFromY = pFromY;
 			this.mToX = pToX;

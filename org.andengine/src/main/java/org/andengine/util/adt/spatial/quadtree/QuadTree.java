@@ -702,11 +702,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 				return true;
 			} else if (this.containsAnyChild(pBounds, pMatcher, this.mBottomLeftChild)) {
 				return true;
-			} else if (this.containsAnyChild(pBounds, pMatcher, this.mBottomRightChild)) {
-				return true;
-			} else {
-				return false;
-			}
+			} else return this.containsAnyChild(pBounds, pMatcher, this.mBottomRightChild);
 		}
 
 		public boolean containsAny(final B pBounds) {
@@ -728,11 +724,7 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 				return true;
 			} else if (this.containsAnyChild(pBounds, this.mBottomLeftChild)) {
 				return true;
-			} else if (this.containsAnyChild(pBounds, this.mBottomRightChild)) {
-				return true;
-			} else {
-				return false;
-			}
+			} else return this.containsAnyChild(pBounds, this.mBottomRightChild);
 		}
 
 		private boolean containsAnyChild(final B pBounds, final IMatcher<T> pMatcher, final QuadTreeNode pChild) {
@@ -740,11 +732,8 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 				return false;
 			}
 
-			if (pChild.intersects(pBounds) && pChild.containsAny(pBounds, pMatcher)) {
-				return true;
-			}
+			return pChild.intersects(pBounds) && pChild.containsAny(pBounds, pMatcher);
 
-			return false;
 		}
 
 		private boolean containsAnyChild(final B pBounds, final QuadTreeNode pChild) {
@@ -752,11 +741,8 @@ public abstract class QuadTree<B extends IBounds, T extends ISpatialItem<B>> imp
 				return false;
 			}
 
-			if (pChild.intersects(pBounds) && pChild.containsAny(pBounds)) {
-				return true;
-			}
+			return pChild.intersects(pBounds) && pChild.containsAny(pBounds);
 
-			return false;
 		}
 
 		public void add(final T pItem, final B pBounds) throws IllegalArgumentException {

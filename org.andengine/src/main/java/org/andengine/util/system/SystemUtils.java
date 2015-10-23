@@ -77,11 +77,7 @@ public final class SystemUtils {
 			return true;
 		} else if (Build.BRAND != null && Build.BRAND.startsWith("generic")){
 			return true;
-		} else if (Build.DEVICE != null && Build.DEVICE.startsWith("generic")) {
-			return true;
-		} else {
-			return false;
-		}
+		} else return Build.DEVICE != null && Build.DEVICE.startsWith("generic");
 	}
 
 	public static MemoryInfo getMemoryInfo() {
@@ -122,11 +118,7 @@ public final class SystemUtils {
 	public static boolean isNDKSupported(final Context pContext, final boolean pDefault) {
 		try {
 			if (SystemUtils.isGoogleTV(pContext)) {
-				if (SystemUtils.isAndroidVersionOrHigher(Build.VERSION_CODES.JELLY_BEAN_MR1)) {
-					return true;
-				} else {
-					return false;
-				}
+				return SystemUtils.isAndroidVersionOrHigher(Build.VERSION_CODES.JELLY_BEAN_MR1);
 			} else {
 				return true;
 			}

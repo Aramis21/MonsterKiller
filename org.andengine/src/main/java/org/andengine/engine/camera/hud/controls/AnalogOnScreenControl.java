@@ -101,6 +101,6 @@ public class AnalogOnScreenControl extends BaseOnScreenControl implements IClick
 		// Methods
 		// ===========================================================
 
-		public void onControlClick(final AnalogOnScreenControl pAnalogOnScreenControl);
+		void onControlClick(final AnalogOnScreenControl pAnalogOnScreenControl);
 	}
 }
