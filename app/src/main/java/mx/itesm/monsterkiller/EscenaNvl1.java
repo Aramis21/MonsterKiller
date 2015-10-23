@@ -4,10 +4,15 @@ import android.util.Log;
 
 import org.andengine.entity.scene.CameraScene;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.ITexture;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
 /**
@@ -31,6 +36,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     //Contador
     private ITextureRegion regionContador;
+
+    //Texto
+    private Text textoPuntaje;
+    private IFont fontMonster;
 
     //timepo
     private float tiempo;
@@ -93,6 +102,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         //contador
         regionContador = cargarImagen("ContadorMons.png");
 
+        //font
+        fontMonster = cargarFont("Alice and the Wicked Monster.ttf");
+
 
         // Pausa
         regionBtnPausa = cargarImagen("PauseBotonJuego.png");
@@ -101,8 +113,23 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionBtnReanudar =  cargarImagen("BackBot.png");
     }
 
+    // Crea y regresa un font que carga desde un archivo .ttf
+    private Font cargarFont(String archivo) {
+
+        // La imagen que contiene cada símbolo
+        final ITexture fontTexture = new BitmapTextureAtlas(actividadJuego.getEngine().getTextureManager(),1024,256);
+
+        // Carga el archivo, tamaño 36, antialias y color
+        Font tipoLetra = FontFactory.createFromAsset(actividadJuego.getEngine().getFontManager(), fontTexture, actividadJuego.getAssets(), archivo, 44, true, 0xFF00FF00);
+        tipoLetra.load();
+        tipoLetra.prepareLetters("InicoFnalMed 01234567890.".toCharArray());
+
+        return tipoLetra;
+    }
+
     @Override
     public void crearEscena() {
+        agregarTexto();
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
         attachChild(spriteFondo);
         spriteFondoSombra = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondoSombra);
@@ -172,6 +199,11 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
         //tiempo
         tiempo = 0;
+    }
+
+    private void agregarTexto() {
+        textoPuntaje = new Text(100,ControlJuego.ALTO_CAMARA/2,fontMonster,"Inicio",actividadJuego.getVertexBufferObjectManager());
+        attachChild(textoPuntaje);
     }
 
     private void pausarJuego() {
