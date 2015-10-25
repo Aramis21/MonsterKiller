@@ -2,7 +2,12 @@ package mx.itesm.monsterkiller;
 
 import android.util.Log;
 
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.JumpModifier;
+import org.andengine.entity.modifier.ParallelEntityModifier;
+import org.andengine.entity.modifier.ScaleModifier;
 import org.andengine.entity.scene.CameraScene;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.sensor.acceleration.AccelerationData;
@@ -21,6 +26,9 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
  */
 public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
+    //Score
+    private int score;
+
     // Fondo
     private ITextureRegion regionFondo;
 
@@ -36,7 +44,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private ITextureRegion regionBateria0;
 
     //Monstruos
-    private TiledTextureRegion regionMonstruo;
+    private AnimatedSprite spriteMonstruo;
+    private TiledTextureRegion regionMonstruo1;
 
     //Contador
     private ITextureRegion regionContador;
@@ -71,6 +80,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private boolean bat1Visible = false;
     private boolean bat0Visible = false;
 
+    //Osito
+    private ITextureRegion regionOsito;
+    private Sprite spriteOsito;
+
     //Controles
     private ITextureRegion regionBtnShoot;
     private ITextureRegion regionBtnCollect;
@@ -104,14 +117,16 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionBateria0 = cargarImagen("Empty.png");
 
         //Monstruos
-        regionMonstruo = cargarImagenMosaico("Monster1.png", 1280,244,1,6 );
+        regionMonstruo1 = cargarImagenMosaico("Monster1.png", 781,244,1,6 );
+
+        //Osito
+        regionOsito = cargarImagen("bolita.png");
 
         //contador
         regionContador = cargarImagen("ContadorMons.png");
 
         //font
         fontMonster = cargarFont("Fonts/Alice and the Wicked Monster.ttf");
-
 
         // Pausa
         regionBtnPausa = cargarImagen("PauseBotonJuego.png");
@@ -129,20 +144,28 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         // Carga el archivo, tamaño 36, antialias y color
         Font tipoLetra = FontFactory.createFromAsset(actividadJuego.getEngine().getFontManager(), fontTexture, actividadJuego.getAssets(), archivo, 44, true, 0xFF00FF00);
         tipoLetra.load();
-        tipoLetra.prepareLetters("InicoFnalMed 01234567890.".toCharArray());
+        tipoLetra.prepareLetters("0123456789".toCharArray());
 
         return tipoLetra;
     }
 
     @Override
     public void crearEscena() {
-
+        //Fondo
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
         attachChild(spriteFondo);
+
+        //Monstruos
+        agregarMonstruos();
+
+        //Sombra
         spriteFondoSombra = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondoSombra);
         attachChild(spriteFondoSombra);
+
+        //Acelerometro
         actividadJuego.getEngine().enableAccelerationSensor(actividadJuego, this);
 
+        //Bateria
         spriteBateria5 = cargarSprite(regionBateria5.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria5.getHeight(), regionBateria5);
         attachChild(spriteBateria5);
         spriteBateria4 = cargarSprite(regionBateria4.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria4.getHeight(), regionBateria4);
@@ -151,17 +174,17 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         spriteBateria1 = cargarSprite(regionBateria1.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria1.getHeight(), regionBateria1);
         spriteBateria0 = cargarSprite(regionBateria0.getWidth()-80, ControlJuego.ALTO_CAMARA - regionBateria0.getHeight(), regionBateria0);
 
+        //Contador y texto
         spriteContador = cargarSprite(ControlJuego.ANCHO_CAMARA - regionContador.getWidth(), ControlJuego.ALTO_CAMARA - regionContador.getHeight(), regionContador);
         attachChild(spriteContador);
         agregarTexto();
-
 
         //Crear botón SHOOT y agregarlo a la escena
         Sprite btnShoot = new Sprite (ControlJuego.ANCHO_CAMARA - regionBtnShoot.getWidth()+100, regionBtnCollect.getHeight()-70, regionBtnShoot, actividadJuego.getVertexBufferObjectManager()){
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
                 if (pSceneTounchEvent.isActionDown()){
-                    pausarJuego();
+                    disparar();
                 }
                 return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
             }
@@ -182,7 +205,6 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         attachChild(btnCollect);
         registerTouchArea(btnCollect);
 
-
         // Crea el botón de PAUSA y lo agrega a la escena
         Sprite btnPausa = new Sprite(ControlJuego.ANCHO_CAMARA - regionBtnPausa.getWidth(), ControlJuego.ALTO_CAMARA - regionBtnPausa.getHeight(), regionBtnPausa, actividadJuego.getVertexBufferObjectManager()) {
             @Override
@@ -200,9 +222,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         escenaPausa = new CameraScene(actividadJuego.camara);
         Sprite fondoPausa = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionPausa);
         escenaPausa.attachChild(fondoPausa);
-        Sprite botonHome = cargarSprite(regionPausa.getWidth()-200, regionPausa.getHeight()-300, regionBtnHome);
+        Sprite botonHome = cargarSprite(regionPausa.getWidth()-100, regionPausa.getHeight()-200, regionBtnHome);
         escenaPausa.attachChild(botonHome);
-        Sprite botonReanudar = cargarSprite(regionPausa.getWidth()-200, regionPausa.getHeight()-500, regionBtnReanudar);
+        Sprite botonReanudar = cargarSprite(regionPausa.getWidth()-100, regionPausa.getHeight()-430, regionBtnReanudar);
         escenaPausa.attachChild(botonReanudar);
         escenaPausa.setBackgroundEnabled(false);
 
@@ -211,13 +233,40 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     }
 
     private void agregarTexto() {
-        textoPuntaje = new Text(100,ControlJuego.ALTO_CAMARA/2,fontMonster,"Inicio",actividadJuego.getVertexBufferObjectManager());
+        score = 0;
+
+        textoPuntaje = new Text(ControlJuego.ANCHO_CAMARA - regionContador.getWidth()+30,ControlJuego.ALTO_CAMARA - regionContador.getHeight()-4,fontMonster,""+score,actividadJuego.getVertexBufferObjectManager());
         attachChild(textoPuntaje);
     }
 
+    private void disparar(){
+        spriteOsito = new Sprite(ControlJuego.ANCHO_CAMARA/2, 0, regionOsito, actividadJuego.getVertexBufferObjectManager());
+        attachChild(spriteOsito);
+        JumpModifier disparo = new JumpModifier(1, spriteOsito.getX(), spriteFondoSombra.getX(), spriteOsito.getY(), spriteFondoSombra.getY(), 10);
+        ScaleModifier pequeño = new ScaleModifier(1, spriteOsito.getScaleX(), spriteOsito.getScaleX()/2, spriteOsito.getScaleY(), spriteOsito.getScaleY()/2);
+        ParallelEntityModifier paralelo = new ParallelEntityModifier(disparo, pequeño) { // dos modificadores en paralelo, (saltar y rotar)
+            @Override
+            protected void onModifierFinished(IEntity pItem) {  // Cuando termina el salto
+                unregisterEntityModifier(this);
+                super.onModifierFinished(pItem);
+            }
+        };
+        spriteOsito.registerEntityModifier(paralelo);
+
+        if (spriteOsito.collidesWith(spriteMonstruo)){
+            // Lo destruye
+            detachChild(spriteMonstruo);
+            //agrega puntaje
+            score = score + 20;
+            // desaparece el osito
+            detachChild(spriteOsito);
+        }
+    }
+
     private void agregarMonstruos(){
-
-
+        spriteMonstruo = new AnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionMonstruo1, actividadJuego.getVertexBufferObjectManager());
+        spriteMonstruo.animate(200);
+        attachChild(spriteMonstruo);
     }
 
     private void pausarJuego() {
@@ -258,8 +307,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             attachChild(spriteBateria0);
             bat0Visible = true;
         }
-
     }
+
 
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
@@ -268,10 +317,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         if (!juegoCorriendo) {
             return;
         }
-
         tiempo= tiempo + pSecondsElapsed;
         perderPila();
-
     }
 
     @Override
@@ -289,7 +336,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         float nxs = spriteFondoSombra.getX() - dx;
         float dy = pAccelerationData.getY()+6;
         float ny = spriteFondoSombra.getY() - dy; //nueva posición del fondo negro
-        Log.i("acelerometro", "dy=" + dy);
+        //Log.i("acelerometro", "dy=" + dy);
 
         if (dx < 0) {
             // Izquierda
@@ -298,7 +345,6 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
                 if (nxs < spriteFondoSombra.getWidth()/2 - ControlJuego.ANCHO_CAMARA) {
                     spriteFondoSombra.setX(nxs);
                 }
-
             }
         } else {
             // Derecha
@@ -320,8 +366,6 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
                 spriteFondoSombra.setY(ny);
             }
         }
-
-
     }
 
     @Override public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
@@ -350,5 +394,21 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionBtnPausa = null;
         regionPausa.getTexture().unload();
         regionPausa = null;
+        regionBateria0.getTexture().unload();
+        regionBateria0=null;
+        regionContador.getTexture().unload();
+        regionContador = null;
+        regionMonstruo1.getTexture().unload();
+        regionMonstruo1 = null;
+        regionBateria1.getTexture().unload();
+        regionBateria1 = null;
+        regionBateria2.getTexture().unload();
+        regionBateria2 = null;
+        regionBateria3.getTexture().unload();
+        regionBateria3 = null;
+        regionBateria4.getTexture().unload();
+        regionBateria4 = null;
+        regionBateria5.getTexture().unload();
+        regionBateria5 = null;
     }
 }
