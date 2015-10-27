@@ -117,7 +117,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionBateria0 = cargarImagen("Empty.png");
 
         //Monstruos
-        regionMonstruo1 = cargarImagenMosaico("Monster1.png", 781,244,1,6 );
+        regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800,198,1,6 );
 
         //Osito
         regionOsito = cargarImagen("bolita.png");
