@@ -21,6 +21,8 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
+import java.util.ArrayList;
+
 /**
  * Created by Aramis on 28/09/15.
  */
@@ -44,8 +46,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private ITextureRegion regionBateria0;
 
     //Monstruos
-    private AnimatedSprite spriteMonstruo;
+    private ArrayList<Monstruos> listaMonst;
     private TiledTextureRegion regionMonstruo1;
+    private TiledTextureRegion regionMonstruo2;
+
+    //pilas
+    private ITextureRegion regionPila;
 
     //Contador
     private ITextureRegion regionContador;
@@ -69,6 +75,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private Sprite spriteBateria1;
     private Sprite spriteBateria0;
 
+    //sprite pila
+    private Sprite spritePila1;
+    private Sprite spritePila2;
+
     //Contador
     private Sprite spriteContador;
 
@@ -79,10 +89,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private boolean bat2Visible = false;
     private boolean bat1Visible = false;
     private boolean bat0Visible = false;
+    private boolean pila1Visible = false;
+    private boolean pila2Visible = false;
 
-    //Osito
+    //Peluche
     private ITextureRegion regionOsito;
-    private Sprite spriteOsito;
+    private ArrayList<Sprite> listaPeluches;
 
     //Controles
     private ITextureRegion regionBtnShoot;
@@ -104,6 +116,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionFondoSombra = cargarImagen("Sombra.png");
         //regionFin = cargarImagen("");
 
+        //pila
+        regionPila = cargarImagen("Pila.png");
+
         //Controles
         regionBtnShoot = cargarImagen("BotShoot1.png");
         regionBtnCollect = cargarImagen("BotCollect1.png");
@@ -117,10 +132,11 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionBateria0 = cargarImagen("Empty.png");
 
         //Monstruos
-        regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800,198,1,6 );
+        regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
+        regionMonstruo2 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
 
         //Osito
-        regionOsito = cargarImagen("bolita.png");
+        regionOsito = cargarImagen("Conejo.png");
 
         //contador
         regionContador = cargarImagen("ContadorMons.png");
@@ -129,7 +145,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         fontMonster = cargarFont("Fonts/Alice and the Wicked Monster.ttf");
 
         // Pausa
-        regionBtnPausa = cargarImagen("PauseBotonJuego.png");
+        regionBtnPausa = cargarImagen("BotonPausa.png");
         regionPausa = cargarImagen("PauseChica.png");
         regionBtnHome = cargarImagen("BotonHome2.png");
         regionBtnReanudar =  cargarImagen("BackBot.png");
@@ -151,9 +167,20 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
 
     @Override
     public void crearEscena() {
+        //peluches
+        listaPeluches = new ArrayList<>();
+
+         //monstruos
+        listaMonst = new ArrayList<>();
+
         //Fondo
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
         attachChild(spriteFondo);
+
+        //Pilas
+        spritePila1 = cargarSprite(300, 121, regionPila);
+        spritePila2 = cargarSprite(500, 121, regionPila);
+        crearPilas();
 
         //Monstruos
         agregarMonstruos();
@@ -206,7 +233,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         registerTouchArea(btnCollect);
 
         // Crea el botón de PAUSA y lo agrega a la escena
-        Sprite btnPausa = new Sprite(ControlJuego.ANCHO_CAMARA - regionBtnPausa.getWidth(), ControlJuego.ALTO_CAMARA - regionBtnPausa.getHeight(), regionBtnPausa, actividadJuego.getVertexBufferObjectManager()) {
+        Sprite btnPausa = new Sprite(ControlJuego.ANCHO_CAMARA - regionBtnPausa.getWidth()+21, ControlJuego.ALTO_CAMARA - regionBtnPausa.getHeight()-30, regionBtnPausa, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
@@ -218,6 +245,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         attachChild(btnPausa);
         registerTouchArea(btnPausa);
 
+        //tiempo
+        tiempo = 0;
+
         // Crear la escena de PAUSA, pero NO lo agrega a la escena
         escenaPausa = new CameraScene(actividadJuego.camara);
         Sprite fondoPausa = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionPausa);
@@ -228,8 +258,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         escenaPausa.attachChild(botonReanudar);
         escenaPausa.setBackgroundEnabled(false);
 
-        //tiempo
-        tiempo = 0;
+
     }
 
     private void agregarTexto() {
@@ -240,7 +269,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     }
 
     private void disparar(){
-        spriteOsito = new Sprite(ControlJuego.ANCHO_CAMARA/2, 0, regionOsito, actividadJuego.getVertexBufferObjectManager());
+        Sprite spriteOsito = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, 0, regionOsito);
         attachChild(spriteOsito);
         JumpModifier disparo = new JumpModifier(1, spriteOsito.getX(), spriteFondoSombra.getX(), spriteOsito.getY(), spriteFondoSombra.getY(), 10);
         ScaleModifier pequeño = new ScaleModifier(1, spriteOsito.getScaleX(), spriteOsito.getScaleX()/2, spriteOsito.getScaleY(), spriteOsito.getScaleY()/2);
@@ -252,21 +281,33 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             }
         };
         spriteOsito.registerEntityModifier(paralelo);
-
-        if (spriteOsito.collidesWith(spriteMonstruo)){
-            // Lo destruye
-            detachChild(spriteMonstruo);
-            //agrega puntaje
-            score = score + 20;
-            // desaparece el osito
-            detachChild(spriteOsito);
-        }
+        listaPeluches.add(spriteOsito);
     }
 
     private void agregarMonstruos(){
-        spriteMonstruo = new AnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionMonstruo1, actividadJuego.getVertexBufferObjectManager());
-        spriteMonstruo.animate(200);
-        attachChild(spriteMonstruo);
+        AnimatedSprite monster = cargarAnimatedSprite(400, 500, regionMonstruo1);
+        Monstruos monstruo = new Monstruos(monster);
+        listaMonst.add(monstruo);
+        attachChild(monstruo.getSprite());
+
+        //spriteMonstruo = new AnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionMonstruo1, actividadJuego.getVertexBufferObjectManager());
+        //spriteMonstruo.animate(200);
+        //attachChild(spriteMonstruo);
+    }
+
+    private void crearPilas(){
+        if (tiempo >= 20f && !pila1Visible){
+            attachChild(spritePila1);
+            pila1Visible = true;
+        }
+        if (tiempo >= 30f && !pila2Visible){
+            attachChild(spritePila2);
+            pila2Visible = true;
+        }
+    }
+
+    private void recolectarPilas(){
+        //si el centro del spriteFondoSombra es igual al del spritePila1 o spritePila2
     }
 
     private void pausarJuego() {
@@ -308,7 +349,35 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             bat0Visible = true;
         }
     }
+    private void actualizarPeluches() {
 
+        // Se visita cada proyectil dentro de la lista, se recorre con el índice porque se pueden borrar datos
+        for (int i = listaPeluches.size() - 1; i>=0; i--) {
+            Sprite osito = listaPeluches.get(i);
+
+            if (osito.getScaleX() == osito.getScaleX()/2 && osito.getScaleY() == osito.getScaleY()/2) {
+                detachChild(osito);
+                listaPeluches.remove(osito);
+                continue;
+            }
+            // Probar si colisionó con un enemigo
+            // Se visita cada proyectil dentro de la lista, se recorre con el índice porque se pueden borrar datos
+            for (int k = listaPeluches.size() - 1; k >= 0; k--) {
+                Monstruos monstruo = listaMonst.get(k);
+                if (osito.collidesWith(monstruo.getSprite())) {
+                    // Lo destruye
+                    detachChild(monstruo.getSprite());
+                    listaMonst.remove(monstruo);
+                    // desaparece el proyectil
+                    detachChild(osito);
+                    listaPeluches.remove(osito);
+                    //agrega score
+                    score = score + 20;
+                    break;
+                }
+            }
+        }
+    }
 
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
@@ -318,8 +387,13 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             return;
         }
         tiempo= tiempo + pSecondsElapsed;
+        crearPilas();
         perderPila();
+
+        actualizarPeluches();
     }
+
+
 
     @Override
     public TipoEscena onBackKeyPressed() {
@@ -333,7 +407,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {
         float dx = pAccelerationData.getX();
         float nx = spriteFondo.getX() - dx*5;  // Nueva posición de la habitacion
-        float nxs = spriteFondoSombra.getX() - dx;
+        float nxs = spriteFondoSombra.getX() + dx*5;
         float dy = pAccelerationData.getY()+6;
         float ny = spriteFondoSombra.getY() - dy; //nueva posición del fondo negro
         //Log.i("acelerometro", "dy=" + dy);
@@ -342,7 +416,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             // Izquierda
             if (nx < spriteFondo.getWidth() / 2) {
                 spriteFondo.setX(nx);
-                if (nxs < spriteFondoSombra.getWidth()/2 - ControlJuego.ANCHO_CAMARA) {
+                if (nxs > ControlJuego.ANCHO_CAMARA + 240) {
                     spriteFondoSombra.setX(nxs);
                 }
             }
@@ -350,7 +424,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             // Derecha
             if (nx > spriteFondo.getWidth() / 2 - ControlJuego.ANCHO_CAMARA) {
                 spriteFondo.setX(nx);
-                if (nxs > spriteFondoSombra.getWidth()/2 - ControlJuego.ANCHO_CAMARA){
+                if (nxs < ControlJuego.ANCHO_CAMARA - 240){
                     spriteFondoSombra.setX(nxs);
                 }
             }
@@ -362,7 +436,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             }
         } else {
 
-            if (ny < ControlJuego.ALTO_CAMARA - 200) {
+            if (ny < ControlJuego.ALTO_CAMARA - 300) {
                 spriteFondoSombra.setY(ny);
             }
         }

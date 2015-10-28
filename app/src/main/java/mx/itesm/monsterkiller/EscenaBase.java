@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
@@ -68,13 +69,24 @@ public abstract class EscenaBase extends Scene {
             }
         };
     }
+    //creo que hice un metodo para cargar animated sprites
+    //spriteMonstruo = new AnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionMonstruo1, actividadJuego.getVertexBufferObjectManager());
+    protected AnimatedSprite cargarAnimatedSprite (float px, float py, final TiledTextureRegion regionSprite){
+        //Cear y regresar Sprite
+        return new AnimatedSprite(px, py, regionSprite, actividadJuego.getVertexBufferObjectManager()){
+            @Override
+            protected void preDraw(GLState pGLState, Camera pCamera) { // Optimizando
+                super.preDraw(pGLState, pCamera);
+                pGLState.enableDither();
+            }
+        };
+    }
 
     // Método auxiliar para cargar las imágenes de las regiones de tipo MOSAICO
     protected TiledTextureRegion cargarImagenMosaico(String archivo, int ancho, int alto, int renglones, int columnas) {
         // Carga las imágenes para el sprite Animado
         BuildableBitmapTextureAtlas texturaMosaico = new BuildableBitmapTextureAtlas(actividadJuego.getTextureManager(),ancho,alto);
-        TiledTextureRegion region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(
-                texturaMosaico, actividadJuego, archivo, columnas, renglones);
+        TiledTextureRegion region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(texturaMosaico, actividadJuego, archivo, columnas, renglones);
         texturaMosaico.load();
         try {
             texturaMosaico.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));

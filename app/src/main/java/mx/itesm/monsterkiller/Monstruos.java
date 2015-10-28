@@ -12,15 +12,16 @@ public class Monstruos {
     private AnimatedSprite spriteMonster;
 
     public Monstruos(AnimatedSprite sprite) {
-        spriteMonster = sprite;
+        this.spriteMonster = sprite;
+        this.spriteMonster.animate(200);
     }
 
-    public AnimatedSprite getSpriteMonster(){
+    public AnimatedSprite getSprite(){
         return spriteMonster;
     }
 
-    public void setAnimatedSpriteMonster (AnimatedSprite spriteMonster){
-        this.spriteMonster = spriteMonster;
+    public void setSprite (AnimatedSprite sprite){
+        this.spriteMonster = sprite;
     }
 
     public void mover (int dx, int dy){

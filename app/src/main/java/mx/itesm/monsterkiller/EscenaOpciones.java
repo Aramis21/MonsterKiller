@@ -38,6 +38,9 @@ public class EscenaOpciones extends EscenaBase {
     private ButtonSprite btnLogros;
     private ButtonSprite btnScores;
 
+    //Bandera
+    private boolean conSonido = true;
+
     @Override
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoOpciones.jpg");
@@ -76,7 +79,7 @@ public class EscenaOpciones extends EscenaBase {
         IMenuItem opcionScores = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_SCORES, regionBtnScores, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
 
         //Agregar las opciones
-        menu.addMenuItem(opcionMusicOff);
+        //menu.addMenuItem(opcionMusicOff);
         menu.addMenuItem(opcionMusicOn);
         menu.addMenuItem(opcionLogros);
         menu.addMenuItem(opcionScores);
@@ -87,8 +90,8 @@ public class EscenaOpciones extends EscenaBase {
 
         // Ubicar las opciones DENTRO del menú. El centro del menú es (0,0)
 
-        opcionMusicOff.setPosition(-200, 0);
-        opcionMusicOn.setPosition(200, 0);
+        opcionMusicOff.setPosition(-20, 0);
+        opcionMusicOn.setPosition(-20, 0);
         opcionLogros.setPosition(-200, -200);
         opcionScores.setPosition(200, -200);
 
@@ -101,7 +104,6 @@ public class EscenaOpciones extends EscenaBase {
                 switch (pMenuItem.getID()) {
                     case OPCION_MUSICOFF:
                         // QUITAR SONIDO
-
                         break;
 
                     case OPCION_MUSICON:
