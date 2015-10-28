@@ -272,7 +272,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         Sprite spriteOsito = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, 0, regionOsito);
         attachChild(spriteOsito);
         JumpModifier disparo = new JumpModifier(1, spriteOsito.getX(), spriteFondoSombra.getX(), spriteOsito.getY(), spriteFondoSombra.getY(), 10);
-        ScaleModifier pequeño = new ScaleModifier(1, spriteOsito.getScaleX(), spriteOsito.getScaleX()/2, spriteOsito.getScaleY(), spriteOsito.getScaleY()/2);
+        ScaleModifier pequeño = new ScaleModifier(1, spriteOsito.getScaleX(), spriteOsito.getScaleX()/5, spriteOsito.getScaleY(), spriteOsito.getScaleY()/5);
         ParallelEntityModifier paralelo = new ParallelEntityModifier(disparo, pequeño) { // dos modificadores en paralelo, (saltar y rotar)
             @Override
             protected void onModifierFinished(IEntity pItem) {  // Cuando termina el salto
