@@ -37,6 +37,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     //Fondo negro
     private ITextureRegion regionFondoSombra;
 
+
     //Baterias
     private ITextureRegion regionBateria5;
     private ITextureRegion regionBateria4;
@@ -288,7 +289,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         AnimatedSprite monster = cargarAnimatedSprite(400, 500, regionMonstruo1);
         Monstruos monstruo = new Monstruos(monster);
         listaMonst.add(monstruo);
-        attachChild(monstruo.getSprite());
+        spriteFondo.attachChild(monstruo.getSprite());
+
+        AnimatedSprite monster2 = cargarAnimatedSprite(2400,550, regionMonstruo2);
+        Monstruos monstruo2 = new Monstruos((monster2));
+        listaMonst.add(monstruo2);
+        spriteFondo.attachChild(monstruo2.getSprite());
 
         //spriteMonstruo = new AnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionMonstruo1, actividadJuego.getVertexBufferObjectManager());
         //spriteMonstruo.animate(200);
@@ -355,7 +361,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         for (int i = listaPeluches.size() - 1; i>=0; i--) {
             Sprite osito = listaPeluches.get(i);
 
-            if (osito.getScaleX() == osito.getScaleX()/2 && osito.getScaleY() == osito.getScaleY()/2) {
+            if (osito.getScaleX() <= 0.2f || osito.getScaleY() <= 0.2f) {  // 0.2 es 1/5 de la escala original
                 detachChild(osito);
                 listaPeluches.remove(osito);
                 continue;
@@ -366,7 +372,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
                 Monstruos monstruo = listaMonst.get(k);
                 if (osito.collidesWith(monstruo.getSprite())) {
                     // Lo destruye
-                    detachChild(monstruo.getSprite());
+                    spriteFondo.detachChild(monstruo.getSprite());
                     listaMonst.remove(monstruo);
                     // desaparece el proyectil
                     detachChild(osito);
@@ -412,7 +418,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         float ny = spriteFondoSombra.getY() - dy; //nueva posición del fondo negro
         //Log.i("acelerometro", "dy=" + dy);
 
-        if (dx < 0) {
+        /*if (dx < 0) {
             // Izquierda
             if (nx < spriteFondo.getWidth() / 2) {
                 spriteFondo.setX(nx);
@@ -427,6 +433,51 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
                 if (nxs < ControlJuego.ANCHO_CAMARA - 240){
                     spriteFondoSombra.setX(nxs);
                 }
+            }
+
+        }
+
+        if (dy > 0) {
+            if (ny > 200) {
+                spriteFondoSombra.setY(ny);
+            }
+        } else {
+
+            if (ny < ControlJuego.ALTO_CAMARA - 300) {
+                spriteFondoSombra.setY(ny);
+            }
+        }*/
+        if (dx < 0) {
+            // Izquierda
+            if (nx < spriteFondo.getWidth() / 2) {
+                spriteFondo.setX(nx);
+                /*
+                if (nxs > ControlJuego.ANCHO_CAMARA + 240) {
+                    spriteFondoSombra.setX(nxs);
+                }
+                */
+            } else {
+                // Ya no se puede mover el fondo, pero podemos mover el centro del fondo negro
+                if (nxs>=120) {
+                    spriteFondoSombra.setX(nxs);
+                }
+
+            }
+        } else {
+            // Derecha
+            if (nx > spriteFondo.getWidth() / 2 - ControlJuego.ANCHO_CAMARA) {
+                spriteFondo.setX(nx);
+                /*
+                if (nxs < ControlJuego.ANCHO_CAMARA - 240){
+                    spriteFondoSombra.setX(nxs);
+                }
+                */
+            } else {
+                // Ya no se puede mover el fondo, pero podemos mover el centro del fondo negro
+                if (nxs<=ControlJuego.ANCHO_CAMARA-120) {
+                    spriteFondoSombra.setX(nxs);
+                }
+
             }
         }
 

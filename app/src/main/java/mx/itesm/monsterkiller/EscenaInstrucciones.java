@@ -1,7 +1,9 @@
 package mx.itesm.monsterkiller;
 
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 /**
  * Created by rmroman on 11/09/15.
@@ -12,15 +14,34 @@ public class EscenaInstrucciones extends EscenaBase {
     // Sprite para el fondo
     private Sprite spriteFondo;
 
+    //Manos lado
+    private TiledTextureRegion regionLado;
+
+    //Manos arriba
+    private TiledTextureRegion regionArriba;
+
     @Override
     public void cargarRecursos() {
-        regionFondo = cargarImagen("FondoPausa.jpg");
+        regionFondo = cargarImagen("Instrucciones.jpg");
+
+        //manos
+        regionArriba = cargarImagenMosaico("ManitasUp.png", 2446, 300, 1, 7);
+        regionLado = cargarImagenMosaico("ManitasLado.png", 2417, 300, 1, 6);
     }
 
     @Override
     public void crearEscena() {
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondo);
         attachChild(spriteFondo);
+
+        //manitas
+        AnimatedSprite spriteArriba = cargarAnimatedSprite(500, 160, regionArriba);
+        spriteArriba.animate(400);
+        attachChild(spriteArriba);
+
+        AnimatedSprite spriteLado = cargarAnimatedSprite(1000, 160, regionLado);
+        spriteLado.animate(400);
+        attachChild(spriteLado);
     }
 
     @Override
@@ -47,5 +68,9 @@ public class EscenaInstrucciones extends EscenaBase {
     public void liberarRecursos() {
         regionFondo.getTexture().unload();
         regionFondo = null;
+        regionLado.getTexture().unload();
+        regionLado = null;
+        regionArriba.getTexture().unload();
+        regionArriba = null;
     }
 }
