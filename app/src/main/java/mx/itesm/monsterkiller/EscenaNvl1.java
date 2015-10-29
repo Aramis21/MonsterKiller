@@ -92,6 +92,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private boolean bat0Visible = false;
     private boolean pila1Visible = false;
     private boolean pila2Visible = false;
+    private boolean gameOver = false;
 
     //Peluche
     private ITextureRegion regionOsito;
@@ -109,7 +110,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private ITextureRegion regionBtnReanudar;
 
     //Fin del juego
-    //private ITextureRegion regionFin;
+    private ITextureRegion regionGO;
 
     @Override
     public void cargarRecursos() {
@@ -150,6 +151,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         regionPausa = cargarImagen("PauseChica.png");
         regionBtnHome = cargarImagen("BotonHome2.png");
         regionBtnReanudar =  cargarImagen("BackBot.png");
+
+        //Fin
+        regionGO = cargarImagen("GameOver.png");
     }
 
     // Crea y regresa un font que carga desde un archivo .ttf
@@ -179,9 +183,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         attachChild(spriteFondo);
 
         //Pilas
-        spritePila1 = cargarSprite(300, 121, regionPila);
-        spritePila2 = cargarSprite(500, 121, regionPila);
-        crearPilas();
+        //spritePila1 = cargarSprite(300, 121, regionPila);
+        //spritePila2 = cargarSprite(500, 121, regionPila);
+        //crearPilas();
 
         //Monstruos
         agregarMonstruos();
@@ -265,7 +269,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private void agregarTexto() {
         score = 0;
 
-        textoPuntaje = new Text(ControlJuego.ANCHO_CAMARA - regionContador.getWidth()+30,ControlJuego.ALTO_CAMARA - regionContador.getHeight()-4,fontMonster,""+score,actividadJuego.getVertexBufferObjectManager());
+        textoPuntaje = new Text(ControlJuego.ANCHO_CAMARA - regionContador.getWidth()+30,ControlJuego.ALTO_CAMARA - regionContador.getHeight()-4,fontMonster," "+score + " ",actividadJuego.getVertexBufferObjectManager());
         attachChild(textoPuntaje);
     }
 
@@ -329,32 +333,53 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     private void perderPila(){
         if (tiempo <= 10f){
         }
-        if (tiempo > 10f && tiempo <=20f && !bat4Visible){
+        if (tiempo > 10f && tiempo <=15f && !bat4Visible){
             detachChild(spriteBateria5);
             attachChild(spriteBateria4);
             bat4Visible = true;
         }
-        if (tiempo > 20f && tiempo <=30f && !bat3Visible){
+        if (tiempo > 15f && tiempo <=20f && !bat3Visible){
             detachChild(spriteBateria4);
             attachChild(spriteBateria3);
             bat3Visible = true;
         }
-        if (tiempo > 30f && tiempo <=40f && !bat2Visible){
+        if (tiempo > 20f && tiempo <=25f && !bat2Visible){
             detachChild(spriteBateria3);
             attachChild(spriteBateria2);
             bat2Visible = true;
         }
-        if (tiempo >40f && tiempo <= 50f && !bat1Visible){
+        if (tiempo >25f && tiempo <= 30f && !bat1Visible){
             detachChild(spriteBateria2);
             attachChild(spriteBateria1);
             bat1Visible = true;
         }
-        if (tiempo >50f && tiempo <=60f && !bat0Visible){
+        if (tiempo >30f && tiempo <=35f && !bat0Visible){
             detachChild(spriteBateria1);
             attachChild(spriteBateria0);
             bat0Visible = true;
         }
+        if (tiempo >= 35f && !gameOver){
+            perdiste();
+            gameOver = true;
+        }
     }
+
+    private void perdiste(){
+        Sprite spritePerdiste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2, regionGO,actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionUp()) {
+                    onBackKeyPressed();
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        registerTouchArea(spritePerdiste);
+        attachChild(spritePerdiste);
+        ScaleModifier agrandar = new ScaleModifier(3, spritePerdiste.getScaleX()/3, spritePerdiste.getScaleX(), spritePerdiste.getScaleY()/3, spritePerdiste.getScaleY());
+        spritePerdiste.registerEntityModifier(agrandar);
+    }
+
     private void actualizarPeluches() {
 
         // Se visita cada proyectil dentro de la lista, se recorre con el índice porque se pueden borrar datos
@@ -368,7 +393,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             }
             // Probar si colisionó con un enemigo
             // Se visita cada proyectil dentro de la lista, se recorre con el índice porque se pueden borrar datos
-            for (int k = listaPeluches.size() - 1; k >= 0; k--) {
+            for (int k = listaMonst.size() - 1; k >= 0; k--) {
                 Monstruos monstruo = listaMonst.get(k);
                 if (osito.collidesWith(monstruo.getSprite())) {
                     // Lo destruye
@@ -379,6 +404,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
                     listaPeluches.remove(osito);
                     //agrega score
                     score = score + 20;
+                    textoPuntaje.setText(score+"");
                     break;
                 }
             }
@@ -393,7 +419,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             return;
         }
         tiempo= tiempo + pSecondsElapsed;
-        crearPilas();
+        //crearPilas();
         perderPila();
 
         actualizarPeluches();
