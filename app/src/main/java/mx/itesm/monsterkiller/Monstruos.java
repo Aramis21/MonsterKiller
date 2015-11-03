@@ -14,6 +14,7 @@ public class Monstruos {
     public Monstruos(AnimatedSprite sprite) {
         this.spriteMonster = sprite;
         this.spriteMonster.animate(200);
+
     }
 
     public AnimatedSprite getSprite(){
@@ -24,8 +25,18 @@ public class Monstruos {
         this.spriteMonster = sprite;
     }
 
-    public void mover (int dx, int dy){
-        spriteMonster.setPosition(spriteMonster.getX()+dx, spriteMonster.getY()+dy);
+    public void movimiento1 (int dx, int dy){
+        if (dx>2550 && dy >800) {
+            spriteMonster.setPosition(spriteMonster.getX() - dx, spriteMonster.getY() - dy);
+        }
+
+        if (dx <100 && dy <100){
+            spriteMonster.setPosition(spriteMonster.getX() + dx, spriteMonster.getY() + dy);
+        }
+    }
+
+    public void movimiento2 (){
+
     }
 
 }

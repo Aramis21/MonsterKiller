@@ -1,6 +1,12 @@
 package mx.itesm.monsterkiller;
 
+import android.app.MediaRouteButton;
+import android.inputmethodservice.KeyboardView;
 import android.util.Log;
+import android.view.SurfaceView;
+import android.view.View;
+import android.widget.AnalogClock;
+import android.widget.ImageView;
 
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.JumpModifier;
@@ -26,7 +32,7 @@ import java.util.ArrayList;
 /**
  * Created by Aramis on 28/09/15.
  */
-public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
+public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     //Score
     private int score;
@@ -183,9 +189,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
         attachChild(spriteFondo);
 
         //Pilas
-        //spritePila1 = cargarSprite(300, 121, regionPila);
-        //spritePila2 = cargarSprite(500, 121, regionPila);
-        //crearPilas();
+        spritePila1 = cargarSprite(300, 121, regionPila);
+        spritePila2 = cargarSprite(1200, 121, regionPila);
+        crearPilas();
 
         //Monstruos
         agregarMonstruos();
@@ -290,31 +296,45 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
     }
 
     private void agregarMonstruos(){
-        AnimatedSprite monster = cargarAnimatedSprite(400, 500, regionMonstruo1);
-        Monstruos monstruo = new Monstruos(monster);
-        listaMonst.add(monstruo);
-        spriteFondo.attachChild(monstruo.getSprite());
+        for (int x = 400; x <= 2000; x += 600) {
+            for (int y = 200; y <= 750; y += 700) {
+                AnimatedSprite monster = cargarAnimatedSprite(x, y, regionMonstruo1);
+                Monstruos monstruo = new Monstruos(monster);
+                //monstruo.movimiento1(1,2);
+                listaMonst.add(monstruo);
+                spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite(2400,550, regionMonstruo2);
-        Monstruos monstruo2 = new Monstruos((monster2));
-        listaMonst.add(monstruo2);
-        spriteFondo.attachChild(monstruo2.getSprite());
+                AnimatedSprite monster2 = cargarAnimatedSprite(x, y, regionMonstruo2);
+                Monstruos monstruo2 = new Monstruos((monster2));
+                //monstruo2.movimiento1(1,2);
+                listaMonst.add(monstruo2);
+                spriteFondo.attachChild(monstruo2.getSprite());
+            }
+        }
+    }
 
-        //spriteMonstruo = new AnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionMonstruo1, actividadJuego.getVertexBufferObjectManager());
-        //spriteMonstruo.animate(200);
-        //attachChild(spriteMonstruo);
+    private void actualizarMons(float tiempo) {
+        boolean yaSalio = false;
+        for (Monstruos monstruo : listaMonst) { // Visita cada enemigo de la lista
+            monstruo.movimiento1(1, 2);
+            // Pregunta si algún enemigo se salió de la pantalla
+            if (!yaSalio && monstruo.getSprite().getY() > ControlJuego.ALTO_CAMARA || monstruo.getSprite().getY() < 0) {
+                yaSalio = true;
+            }
+        }
     }
 
     private void crearPilas(){
-        if (tiempo >= 20f && !pila1Visible){
-            attachChild(spritePila1);
+        if (tiempo >= 10f && !pila1Visible){
+            spriteFondo.attachChild(spritePila1);
             pila1Visible = true;
         }
         if (tiempo >= 30f && !pila2Visible){
-            attachChild(spritePila2);
+            spriteFondo.attachChild(spritePila2);
             pila2Visible = true;
         }
     }
+
 
     private void recolectarPilas(){
         //si el centro del spriteFondoSombra es igual al del spritePila1 o spritePila2
@@ -419,13 +439,11 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener{
             return;
         }
         tiempo= tiempo + pSecondsElapsed;
-        //crearPilas();
+        crearPilas();
         perderPila();
-
+        actualizarMons(pSecondsElapsed);
         actualizarPeluches();
     }
-
-
 
     @Override
     public TipoEscena onBackKeyPressed() {
