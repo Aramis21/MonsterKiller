@@ -115,6 +115,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private ITextureRegion regionBtnHome;
     private ITextureRegion regionBtnReanudar;
 
+    //fin de luz
+    private TiledTextureRegion regionLuzApagada;
+
     //Fin del juego
     private ITextureRegion regionGO;
 
@@ -158,6 +161,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionBtnHome = cargarImagen("BotonHome2.png");
         regionBtnReanudar =  cargarImagen("BackBot.png");
 
+        //luz apagada
+        regionLuzApagada = cargarImagenMosaico("fin.png", 6400, 800, 1, 5);
+
         //Fin
         regionGO = cargarImagen("GameOver.png");
     }
@@ -181,7 +187,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         //peluches
         listaPeluches = new ArrayList<>();
 
-         //monstruos
+        //monstruos
         listaMonst = new ArrayList<>();
 
         //Fondo
@@ -190,7 +196,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
         //Pilas
         spritePila1 = cargarSprite(300, 121, regionPila);
-        spritePila2 = cargarSprite(1200, 121, regionPila);
+        spritePila2 = cargarSprite(2310, 450, regionPila);
         crearPilas();
 
         //Monstruos
@@ -235,7 +241,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
                 if (pSceneTounchEvent.isActionDown()){
-                    pausarJuego();
+                    recolectarPilas();
                 }
                 return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
             }
@@ -268,8 +274,6 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         Sprite botonReanudar = cargarSprite(regionPausa.getWidth()-100, regionPausa.getHeight()-430, regionBtnReanudar);
         escenaPausa.attachChild(botonReanudar);
         escenaPausa.setBackgroundEnabled(false);
-
-
     }
 
     private void agregarTexto() {
@@ -296,48 +300,29 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     }
 
     private void agregarMonstruos(){
-        for (int x = 400; x <= 2000; x += 600) {
-            for (int y = 200; y <= 750; y += 700) {
-                AnimatedSprite monster = cargarAnimatedSprite(x, y, regionMonstruo1);
-                Monstruos monstruo = new Monstruos(monster);
-                //monstruo.movimiento1(1,2);
-                listaMonst.add(monstruo);
-                spriteFondo.attachChild(monstruo.getSprite());
 
-                AnimatedSprite monster2 = cargarAnimatedSprite(x, y, regionMonstruo2);
-                Monstruos monstruo2 = new Monstruos((monster2));
-                //monstruo2.movimiento1(1,2);
-                listaMonst.add(monstruo2);
-                spriteFondo.attachChild(monstruo2.getSprite());
-            }
-        }
-    }
+        AnimatedSprite monster = cargarAnimatedSprite(150, 400, regionMonstruo1);
+        Monstruos monstruo = new Monstruos(monster);
+        monstruo.movimiento(1);
+        listaMonst.add(monstruo);
+        spriteFondo.attachChild(monstruo.getSprite());
 
-    private void actualizarMons(float tiempo) {
-        boolean yaSalio = false;
-        for (Monstruos monstruo : listaMonst) { // Visita cada enemigo de la lista
-            monstruo.movimiento1(1, 2);
-            // Pregunta si algún enemigo se salió de la pantalla
-            if (!yaSalio && monstruo.getSprite().getY() > ControlJuego.ALTO_CAMARA || monstruo.getSprite().getY() < 0) {
-                yaSalio = true;
-            }
-        }
+        AnimatedSprite monster2 = cargarAnimatedSprite(2000, 300, regionMonstruo2);
+        Monstruos monstruo2 = new Monstruos((monster2));
+        monstruo.movimiento(2);
+        listaMonst.add(monstruo2);
+        spriteFondo.attachChild(monstruo2.getSprite());
     }
 
     private void crearPilas(){
-        if (tiempo >= 10f && !pila1Visible){
+        if (tiempo >= 15f && !pila1Visible){
             spriteFondo.attachChild(spritePila1);
             pila1Visible = true;
         }
-        if (tiempo >= 30f && !pila2Visible){
+        if (tiempo >= 20f && !pila2Visible){
             spriteFondo.attachChild(spritePila2);
             pila2Visible = true;
         }
-    }
-
-
-    private void recolectarPilas(){
-        //si el centro del spriteFondoSombra es igual al del spritePila1 o spritePila2
     }
 
     private void pausarJuego() {
@@ -373,14 +358,28 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             attachChild(spriteBateria1);
             bat1Visible = true;
         }
-        if (tiempo >30f && tiempo <=35f && !bat0Visible){
+        if (tiempo >30f && tiempo <=34.1f && !bat0Visible){
             detachChild(spriteBateria1);
             attachChild(spriteBateria0);
             bat0Visible = true;
         }
-        if (tiempo >= 35f && !gameOver){
+        if (tiempo >= 34.2f && !gameOver){
+            AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
+            luz.animate(100,2);
+            attachChild(luz);
             perdiste();
             gameOver = true;
+        }
+    }
+
+    private void recolectarPilas(){
+        if (spritePila1.getX()+20 <= spriteFondoSombra.getX() ||spritePila1.getX()-20 <= spriteFondoSombra.getX() ){
+            detachChild(spritePila1);
+            tiempo=tiempo+5;
+        }
+        if (spritePila2.getX()+20 <= spriteFondoSombra.getX() ||spritePila2.getX()-20 <= spriteFondoSombra.getX() ){
+            detachChild(spritePila2);
+            tiempo=tiempo+5;
         }
     }
 
@@ -438,10 +437,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         if (!juegoCorriendo) {
             return;
         }
+
         tiempo= tiempo + pSecondsElapsed;
         crearPilas();
         perderPila();
-        actualizarMons(pSecondsElapsed);
         actualizarPeluches();
     }
 
@@ -462,44 +461,11 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         float ny = spriteFondoSombra.getY() - dy; //nueva posición del fondo negro
         //Log.i("acelerometro", "dy=" + dy);
 
-        /*if (dx < 0) {
-            // Izquierda
-            if (nx < spriteFondo.getWidth() / 2) {
-                spriteFondo.setX(nx);
-                if (nxs > ControlJuego.ANCHO_CAMARA + 240) {
-                    spriteFondoSombra.setX(nxs);
-                }
-            }
-        } else {
-            // Derecha
-            if (nx > spriteFondo.getWidth() / 2 - ControlJuego.ANCHO_CAMARA) {
-                spriteFondo.setX(nx);
-                if (nxs < ControlJuego.ANCHO_CAMARA - 240){
-                    spriteFondoSombra.setX(nxs);
-                }
-            }
-
-        }
-
-        if (dy > 0) {
-            if (ny > 200) {
-                spriteFondoSombra.setY(ny);
-            }
-        } else {
-
-            if (ny < ControlJuego.ALTO_CAMARA - 300) {
-                spriteFondoSombra.setY(ny);
-            }
-        }*/
         if (dx < 0) {
             // Izquierda
             if (nx < spriteFondo.getWidth() / 2) {
                 spriteFondo.setX(nx);
-                /*
-                if (nxs > ControlJuego.ANCHO_CAMARA + 240) {
-                    spriteFondoSombra.setX(nxs);
-                }
-                */
+
             } else {
                 // Ya no se puede mover el fondo, pero podemos mover el centro del fondo negro
                 if (nxs>=120) {
@@ -511,17 +477,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             // Derecha
             if (nx > spriteFondo.getWidth() / 2 - ControlJuego.ANCHO_CAMARA) {
                 spriteFondo.setX(nx);
-                /*
-                if (nxs < ControlJuego.ANCHO_CAMARA - 240){
-                    spriteFondoSombra.setX(nxs);
-                }
-                */
+
             } else {
                 // Ya no se puede mover el fondo, pero podemos mover el centro del fondo negro
                 if (nxs<=ControlJuego.ANCHO_CAMARA-120) {
                     spriteFondoSombra.setX(nxs);
                 }
-
             }
         }
 
@@ -579,5 +540,25 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionBateria4 = null;
         regionBateria5.getTexture().unload();
         regionBateria5 = null;
+        regionMonstruo2.getTexture().unload();
+        regionMonstruo2=null;
+        regionLuzApagada.getTexture().unload();
+        regionLuzApagada = null;
+        regionGO.getTexture().unload();
+        regionGO = null;
+        regionPila.getTexture().unload();
+        regionPila = null;
+        regionBtnHome.getTexture().unload();
+        regionBtnHome = null;
+        regionBtnCollect.getTexture().unload();
+        regionBtnCollect = null;
+        regionBtnReanudar.getTexture().unload();
+        regionBtnReanudar = null;
+        regionBtnShoot.getTexture().unload();
+        regionBtnShoot = null;
+        regionFondoSombra.getTexture().unload();
+        regionFondoSombra = null;
+        regionOsito.getTexture().unload();
+        regionOsito = null;
     }
 }
