@@ -16,9 +16,12 @@ public class Monstruos {
 
     private AnimatedSprite spriteMonster;
 
-    public Monstruos(AnimatedSprite sprite) {
+    private int tipo;
+
+    public Monstruos(AnimatedSprite sprite, int tipo) {
         this.spriteMonster = sprite;
         this.spriteMonster.animate(200);
+        this.tipo = tipo;
     }
 
     public AnimatedSprite getSprite(){
@@ -29,7 +32,7 @@ public class Monstruos {
         this.spriteMonster = sprite;
     }
 
-    public void movimiento (int tipo){
+    public void movimiento() {
         if (tipo == 1){
             if (spriteMonster.getX()>2550) {
                 spriteMonster.setPosition(spriteMonster.getX() - DX, spriteMonster.getY());

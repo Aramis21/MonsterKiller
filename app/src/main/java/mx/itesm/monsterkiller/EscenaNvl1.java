@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AnalogClock;
 import android.widget.ImageView;
 
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.JumpModifier;
 import org.andengine.entity.modifier.ParallelEntityModifier;
@@ -162,7 +164,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionBtnReanudar =  cargarImagen("BackBot.png");
 
         //luz apagada
-        regionLuzApagada = cargarImagenMosaico("fin.png", 6400, 800, 1, 5);
+        regionLuzApagada = cargarImagenMosaico("fin.png", 2560, 801, 1, 2);
 
         //Fin
         regionGO = cargarImagen("GameOver.png");
@@ -195,8 +197,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         attachChild(spriteFondo);
 
         //Pilas
-        spritePila1 = cargarSprite(300, 121, regionPila);
-        spritePila2 = cargarSprite(2310, 450, regionPila);
+        spritePila1 = cargarSprite(300, 200, regionPila);
+        spritePila2 = cargarSprite(2310, 200, regionPila);
         crearPilas();
 
         //Monstruos
@@ -302,14 +304,14 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private void agregarMonstruos(){
 
         AnimatedSprite monster = cargarAnimatedSprite(150, 400, regionMonstruo1);
-        Monstruos monstruo = new Monstruos(monster);
-        monstruo.movimiento(1);
+        Monstruos monstruo = new Monstruos(monster, 1);
+        monstruo.movimiento();
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
         AnimatedSprite monster2 = cargarAnimatedSprite(2000, 300, regionMonstruo2);
-        Monstruos monstruo2 = new Monstruos((monster2));
-        monstruo.movimiento(2);
+        Monstruos monstruo2 = new Monstruos(monster2, 2);
+        monstruo.movimiento();
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
     }
@@ -358,28 +360,37 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             attachChild(spriteBateria1);
             bat1Visible = true;
         }
-        if (tiempo >30f && tiempo <=34.1f && !bat0Visible){
+        if (tiempo >30f && tiempo <=34f && !bat0Visible){
             detachChild(spriteBateria1);
             attachChild(spriteBateria0);
             bat0Visible = true;
         }
-        if (tiempo >= 34.2f && !gameOver){
+        if (tiempo >= 34f && !gameOver){
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
-            luz.animate(100,2);
+            luz.animate(100, 4);
             attachChild(luz);
-            perdiste();
+            actividadJuego.getEngine().registerUpdateHandler(new TimerHandler(1.8f,
+                    new ITimerCallback() {
+                        @Override
+                        public void onTimePassed(TimerHandler pTimerHandler) {
+                            actividadJuego.getEngine().unregisterUpdateHandler(pTimerHandler);
+                            perdiste();
+                        }
+                    }));
             gameOver = true;
         }
     }
 
     private void recolectarPilas(){
-        if (spritePila1.getX()+20 <= spriteFondoSombra.getX() ||spritePila1.getX()-20 <= spriteFondoSombra.getX() ){
-            detachChild(spritePila1);
+        if (spriteFondoSombra.getX() >= (spritePila1.getX()-200) && spriteFondoSombra.getX() <= (spritePila1.getX() + 200) && spriteFondoSombra.getY() >= (spritePila1.getY()-200) && spriteFondoSombra.getY() <= (spritePila1.getY() + 200)){
+            spriteFondo.detachChild(spritePila1);
             tiempo=tiempo+5;
+            Log.i("Fondo", "dx=" + spriteFondoSombra.getX());
+            Log.i("Pila", "dx=" + spritePila1.getX());
         }
-        if (spritePila2.getX()+20 <= spriteFondoSombra.getX() ||spritePila2.getX()-20 <= spriteFondoSombra.getX() ){
-            detachChild(spritePila2);
-            tiempo=tiempo+5;
+        if (spriteFondoSombra.getX() >= (spritePila2.getX()-200) && spriteFondoSombra.getX() <= (spritePila2.getX() + 200) && spriteFondoSombra.getY() >= (spritePila2.getY()-200) && spriteFondoSombra.getY() <= (spritePila2.getY() + 200)){
+            spriteFondo.detachChild(spritePila2);
+            tiempo= tiempo+5;
         }
     }
 
