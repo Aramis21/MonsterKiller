@@ -11,7 +11,7 @@ public class Monstruos {
 
 
 
-    private int DX = 10;
+    private int DX = -10;
     private int DY = 3;
 
     private AnimatedSprite spriteMonster;
@@ -34,12 +34,14 @@ public class Monstruos {
 
     public void movimiento() {
         if (tipo == 1){
+            spriteMonster.setX(spriteMonster.getX()+ DX);
             if (spriteMonster.getX()>2550) {
-                spriteMonster.setPosition(spriteMonster.getX() - DX, spriteMonster.getY());
+                spriteMonster.setFlippedHorizontal(false);
+                DX = DX*(-1);
             }
             if (spriteMonster.getX()<100){
-                spriteMonster.isFlippedHorizontal();
-                spriteMonster.setPosition(spriteMonster.getX() + DX, spriteMonster.getY());
+                spriteMonster.setFlippedHorizontal(true);
+                DX = DX*(-1);
             }
         }
         if (tipo == 2){

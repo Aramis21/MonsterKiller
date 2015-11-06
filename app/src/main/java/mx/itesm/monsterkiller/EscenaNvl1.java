@@ -305,13 +305,11 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
         AnimatedSprite monster = cargarAnimatedSprite(150, 400, regionMonstruo1);
         Monstruos monstruo = new Monstruos(monster, 1);
-        monstruo.movimiento();
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
         AnimatedSprite monster2 = cargarAnimatedSprite(2000, 300, regionMonstruo2);
-        Monstruos monstruo2 = new Monstruos(monster2, 2);
-        monstruo.movimiento();
+        Monstruos monstruo2 = new Monstruos(monster2, 1);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
     }
@@ -453,6 +451,15 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         crearPilas();
         perderPila();
         actualizarPeluches();
+        actualizarMonstruos();
+
+    }
+
+    private void actualizarMonstruos() {
+        for (int k = listaMonst.size() - 1; k >= 0; k--) {
+            Monstruos monstruo = listaMonst.get(k);
+            monstruo.movimiento();
+        }
     }
 
     @Override
