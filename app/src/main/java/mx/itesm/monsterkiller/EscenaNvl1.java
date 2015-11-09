@@ -1,6 +1,8 @@
 package mx.itesm.monsterkiller;
 
 import android.app.MediaRouteButton;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.inputmethodservice.KeyboardView;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -36,10 +38,7 @@ import java.util.ArrayList;
  */
 public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
-    //Score
-    private int score;
-
-    // Fondo
+   // Fondo
     private ITextureRegion regionFondo;
 
     //Fondo negro
@@ -68,6 +67,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     //Texto
     private Text textoPuntaje;
     private IFont fontMonster;
+
+    //Score
+    private int score;
 
     //Tiempo
     private float tiempo;
@@ -123,11 +125,11 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     //Fin del juego
     private ITextureRegion regionGO;
 
+
     @Override
     public void cargarRecursos() {
         regionFondo = cargarImagen("cuartonino-luz.png");
         regionFondoSombra = cargarImagen("Sombra.png");
-        //regionFin = cargarImagen("");
 
         //pila
         regionPila = cargarImagen("Pila.png");
@@ -464,11 +466,26 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     @Override
     public TipoEscena onBackKeyPressed() {
+
+        guardarMarcadorAlto();
+
         // Regresar al menú principal
         admEscenas.crearEscenaMenu();
         admEscenas.setEscena(TipoEscena.ESCENA_MENU);
         admEscenas.liberarEscenaNvl1();
         return null;
+    }
+
+    private void guardarMarcadorAlto() {
+        // Abre preferencias y ve si el marcador actual es mayor que el guardado
+        SharedPreferences preferencias = actividadJuego.getSharedPreferences("marcadorAlto", Context.MODE_PRIVATE);
+        int anterior = preferencias.getInt("score",0);
+        if (score > anterior) {
+            // Nuevo valor mayor, guardarlo
+            SharedPreferences.Editor editor = preferencias.edit();
+            editor.putInt("puntos", score);
+            editor.commit();
+        }
     }
 
     @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {

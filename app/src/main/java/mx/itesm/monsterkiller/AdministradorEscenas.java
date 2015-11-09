@@ -18,6 +18,7 @@ public class AdministradorEscenas {
     private EscenaBase escenaNvl1;
     private EscenaBase escenaOpciones;
     private EscenaBase escenaNiveles;
+    private EscenaBase escenaScore;
 
     // El tipo de escena que se está mostrando
     private TipoEscena tipoEscenaActual = TipoEscena.ESCENA_SPLASH;
@@ -84,6 +85,8 @@ public class AdministradorEscenas {
             case ESCENA_NVLS:
                 setEscenaBase(escenaNiveles);
                 break;
+            case ESCENA_SCORE:
+                setEscenaBase(escenaScore);
         }
     }
 
@@ -179,11 +182,24 @@ public class AdministradorEscenas {
          escenaOpciones = new EscenaOpciones();
     }
 
-    //*** Libera la escena de Juego Dos
+    //*** Libera la escena de Opciones
 
     public void liberarEscenaOpciones() {
         escenaOpciones.liberarEscena();
         escenaOpciones = null;
+    }
+
+    //Crear escena score
+
+    public void crearEscenaScore(){
+        escenaScore = new EscenaScore();
+    }
+
+    //liberar escena score
+
+    public void liberarEscenaScore(){
+        escenaScore.liberarEscena();
+        escenaScore = null;
     }
 
 }

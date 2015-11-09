@@ -112,9 +112,9 @@ public class EscenaOpciones extends EscenaBase {
 
                     case OPCION_SCORES:
                         //PONER ESCENA DE SCORES
-                        //admEscenas.crearEscenaCreditos();
-                        //admEscenas.setEscena(TipoEscena.ESCENA_CREDITOS);
-                        //admEscenas.liberarEscenaMenu();
+                        admEscenas.crearEscenaScore();
+                        admEscenas.setEscena(TipoEscena.ESCENA_SCORE);
+                        admEscenas.liberarEscenaOpciones();
                         break;
 
                     case OPCION_LOGROS:
