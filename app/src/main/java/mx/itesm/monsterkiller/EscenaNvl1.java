@@ -479,13 +479,14 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private void guardarMarcadorAlto() {
         // Abre preferencias y ve si el marcador actual es mayor que el guardado
         SharedPreferences preferencias = actividadJuego.getSharedPreferences("marcadorAlto", Context.MODE_PRIVATE);
-        int anterior = preferencias.getInt("score",0);
+        int anterior = preferencias.getInt("score", 0);
+        SharedPreferences.Editor editor = preferencias.edit();
         if (score > anterior) {
             // Nuevo valor mayor, guardarlo
-            SharedPreferences.Editor editor = preferencias.edit();
             editor.putInt("puntos", score);
-            editor.commit();
         }
+        editor.putInt("actual", score);
+        editor.commit();
     }
 
     @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {

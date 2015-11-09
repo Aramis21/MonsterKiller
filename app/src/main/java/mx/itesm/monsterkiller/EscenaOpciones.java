@@ -1,12 +1,16 @@
 package mx.itesm.monsterkiller;
 
+import android.util.Log;
+
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 /**
  * Created by Aramis on 07/10/15.
@@ -15,13 +19,15 @@ public class EscenaOpciones extends EscenaBase {
 
     // Regiones para imágenes
     private ITextureRegion regionFondo;
-    private ITextureRegion regionBtnMusicOn;
-    private ITextureRegion regionBtnMusicOff;
     private ITextureRegion regionBtnLogros;
     private ITextureRegion regionBtnScores;
 
     //Sprite para el fondo
     private Sprite spriteFondo;
+
+    // SpriteButton con estado ON/OFF
+    private ButtonSprite btnMusic;
+    private ITiledTextureRegion regionBtnMusic; // Imagen de mosaico con dos estados: normal-prendido
 
     //Menu de tipo SceneMenu
     private MenuScene menu; //contenedor de las opciones
@@ -33,8 +39,6 @@ public class EscenaOpciones extends EscenaBase {
     private final int OPCION_SCORES = 3;
 
     // Botones de cada opción
-    private ButtonSprite btnMusicOn;
-    private ButtonSprite btnMusicOff;
     private ButtonSprite btnLogros;
     private ButtonSprite btnScores;
 
@@ -44,9 +48,7 @@ public class EscenaOpciones extends EscenaBase {
     @Override
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoOpciones.jpg");
-
-        regionBtnMusicOff = cargarImagen("BotonMusicOff2.png");
-        regionBtnMusicOn = cargarImagen("BotonMusicOn2.png");
+        regionBtnMusic = cargarImagenMosaico("BotonMusic.png",381,135,1,2);
         regionBtnLogros = cargarImagen("BotonLogros2.png");
         regionBtnScores = cargarImagen("BotonScores2.png");
     }
@@ -56,6 +58,7 @@ public class EscenaOpciones extends EscenaBase {
         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
         attachChild(spriteFondo);
         agregarMenu();
+        agregarBtnMusic();
     }
 
     @Override
@@ -67,20 +70,39 @@ public class EscenaOpciones extends EscenaBase {
         return null;
     }
 
+    private void agregarBtnMusic() {
+
+        // Toggle button
+        btnMusic = new ButtonSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionBtnMusic,actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+
+                if (pSceneTouchEvent.isActionDown()) {
+                    // Cambia el índice entre 0 y 1 ed manera alternada
+                    btnMusic.setCurrentTileIndex((btnMusic.getCurrentTileIndex()+1)%2);
+                }
+                // 0-NORMAL, 1-PRESIONADO
+                Log.i("Musica", "" + btnMusic.getCurrentTileIndex());
+                return false; // Regresa falso para que Android no cambie el botón
+            }
+        };
+        // El estado inicial del botón se lee desde las preferencias o se toma un valor por default
+        // en este demo, siempre inicia prendido
+        btnMusic.setCurrentTileIndex(1);
+        registerTouchArea(btnMusic);
+        attachChild(btnMusic);
+    }
+
     private void agregarMenu(){
         //Crear el objeto que representa el menu
         menu = new MenuScene(actividadJuego.camara);
         //Centrado en la pantalla
         menu.setPosition(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2);
         //Crea las opciones
-        IMenuItem opcionMusicOn = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_MUSICON, regionBtnMusicOn, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
-        IMenuItem opcionMusicOff = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_MUSICOFF, regionBtnMusicOff, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
         IMenuItem opcionLogros = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_LOGROS, regionBtnLogros, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
         IMenuItem opcionScores = new ScaleMenuItemDecorator(new SpriteMenuItem(OPCION_SCORES, regionBtnScores, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
 
         //Agregar las opciones
-        //menu.addMenuItem(opcionMusicOff);
-        menu.addMenuItem(opcionMusicOn);
         menu.addMenuItem(opcionLogros);
         menu.addMenuItem(opcionScores);
 
@@ -90,8 +112,6 @@ public class EscenaOpciones extends EscenaBase {
 
         // Ubicar las opciones DENTRO del menú. El centro del menú es (0,0)
 
-        opcionMusicOff.setPosition(-20, 0);
-        opcionMusicOn.setPosition(-20, 0);
         opcionLogros.setPosition(-200, -200);
         opcionScores.setPosition(200, -200);
 
@@ -102,13 +122,6 @@ public class EscenaOpciones extends EscenaBase {
                                              float pMenuItemLocalX, float pMenuItemLocalY) {
                 // El parámetro pMenuItem indica la opción oprimida
                 switch (pMenuItem.getID()) {
-                    case OPCION_MUSICOFF:
-                        // QUITAR SONIDO
-                        break;
-
-                    case OPCION_MUSICON:
-                        //PONER SONIDO
-                        break;
 
                     case OPCION_SCORES:
                         //PONER ESCENA DE SCORES

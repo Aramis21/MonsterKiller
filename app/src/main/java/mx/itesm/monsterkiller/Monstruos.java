@@ -13,6 +13,7 @@ public class Monstruos {
 
     private int DX = -10;
     private int DY = 3;
+    private int acomulador = 0;
 
     private AnimatedSprite spriteMonster;
 
@@ -35,15 +36,23 @@ public class Monstruos {
     public void movimiento() {
         if (tipo == 1){
             spriteMonster.setX(spriteMonster.getX()+ DX);
+            acomulador = acomulador + 3;
             if (spriteMonster.getX()>2550) {
                 spriteMonster.setFlippedHorizontal(false);
                 DX = DX*(-1);
             }
-            if (spriteMonster.getX()<100){
+            if (spriteMonster.getX()<100 ){
                 spriteMonster.setFlippedHorizontal(true);
                 DX = DX*(-1);
             }
+
+            //if (spriteMonster.getX()< al tamaño que va a vanza y tmb del otro lado)
+            if (acomulador >= 90){
+                spriteMonster.setX(spriteMonster.getX()+(DX*20));
+                acomulador=0;
+            }
         }
+
         if (tipo == 2){
             if (spriteMonster.getX()>2550 && spriteMonster.getY()>700){
                 spriteMonster.setPosition(spriteMonster.getX()-(DX*2), spriteMonster.getY() - DY);
