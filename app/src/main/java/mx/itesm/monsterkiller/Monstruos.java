@@ -11,8 +11,8 @@ public class Monstruos {
 
 
 
-    private int DX = -10;
-    private int DY = 3;
+    private int DX = -5;
+    private int DY = -3;
     private int acomulador = 0;
 
     private AnimatedSprite spriteMonster;
@@ -46,27 +46,37 @@ public class Monstruos {
                 DX = DX*(-1);
             }
 
-            //if (spriteMonster.getX()< al tamaño que va a vanza y tmb del otro lado)
-            if (acomulador >= 90){
-                spriteMonster.setX(spriteMonster.getX()+(DX*20));
-                acomulador=0;
+            if (spriteMonster.getX()< 1900 && spriteMonster.getX()>600) {
+                if (acomulador >= 150) {
+                    spriteMonster.setX(spriteMonster.getX() + (DX * 60));
+                    acomulador = 0;
+                }
             }
         }
 
         if (tipo == 2){
-            if (spriteMonster.getX()>2550 && spriteMonster.getY()>700){
-                spriteMonster.setPosition(spriteMonster.getX()-(DX*2), spriteMonster.getY() - DY);
+            spriteMonster.setX(spriteMonster.getX()+ DX);
+            spriteMonster.setY(spriteMonster.getY()+ DY);
+            acomulador = acomulador + 2;
+            if (spriteMonster.getX()>2550){
+                spriteMonster.setFlippedHorizontal(false);
+                DX = DX*(-1);
             }
-            if (spriteMonster.getX()<100 && spriteMonster.getY()>700){
-                spriteMonster.isFlippedHorizontal();
-                spriteMonster.setPosition(spriteMonster.getX()+(DX*2), spriteMonster.getY() - DY);
+            if (spriteMonster.getX()<100 ){
+                spriteMonster.setFlippedHorizontal(true);
+                DX = DX*(-1);
             }
-            if (spriteMonster.getX()>2550 && spriteMonster.getY()<100){
-                spriteMonster.setPosition(spriteMonster.getX()-(DX*2), spriteMonster.getY() + DY);
+            if (spriteMonster.getY()>600){
+                DY = DY*(-1);
             }
-            if (spriteMonster.getX()<100 && spriteMonster.getY()<100){
-                spriteMonster.isFlippedHorizontal();
-                spriteMonster.setPosition(spriteMonster.getX()+ (DX*2), spriteMonster.getY() + DY);
+            if (spriteMonster.getY()<100){
+                DY= DY*(-1);
+            }
+            if (spriteMonster.getX()< 1900 && spriteMonster.getX()>600 && spriteMonster.getY()<600 && spriteMonster.getY() > 100) {
+                if (acomulador >= 200) {
+                    spriteMonster.setX(spriteMonster.getX() + (DX * 60));
+                    acomulador = 0;
+                }
             }
         }
     }

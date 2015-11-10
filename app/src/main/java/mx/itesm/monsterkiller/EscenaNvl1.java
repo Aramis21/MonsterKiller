@@ -1,14 +1,8 @@
 package mx.itesm.monsterkiller;
 
-import android.app.MediaRouteButton;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.inputmethodservice.KeyboardView;
 import android.util.Log;
-import android.view.SurfaceView;
-import android.view.View;
-import android.widget.AnalogClock;
-import android.widget.ImageView;
 
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -124,19 +118,21 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     //Fin del juego
     private ITextureRegion regionGO;
+    private  ITextureRegion regionBtnContinuar;
+    private ITextureRegion regionBtnSalir;
 
 
     @Override
     public void cargarRecursos() {
-        regionFondo = cargarImagen("cuartonino-luz.png");
+        regionFondo = cargarImagen("CuartoNino.png");
         regionFondoSombra = cargarImagen("Sombra.png");
 
         //pila
         regionPila = cargarImagen("Pila.png");
 
         //Controles
-        regionBtnShoot = cargarImagen("BotShoot1.png");
-        regionBtnCollect = cargarImagen("BotCollect1.png");
+        regionBtnShoot = cargarImagen("BotShoot.png");
+        regionBtnCollect = cargarImagen("BotCollect.png");
 
         //bateria
         regionBateria5 = cargarImagen("Llena.png");
@@ -148,7 +144,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
         //Monstruos
         regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
-        regionMonstruo2 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
+        regionMonstruo2 = cargarImagenMosaico("Monster2.png", 969, 301, 1, 5);
 
         //Osito
         regionOsito = cargarImagen("Conejo.png");
@@ -166,7 +162,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionBtnReanudar =  cargarImagen("BackBot.png");
 
         //luz apagada
-        regionLuzApagada = cargarImagenMosaico("fin.png", 2560, 801, 1, 2);
+        regionLuzApagada = cargarImagenMosaico("FinLuz.png", 2560, 801, 1, 2);
 
         //Fin
         regionGO = cargarImagen("GameOver.png");
@@ -199,8 +195,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         attachChild(spriteFondo);
 
         //Pilas
-        spritePila1 = cargarSprite(300, 200, regionPila);
-        spritePila2 = cargarSprite(2310, 200, regionPila);
+        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(350*Math.random())+110, regionPila);
+        spritePila2 = cargarSprite((int)(2400*Math.random())+200, (int)(350*Math.random())+110, regionPila);
         crearPilas();
 
         //Monstruos
@@ -305,12 +301,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     private void agregarMonstruos(){
 
-        AnimatedSprite monster = cargarAnimatedSprite(150, 400, regionMonstruo1);
-        Monstruos monstruo = new Monstruos(monster, 1);
+        AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(600*Math.random())+300, regionMonstruo1);
+        Monstruos monstruo = new Monstruos(monster, 2);
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite(2000, 300, regionMonstruo2);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(300*Math.random())+100, regionMonstruo2);
         Monstruos monstruo2 = new Monstruos(monster2, 1);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());

@@ -16,9 +16,14 @@ public class AdministradorEscenas {
     private EscenaBase escenaIntrucciones;
     private EscenaBase escenaCreditos;
     private EscenaBase escenaNvl1;
+    private EscenaBase escenaNvl2;
+    private EscenaBase escenaNvl3;
+    private EscenaBase escenaNvl4;
+    private EscenaBase escenaNvl5;
     private EscenaBase escenaOpciones;
     private EscenaBase escenaNiveles;
     private EscenaBase escenaScore;
+    private EscenaBase escenaLogros;
 
     // El tipo de escena que se está mostrando
     private TipoEscena tipoEscenaActual = TipoEscena.ESCENA_SPLASH;
@@ -79,6 +84,18 @@ public class AdministradorEscenas {
             case ESCENA_NVL1:
                 setEscenaBase(escenaNvl1);
                 break;
+            case ESCENA_NVL2:
+                setEscenaBase(escenaNvl2);
+                break;
+            case ESCENA_NVL3:
+                setEscenaBase(escenaNvl3);
+                break;
+            case ESCENA_NVL4:
+                setEscenaBase(escenaNvl4);
+                break;
+            case ESCENA_NVL5:
+                setEscenaBase(escenaNvl5);
+                break;
             case ESCENA_OPCIONES:
                 setEscenaBase(escenaOpciones);
                 break;
@@ -87,6 +104,10 @@ public class AdministradorEscenas {
                 break;
             case ESCENA_SCORE:
                 setEscenaBase(escenaScore);
+                break;
+            case ESCENA_LOGROS:
+                setEscenaBase(escenaLogros);
+                break;
         }
     }
 
@@ -175,6 +196,62 @@ public class AdministradorEscenas {
         escenaNvl1 = null;
     }
 
+    //*** Crea la escena de Nvl1
+
+    public void crearEscenaNvl2() {
+        // Carga los recursos
+        escenaNvl2 = new EscenaNvl2();
+    }
+
+    //*** Libera la escena de Nvl1
+
+    public void liberarEscenaNvl2() {
+        escenaNvl2.liberarEscena();
+        escenaNvl2 = null;
+    }
+
+    //*** Crea la escena de Nvl1
+
+    public void crearEscenaNvl3() {
+        // Carga los recursos
+        escenaNvl3 = new EscenaNvl3();
+    }
+
+    //*** Libera la escena de Nvl1
+
+    public void liberarEscenaNvl3() {
+        escenaNvl3.liberarEscena();
+        escenaNvl3 = null;
+    }
+
+    //*** Crea la escena de Nvl1
+
+    public void crearEscenaNvl4() {
+        // Carga los recursos
+        escenaNvl4 = new EscenaNvl4();
+    }
+
+    //*** Libera la escena de Nvl1
+
+    public void liberarEscenaNvl4() {
+        escenaNvl4.liberarEscena();
+        escenaNvl4 = null;
+    }
+
+    //*** Crea la escena de Nvl1
+
+    public void crearEscenaNvl5() {
+        // Carga los recursos
+        escenaNvl5 = new EscenaNvl5();
+    }
+
+    //*** Libera la escena de Nvl1
+
+    public void liberarEscenaNvl5() {
+        escenaNvl5.liberarEscena();
+        escenaNvl5 = null;
+    }
+
     //*** Crea la escena de Opciones
 
     public void crearEscenaOpciones() {
@@ -200,6 +277,19 @@ public class AdministradorEscenas {
     public void liberarEscenaScore(){
         escenaScore.liberarEscena();
         escenaScore = null;
+    }
+
+    //Crear escena logros
+
+    public void crearEscenaLogros(){
+        escenaLogros = new EscenaLogros();
+    }
+
+    //liberar escena logros
+
+    public void liberarEscenaLogros(){
+        escenaLogros.liberarEscena();
+        escenaLogros = null;
     }
 
 }

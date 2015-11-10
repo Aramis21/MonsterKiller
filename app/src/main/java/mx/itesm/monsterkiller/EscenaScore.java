@@ -29,11 +29,8 @@ public class EscenaScore extends EscenaOpciones {
     //marcador anterior
     private Text txtAnterior;
 
-
-
-
     public void cargarRecursos() {
-        regionFondo = cargarImagen("scorefin.png");
+        regionFondo = cargarImagen("FondoScore.png");
 
         // Marcador
         fontMonster = cargarFont("Fonts/Alice and the Wicked Monster.ttf",140,0xFFD5EDF7,"Best cor La:0123456789");
@@ -84,6 +81,23 @@ public class EscenaScore extends EscenaOpciones {
         admEscenas.setEscena(TipoEscena.ESCENA_OPCIONES);
         admEscenas.liberarEscenaScore();
         return null;
+    }
+
+    @Override
+    public TipoEscena getTipoEscena() {
+        return TipoEscena.ESCENA_SCORE;
+    }
+
+    @Override
+    public void liberarEscena() {
+        this.detachSelf();
+        this.dispose();
+    }
+
+    @Override
+    public void liberarRecursos() {
+        regionFondo.getTexture().unload();
+        regionFondo = null;
     }
 
 }

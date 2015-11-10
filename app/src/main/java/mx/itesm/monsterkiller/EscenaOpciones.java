@@ -33,10 +33,8 @@ public class EscenaOpciones extends EscenaBase {
     private MenuScene menu; //contenedor de las opciones
 
     //Constantes para cada opcion del menu
-    private final int OPCION_MUSICON = 0;
-    private final int OPCION_MUSICOFF= 1;
-    private final int OPCION_LOGROS = 2;
-    private final int OPCION_SCORES = 3;
+       private final int OPCION_LOGROS = 0;
+    private final int OPCION_SCORES = 1;
 
     // Botones de cada opción
     private ButtonSprite btnLogros;
@@ -132,9 +130,9 @@ public class EscenaOpciones extends EscenaBase {
 
                     case OPCION_LOGROS:
                         //MOSTRAR ESCENA DE LOGROS
-                        //admEscenas.crearEscenaOpciones();
-                        //admEscenas.setEscena(TipoEscena.ESCENA_OPCIONES);
-                        //admEscenas.liberarEscenaMenu();
+                        admEscenas.crearEscenaLogros();
+                        admEscenas.setEscena(TipoEscena.ESCENA_LOGROS);
+                        admEscenas.liberarEscenaOpciones();
                         break;
 
                 }

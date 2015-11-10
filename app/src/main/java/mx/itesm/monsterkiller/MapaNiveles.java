@@ -34,13 +34,6 @@ public class MapaNiveles extends EscenaBase {
     private final int NIVEL_4 = 3;
     private final int NIVEL_5 = 4;
 
-    //botones
-    private ButtonSprite Star1;
-    private ButtonSprite Star2;
-    private ButtonSprite Star3;
-    private ButtonSprite Star4;
-    private ButtonSprite Star5;
-
     @Override
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoNivelespt1.jpg");
@@ -83,11 +76,11 @@ public class MapaNiveles extends EscenaBase {
         menu.setBackgroundEnabled(false);   // Completamente transparente
 
         // Ubicar las opciones DENTRO del menú. El centro del menú es (0,0)
-        opcion1.setPosition(190, -220);
-        opcion2.setPosition(-190,-100);
-        opcion3.setPosition(-80, 130 );
+        opcion1.setPosition(190, -210);
+        opcion2.setPosition(-170,-100);
+        opcion3.setPosition(-80, 112);
         opcion4.setPosition(200, 130);
-        opcion5.setPosition(300, -70);
+        opcion5.setPosition(270, -30);
 
         // Registra el Listener para atender las opciones
         menu.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {
@@ -104,15 +97,21 @@ public class MapaNiveles extends EscenaBase {
                         break;
 
                     case NIVEL_2:
-
+                        admEscenas.crearEscenaNvl2();
+                        admEscenas.setEscena(TipoEscena.ESCENA_NVL2);
+                        admEscenas.liberarEscenaNiveles();
                         break;
 
                     case NIVEL_3:
-
+                        admEscenas.crearEscenaNvl3();
+                        admEscenas.setEscena(TipoEscena.ESCENA_NVL3);
+                        admEscenas.liberarEscenaNiveles();
                         break;
 
                     case NIVEL_4:
-
+                        admEscenas.crearEscenaNvl4();
+                        admEscenas.setEscena(TipoEscena.ESCENA_NVL4);
+                        admEscenas.liberarEscenaNiveles();
                         break;
                     case NIVEL_5:
 

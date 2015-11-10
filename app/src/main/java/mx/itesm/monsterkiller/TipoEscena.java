@@ -13,5 +13,10 @@ public enum TipoEscena {
     ESCENA_OPCIONES,
     ESCENA_NVLS,
     ESCENA_NVL1,
+    ESCENA_NVL2,
+    ESCENA_NVL3,
+    ESCENA_NVL4,
+    ESCENA_NVL5,
+    ESCENA_LOGROS,
     ESCENA_SCORE
 }
