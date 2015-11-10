@@ -89,13 +89,23 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     //Banderas
     private boolean juegoCorriendo = true;
+
+    //banderas de baterias
     private boolean bat4Visible = false;
     private boolean bat3Visible = false;
     private boolean bat2Visible = false;
     private boolean bat1Visible = false;
     private boolean bat0Visible = false;
+
+    //variables para cambiar pila
+    private Sprite bateriaActual;
+    private Sprite bateriaPasada;
+
+    //banderas de pilas
     private boolean pila1Visible = false;
     private boolean pila2Visible = false;
+
+    //banderas de game over
     private boolean gameOver = false;
 
     //Peluche
@@ -158,7 +168,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         // Pausa
         regionBtnPausa = cargarImagen("BotonPausa.png");
         regionPausa = cargarImagen("PauseChica.png");
-        regionBtnHome = cargarImagen("BotonHome2.png");
+        regionBtnHome = cargarImagen("BotonHome.png");
         regionBtnReanudar =  cargarImagen("BackBot.png");
 
         //luz apagada
@@ -166,6 +176,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
         //Fin
         regionGO = cargarImagen("GameOver.png");
+        regionBtnContinuar = cargarImagen("BackBot.png");
+        regionBtnSalir = cargarImagen("BotonHome.png");
     }
 
     // Crea y regresa un font que carga desde un archivo .ttf
@@ -301,7 +313,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     private void agregarMonstruos(){
 
-        AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(600*Math.random())+300, regionMonstruo1);
+        AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, /*(int)(600*Math.random())+*/300, regionMonstruo1);
         Monstruos monstruo = new Monstruos(monster, 2);
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
@@ -340,26 +352,36 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             detachChild(spriteBateria5);
             attachChild(spriteBateria4);
             bat4Visible = true;
+            bateriaActual = spriteBateria4;
+            bateriaPasada = spriteBateria5;
         }
         if (tiempo > 15f && tiempo <=20f && !bat3Visible){
             detachChild(spriteBateria4);
             attachChild(spriteBateria3);
             bat3Visible = true;
+            bateriaActual = spriteBateria3;
+            bateriaPasada = spriteBateria4;
         }
         if (tiempo > 20f && tiempo <=25f && !bat2Visible){
             detachChild(spriteBateria3);
             attachChild(spriteBateria2);
             bat2Visible = true;
+            bateriaActual = spriteBateria2;
+            bateriaPasada = spriteBateria3;
         }
         if (tiempo >25f && tiempo <= 30f && !bat1Visible){
             detachChild(spriteBateria2);
             attachChild(spriteBateria1);
             bat1Visible = true;
+            bateriaActual = spriteBateria1;
+            bateriaPasada = spriteBateria2;
         }
         if (tiempo >30f && tiempo <=34f && !bat0Visible){
             detachChild(spriteBateria1);
             attachChild(spriteBateria0);
             bat0Visible = true;
+            bateriaActual = spriteBateria0;
+            bateriaPasada = spriteBateria1;
         }
         if (tiempo >= 34f && !gameOver){
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
@@ -380,18 +402,20 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private void recolectarPilas(){
         if (spriteFondoSombra.getX() >= (spritePila1.getX()-200) && spriteFondoSombra.getX() <= (spritePila1.getX() + 200) && spriteFondoSombra.getY() >= (spritePila1.getY()-200) && spriteFondoSombra.getY() <= (spritePila1.getY() + 200)){
             spriteFondo.detachChild(spritePila1);
-            tiempo=tiempo+5;
-            Log.i("Fondo", "dx=" + spriteFondoSombra.getX());
-            Log.i("Pila", "dx=" + spritePila1.getX());
+            tiempo=tiempo-5;
+            detachChild(bateriaActual);
+            attachChild(bateriaPasada);
         }
         if (spriteFondoSombra.getX() >= (spritePila2.getX()-200) && spriteFondoSombra.getX() <= (spritePila2.getX() + 200) && spriteFondoSombra.getY() >= (spritePila2.getY()-200) && spriteFondoSombra.getY() <= (spritePila2.getY() + 200)){
             spriteFondo.detachChild(spritePila2);
-            tiempo= tiempo+5;
+            tiempo= tiempo-5;
+            detachChild(bateriaActual);
+            attachChild(bateriaPasada);
         }
     }
 
     private void perdiste(){
-        Sprite spritePerdiste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2, regionGO,actividadJuego.getVertexBufferObjectManager()) {
+        Sprite spritePerdiste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2, regionGO, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionUp()) {

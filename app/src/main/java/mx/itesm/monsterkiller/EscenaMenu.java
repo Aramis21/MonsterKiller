@@ -1,6 +1,5 @@
 package mx.itesm.monsterkiller;
 
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
@@ -47,7 +46,7 @@ public class EscenaMenu extends EscenaBase {
         // Botones del menú
         regionBtnIntrucciones = cargarImagen("BotonInstrucciones2.png");
         regionBtnJugar = cargarImagen("BotonPlay2.png");
-        regionBtnCreditos = cargarImagen("BotonCredits2.png");
+        regionBtnCreditos = cargarImagen("BotonCredits.png");
         regionBtnOpciones = cargarImagen("BotonOptions2.png");
     }
 
