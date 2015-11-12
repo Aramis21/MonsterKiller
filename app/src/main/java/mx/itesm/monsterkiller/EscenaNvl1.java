@@ -214,8 +214,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         attachChild(spriteFondo);
 
         //Pilas
-        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(350*Math.random())+110, regionPila);
-        spritePila2 = cargarSprite((int)(2400*Math.random())+200, (int)(350*Math.random())+110, regionPila);
+        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
+        spritePila2 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
         crearPilas();
 
         //Monstruos
@@ -323,12 +323,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     private void agregarMonstruos(){
 
-        AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, /*(int)(600*Math.random())+*/300, regionMonstruo1);
+        AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, 300, regionMonstruo1);
         Monstruos monstruo = new Monstruos(monster, 2);
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(300*Math.random())+100, regionMonstruo2);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(250*Math.random())+100, regionMonstruo2);
         Monstruos monstruo2 = new Monstruos(monster2, 1);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
@@ -359,35 +359,36 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         if (tiempo <= 10f){
         }
         if (tiempo > 10f && tiempo <=15f && !bat4Visible){
-            detachChild(spriteBateria5);
+            eliminarSprite(spriteBateria5); //detachChild(spriteBateria5);
             attachChild(spriteBateria4);
             bat4Visible = true;
             bateriaActual = spriteBateria4;
             bateriaPasada = spriteBateria5;
         }
         if (tiempo > 15f && tiempo <=20f && !bat3Visible){
-            detachChild(spriteBateria4);
+            eliminarSprite(spriteBateria4); //detachChild(spriteBateria4);
             attachChild(spriteBateria3);
             bat3Visible = true;
             bateriaActual = spriteBateria3;
             bateriaPasada = spriteBateria4;
         }
         if (tiempo > 20f && tiempo <=25f && !bat2Visible){
-            detachChild(spriteBateria3);
+            eliminarSprite(spriteBateria3); //detachChild(spriteBateria3);
             attachChild(spriteBateria2);
             bat2Visible = true;
             bateriaActual = spriteBateria2;
             bateriaPasada = spriteBateria3;
         }
         if (tiempo >25f && tiempo <= 30f && !bat1Visible){
-            detachChild(spriteBateria2);
+            eliminarSprite(spriteBateria2); //detachChild(spriteBateria2);
             attachChild(spriteBateria1);
             bat1Visible = true;
             bateriaActual = spriteBateria1;
             bateriaPasada = spriteBateria2;
         }
         if (tiempo >30f && tiempo <=34f && !bat0Visible){
-            detachChild(spriteBateria1);
+            eliminarSprite(spriteBateria1);
+            //detachChild(spriteBateria1);
             attachChild(spriteBateria0);
             bat0Visible = true;
             bateriaActual = spriteBateria0;
@@ -405,32 +406,48 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
                             perdiste();
                         }
                     }));
-            actividadJuego.getEngine().registerUpdateHandler(new TimerHandler(2.5f,
-                    new ITimerCallback() {
-                        @Override
-                        public void onTimePassed(TimerHandler pTimerHandler) {
-                            actividadJuego.getEngine().unregisterUpdateHandler(pTimerHandler);
-                            finJuegoPerdedor();
-                        }
-                    }));
             gameOver = true;
         }
     }
 
-    private void recolectarPilas(){
-        if (spriteFondoSombra.getX() >= (spritePila1.getX()-200) && spriteFondoSombra.getX() <= (spritePila1.getX() + 200) && spriteFondoSombra.getY() >= (spritePila1.getY()-200) && spriteFondoSombra.getY() <= (spritePila1.getY() + 200)){
-            spriteFondo.detachChild(spritePila1);
-            tiempo=tiempo-5;
-            detachChild(bateriaActual);
-            attachChild(bateriaPasada);
-        }
-        if (spriteFondoSombra.getX() >= (spritePila2.getX()-200) && spriteFondoSombra.getX() <= (spritePila2.getX() + 200) && spriteFondoSombra.getY() >= (spritePila2.getY()-200) && spriteFondoSombra.getY() <= (spritePila2.getY() + 200)){
-            spriteFondo.detachChild(spritePila2);
-            tiempo= tiempo-5;
-            detachChild(bateriaActual);
-            attachChild(bateriaPasada);
+    private void eliminarSprite(Sprite sprite) {
+        if (sprite.hasParent()) {
+            detachChild(sprite);
         }
     }
+
+    private void recolectarPilas(){
+        float px1 = spriteFondo.getX() + spritePila1.getX() - spriteFondo.getWidth()/2;
+        float px2 = spriteFondo.getX() + spritePila2.getX() - spriteFondo.getWidth()/2;
+
+        if (spritePila1.hasParent()) {
+            if (spriteFondoSombra.getX() >= (px1 - 200) && spriteFondoSombra.getX() <= (px1 + 200) && spriteFondoSombra.getY() >= (spritePila1.getY() - 200) && spriteFondoSombra.getY() <= (spritePila1.getY() + 200)) {
+                spriteFondo.detachChild(spritePila1);
+                if (tiempo > 15) {
+                    tiempo = tiempo - 5;
+                    detachChild(bateriaActual);
+                    detachChild(spritePila1);
+                    //attachChild(bateriaPasada);
+                    bat0Visible = bat1Visible = bat2Visible = bat3Visible = bat4Visible = false;
+                    Log.i("PILA", "recolecta 1");
+                }
+            }
+        }
+        if (spritePila2.hasParent()) {
+            if (spriteFondoSombra.getX() >= (px2 - 200) && spriteFondoSombra.getX() <= (px2 + 200) && spriteFondoSombra.getY() >= (spritePila2.getY() - 200) && spriteFondoSombra.getY() <= (spritePila2.getY() + 200)) {
+                spriteFondo.detachChild(spritePila2);
+                if (tiempo > 15) {
+                    tiempo = tiempo - 5;
+                    detachChild(bateriaActual);
+                    detachChild(spritePila2);
+                    bat0Visible = bat1Visible = bat2Visible = bat3Visible = bat4Visible = false;
+                    //attachChild(bateriaPasada);
+                    Log.i("PILA", "recolecta 2");
+                }
+            }
+        }
+    }
+
 
     private void perdiste(){
         Sprite spritePerdiste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2 + 100, regionGO, actividadJuego.getVertexBufferObjectManager()) {
@@ -463,7 +480,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         };
         attachChild(btnContinuar);
         registerTouchArea(btnContinuar);
-        AlphaModifier aparecer = new AlphaModifier(3, 0, 100);
+        AlphaModifier aparecer = new AlphaModifier(3, 0, 1);
         btnContinuar.registerEntityModifier(aparecer);
 
         // Crea el botón de SALIR y lo agrega a la escena
@@ -480,7 +497,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         };
         attachChild(btnSalir);
         registerTouchArea(btnSalir);
-        btnSalir.registerEntityModifier(aparecer);
+        AlphaModifier aparecer2 = new AlphaModifier(3, 0, 1);
+        btnSalir.registerEntityModifier(aparecer2);
     }
 
     private void reiniciarJuego() {
