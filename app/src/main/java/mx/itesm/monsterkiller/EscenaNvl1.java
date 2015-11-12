@@ -7,6 +7,7 @@ import android.util.Log;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.JumpModifier;
 import org.andengine.entity.modifier.ParallelEntityModifier;
 import org.andengine.entity.modifier.ScaleModifier;
@@ -128,7 +129,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     //Fin del juego
     private ITextureRegion regionGO;
-    private  ITextureRegion regionBtnContinuar;
+    private ITextureRegion regionBtnContinuar;
     private ITextureRegion regionBtnSalir;
 
 
@@ -395,6 +396,14 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
                             perdiste();
                         }
                     }));
+            actividadJuego.getEngine().registerUpdateHandler(new TimerHandler(2.5f,
+                    new ITimerCallback() {
+                        @Override
+                        public void onTimePassed(TimerHandler pTimerHandler) {
+                            actividadJuego.getEngine().unregisterUpdateHandler(pTimerHandler);
+                            finJuegoPerdedor();
+                        }
+                    }));
             gameOver = true;
         }
     }
@@ -415,7 +424,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     }
 
     private void perdiste(){
-        Sprite spritePerdiste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2, regionGO, actividadJuego.getVertexBufferObjectManager()) {
+        Sprite spritePerdiste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2 + 200, regionGO, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionUp()) {
@@ -428,6 +437,110 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         attachChild(spritePerdiste);
         ScaleModifier agrandar = new ScaleModifier(3, spritePerdiste.getScaleX()/3, spritePerdiste.getScaleX(), spritePerdiste.getScaleY()/3, spritePerdiste.getScaleY());
         spritePerdiste.registerEntityModifier(agrandar);
+    }
+
+    private void finJuegoPerdedor(){
+        // Crea el botón de CONTINUE y lo agrega a la escena
+        Sprite btnContinuar = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnReanudar.getWidth(), ControlJuego.ALTO_CAMARA/4,
+                regionBtnReanudar, actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionDown()) {
+                    reiniciarJuego();
+                    return true;
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        attachChild(btnContinuar);
+        registerTouchArea(btnContinuar);
+        AlphaModifier aparecer = new AlphaModifier(3, 0, 100);
+        btnContinuar.registerEntityModifier(aparecer);
+
+        // Crea el botón de SALIR y lo agrega a la escena
+        Sprite btnSalir = new Sprite(ControlJuego.ANCHO_CAMARA/2 - regionBtnSalir.getWidth(), ControlJuego.ALTO_CAMARA/4,
+                regionBtnSalir, actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionDown()) {
+                    onBackKeyPressed();
+                    return true;
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        attachChild(btnSalir);
+        registerTouchArea(btnSalir);
+        btnSalir.registerEntityModifier(aparecer);
+    }
+
+    private void reiniciarJuego() {
+        admEscenas.liberarEscenaNvl1();
+        admEscenas.crearEscenaNvl1();
+        admEscenas.setEscena(TipoEscena.ESCENA_NVL1);
+    }
+
+    private void ganaste(){
+        Sprite spriteGanaste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2 + 200, regionGO, actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionUp()) {
+                    onBackKeyPressed();
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        registerTouchArea(spriteGanaste);
+        attachChild(spriteGanaste);
+        ScaleModifier agrandar = new ScaleModifier(3, spriteGanaste.getScaleX()/3, spriteGanaste.getScaleX(), spriteGanaste.getScaleY()/3, spriteGanaste.getScaleY());
+        spriteGanaste.registerEntityModifier(agrandar);
+    }
+
+    private void checarScore(){
+        if (score >= 2000){
+            ganaste();
+        }
+    }
+
+    private void finJuegoGanador(){
+        // Crea el botón de CONTINUE y lo agrega a la escena
+        Sprite btnContinuar = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnContinuar.getWidth(), ControlJuego.ALTO_CAMARA/4,
+                regionBtnContinuar, actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionDown()) {
+                    pasarSigNivel();
+                    return true;
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        attachChild(btnContinuar);
+        registerTouchArea(btnContinuar);
+        AlphaModifier aparecer = new AlphaModifier(3, 0, 100);
+        btnContinuar.registerEntityModifier(aparecer);
+
+        // Crea el botón de SALIR y lo agrega a la escena
+        Sprite btnSalir = new Sprite(ControlJuego.ANCHO_CAMARA/2 - regionBtnSalir.getWidth(), ControlJuego.ALTO_CAMARA/4,
+                regionBtnSalir, actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionDown()) {
+                    onBackKeyPressed();
+                    return true;
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        attachChild(btnSalir);
+        registerTouchArea(btnSalir);
+        btnSalir.registerEntityModifier(aparecer);
+    }
+
+    private void pasarSigNivel(){
+        admEscenas.liberarEscenaNvl1();
+        admEscenas.crearEscenaNvl2();
+        admEscenas.setEscena(TipoEscena.ESCENA_NVL2);
     }
 
     private void actualizarPeluches() {
@@ -616,5 +729,11 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionFondoSombra = null;
         regionOsito.getTexture().unload();
         regionOsito = null;
+        regionBtnSalir.getTexture().unload();
+        regionBtnSalir = null;
+        regionBtnContinuar.getTexture().unload();
+        regionBtnContinuar = null;
+        fontMonster.getTexture().unload();
+        fontMonster = null;
     }
 }

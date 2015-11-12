@@ -54,6 +54,11 @@ public class AdministradorEscenas {
         return escenaActual;
     }
 
+    public  EscenaBase liberarEscenaActual(){
+        getEscenaActual().liberarEscena();
+        return null;
+    }
+
     /*
      * Pone en la pantalla la escena que llega como parámetro y guarda el nuevo estado
      */
