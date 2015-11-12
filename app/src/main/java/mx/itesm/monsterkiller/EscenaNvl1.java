@@ -124,6 +124,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private ITextureRegion regionBtnHome;
     private ITextureRegion regionBtnReanudar;
 
+    //Ojo
+    private TiledTextureRegion regionOjo;
+
     //fin de luz
     private TiledTextureRegion regionLuzApagada;
 
@@ -171,6 +174,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionPausa = cargarImagen("PauseChica.png");
         regionBtnHome = cargarImagen("BotonHome.png");
         regionBtnReanudar =  cargarImagen("BackBot.png");
+
+        //Ojo
+        regionOjo = cargarImagenMosaico("Ojo3.png", 270, 97, 1, 4);
 
         //luz apagada
         regionLuzApagada = cargarImagenMosaico("FinLuz.png", 2560, 801, 1, 2);
@@ -284,9 +290,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         escenaPausa.attachChild(fondoPausa);
         Sprite botonHome = cargarSprite(regionPausa.getWidth()-100, regionPausa.getHeight()-200, regionBtnHome);
         escenaPausa.attachChild(botonHome);
-        Sprite botonReanudar = cargarSprite(regionPausa.getWidth()-100, regionPausa.getHeight()-430, regionBtnReanudar);
+        Sprite botonReanudar = cargarSprite(regionPausa.getWidth() - 100, regionPausa.getHeight() - 430, regionBtnReanudar);
         escenaPausa.attachChild(botonReanudar);
         escenaPausa.setBackgroundEnabled(false);
+        AnimatedSprite spriteOjo = cargarAnimatedSprite(670, 500, regionOjo);
+        spriteOjo.animate(250);
+        escenaPausa.attachChild(spriteOjo);
     }
 
     private void agregarTexto() {
@@ -424,7 +433,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     }
 
     private void perdiste(){
-        Sprite spritePerdiste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2 + 200, regionGO, actividadJuego.getVertexBufferObjectManager()) {
+        Sprite spritePerdiste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2 + 100, regionGO, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionUp()) {

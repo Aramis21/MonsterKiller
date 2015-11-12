@@ -14,6 +14,9 @@ public class EscenaInstrucciones extends EscenaBase {
     // Sprite para el fondo
     private Sprite spriteFondo;
 
+    //Ojo
+    private TiledTextureRegion regionOjo;
+
     //Manos lado
     private TiledTextureRegion regionLado;
 
@@ -27,6 +30,8 @@ public class EscenaInstrucciones extends EscenaBase {
         //manos
         regionArriba = cargarImagenMosaico("ManitasUp.png", 2446, 300, 1, 7);
         regionLado = cargarImagenMosaico("ManitasLado.png", 2417, 300, 1, 6);
+
+        regionOjo = cargarImagenMosaico("Ojo2.png", 869, 280, 1, 5);
     }
 
     @Override
@@ -42,6 +47,10 @@ public class EscenaInstrucciones extends EscenaBase {
         AnimatedSprite spriteLado = cargarAnimatedSprite(1000, 160, regionLado);
         spriteLado.animate(400);
         attachChild(spriteLado);
+
+        AnimatedSprite spriteOjo = cargarAnimatedSprite(1115, 580, regionOjo);
+        spriteOjo.animate(250);
+        attachChild(spriteOjo);
     }
 
     @Override
@@ -72,5 +81,7 @@ public class EscenaInstrucciones extends EscenaBase {
         regionLado = null;
         regionArriba.getTexture().unload();
         regionArriba = null;
+        regionOjo.getTexture().unload();
+        regionOjo = null;
     }
 }

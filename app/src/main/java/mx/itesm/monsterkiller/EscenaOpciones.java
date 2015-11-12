@@ -6,11 +6,13 @@ import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 /**
  * Created by Aramis on 07/10/15.
@@ -21,6 +23,9 @@ public class EscenaOpciones extends EscenaBase {
     private ITextureRegion regionFondo;
     private ITextureRegion regionBtnLogros;
     private ITextureRegion regionBtnScores;
+
+    //Ojo
+    private TiledTextureRegion regionOjo;
 
     //Sprite para el fondo
     private Sprite spriteFondo;
@@ -33,7 +38,7 @@ public class EscenaOpciones extends EscenaBase {
     private MenuScene menu; //contenedor de las opciones
 
     //Constantes para cada opcion del menu
-       private final int OPCION_LOGROS = 0;
+    private final int OPCION_LOGROS = 0;
     private final int OPCION_SCORES = 1;
 
     // Botones de cada opción
@@ -46,9 +51,10 @@ public class EscenaOpciones extends EscenaBase {
     @Override
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoOpciones.jpg");
-        regionBtnMusic = cargarImagenMosaico("BotonMusic.png",381,135,1,2);
+        regionBtnMusic = cargarImagenMosaico("BotonMusic.png", 381, 135, 1, 2);
         regionBtnLogros = cargarImagen("BotonLogros2.png");
         regionBtnScores = cargarImagen("BotonScores2.png");
+        regionOjo = cargarImagenMosaico("Ojo1.png", 1307, 306, 1, 6);
     }
 
     @Override
@@ -57,6 +63,10 @@ public class EscenaOpciones extends EscenaBase {
         attachChild(spriteFondo);
         agregarMenu();
         agregarBtnMusic();
+
+        AnimatedSprite spriteOjo = cargarAnimatedSprite(200, 600, regionOjo);
+        spriteOjo.animate(250);
+        attachChild(spriteOjo);
     }
 
     @Override
@@ -159,6 +169,14 @@ public class EscenaOpciones extends EscenaBase {
     public void liberarRecursos() {
         regionFondo.getTexture().unload();
         regionFondo = null;
+        regionOjo.getTexture().unload();
+        regionOjo = null;
+        regionBtnMusic.getTexture().unload();
+        regionBtnMusic = null;
+        regionBtnScores.getTexture().unload();
+        regionBtnMusic = null;
+        regionBtnLogros.getTexture().unload();
+        regionBtnLogros = null;
     }
 
 
