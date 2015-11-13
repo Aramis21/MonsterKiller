@@ -1,5 +1,8 @@
 package mx.itesm.monsterkiller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
@@ -22,6 +25,18 @@ public class MapaNiveles extends EscenaBase {
     private ITextureRegion regionStar4;
     private ITextureRegion regionStar5;
 
+    private ITextureRegion regionGray1;
+    private ITextureRegion regionGray2;
+    private ITextureRegion regionGray3;
+    private ITextureRegion regionGray4;
+    private ITextureRegion regionGray5;
+
+    private ITextureRegion estrella2;
+    private ITextureRegion estrella3;
+    private ITextureRegion estrella4;
+    private ITextureRegion estrella5;
+
+
     // Sprite para el fondo
     private Sprite spriteFondo;
 
@@ -34,6 +49,8 @@ public class MapaNiveles extends EscenaBase {
     private final int NIVEL_4 = 3;
     private final int NIVEL_5 = 4;
 
+    private int puntos;
+
     @Override
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoNivelespt1.jpg");
@@ -43,6 +60,12 @@ public class MapaNiveles extends EscenaBase {
         regionStar3 = cargarImagen("niv3.png");
         regionStar4 = cargarImagen("niv4.png");
         regionStar5 = cargarImagen("niv5.png");
+
+        regionGray1 = cargarImagen("egris1.png");
+        regionGray2 = cargarImagen("egris2.png");
+        regionGray3 = cargarImagen("egris3.png");
+        regionGray4 = cargarImagen("egris4.png");
+        regionGray5 = cargarImagen("egris5.png");
     }
 
     @Override
@@ -52,17 +75,59 @@ public class MapaNiveles extends EscenaBase {
         agregarMenu();
     }
 
+    private void marcadorAlto() {
+        // Obtener de las preferencias el marcador mayor
+        SharedPreferences preferencias = actividadJuego.getSharedPreferences("Best cor", Context.MODE_PRIVATE);
+        puntos = preferencias.getInt("puntos", 0);
+    }
+
     private void agregarMenu() {
         // Crea el objeto que representa el menú
         menu = new MenuScene(actividadJuego.camara);
+
         // Centrado en la pantalla
         menu.setPosition(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2);
         // Crea las opciones (por ahora, acerca de y jugar)
+        if(puntos == 0){
+            estrella2 = regionGray2;
+            estrella3 = regionGray3;
+            estrella4 = regionGray4;
+            estrella5 = regionGray5;
+        }
+
+        if (puntos>= 80){
+            estrella2 = regionStar2;
+            estrella3 = regionGray3;
+            estrella4 = regionGray4;
+            estrella5 = regionGray5;
+        }
+
+        if (puntos >= 120){
+            estrella2 = regionStar2;
+            estrella3 = regionStar3;
+            estrella4 = regionGray4;
+            estrella5 = regionGray5;
+
+        }
+        if (puntos >= 160){
+            estrella2 = regionStar2;
+            estrella3 = regionStar3;
+            estrella4 = regionStar4;
+            estrella5 = regionGray5;
+
+        }
+        if (puntos >= 200){
+            estrella2 = regionStar2;
+            estrella3 = regionStar3;
+            estrella4 = regionStar4;
+            estrella5 = regionStar5;
+        }
+
         IMenuItem opcion1 = new ScaleMenuItemDecorator(new SpriteMenuItem(NIVEL_1, regionStar1, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
-        IMenuItem opcion2 = new ScaleMenuItemDecorator(new SpriteMenuItem(NIVEL_2, regionStar2, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
-        IMenuItem opcion3 = new ScaleMenuItemDecorator(new SpriteMenuItem(NIVEL_3, regionStar3, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
-        IMenuItem opcion4 = new ScaleMenuItemDecorator(new SpriteMenuItem(NIVEL_4, regionStar4, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
-        IMenuItem opcion5 = new ScaleMenuItemDecorator(new SpriteMenuItem(NIVEL_5, regionStar5, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
+        IMenuItem opcion2 = new ScaleMenuItemDecorator(new SpriteMenuItem(NIVEL_2, estrella2, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
+        IMenuItem opcion3 = new ScaleMenuItemDecorator(new SpriteMenuItem(NIVEL_3, estrella3, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
+        IMenuItem opcion4 = new ScaleMenuItemDecorator(new SpriteMenuItem(NIVEL_4, estrella4, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
+        IMenuItem opcion5 = new ScaleMenuItemDecorator(new SpriteMenuItem(NIVEL_5, estrella5, actividadJuego.getVertexBufferObjectManager()), 1.5f, 1);
 
         // Agrega las opciones al menú
         menu.addMenuItem(opcion1);
@@ -150,5 +215,25 @@ public class MapaNiveles extends EscenaBase {
     public void liberarRecursos() {
         regionFondo.getTexture().unload();
         regionFondo = null;
+        regionGray1.getTexture().unload();
+        regionGray1 = null;
+        regionGray2.getTexture().unload();
+        regionGray2 = null;
+        regionGray3.getTexture().unload();
+        regionGray3 = null;
+        regionGray4.getTexture().unload();
+        regionGray4 = null;
+        regionGray5.getTexture().unload();
+        regionGray5 = null;
+        regionStar1.getTexture().unload();
+        regionStar1 = null;
+        regionStar2.getTexture().unload();
+        regionStar2 = null;
+        regionStar3.getTexture().unload();
+        regionStar3 = null;
+        regionStar4.getTexture().unload();
+        regionStar4 = null;
+        regionStar5.getTexture().unload();
+        regionStar5 = null;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.andengine.audio.sound.Sound;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.IEntity;
@@ -88,6 +89,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     //Contador
     private Sprite spriteContador;
 
+    //Botones
+    private Sprite spriteBtnShoot;
+    private Sprite spriteBtnCollect;
+
     //Banderas
     private boolean juegoCorriendo = true;
 
@@ -109,6 +114,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     //banderas de game over
     private boolean gameOver = false;
 
+    //bandera ganador
+    private boolean gameWin = false;
+
     //Peluche
     private ITextureRegion regionOsito;
     private ArrayList<Sprite> listaPeluches;
@@ -127,6 +135,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     //Ojo
     private TiledTextureRegion regionOjo;
 
+    //Boton retry
+    private ITextureRegion regionBtnRetry;
+
     //fin de luz
     private TiledTextureRegion regionLuzApagada;
 
@@ -134,6 +145,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private ITextureRegion regionGO;
     private ITextureRegion regionBtnContinuar;
     private ITextureRegion regionBtnSalir;
+    private ITextureRegion regionWin;
+
+    // Efectos de sonido
+    private Sound sonidoApagador;
 
 
     @Override
@@ -178,6 +193,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         //Ojo
         regionOjo = cargarImagenMosaico("Ojo3.png", 270, 97, 1, 4);
 
+        //Btn retry
+        regionBtnRetry = cargarImagen("BtnRetry.png");
+
         //luz apagada
         regionLuzApagada = cargarImagenMosaico("FinLuz.png", 2560, 801, 1, 2);
 
@@ -185,6 +203,10 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionGO = cargarImagen("GameOver.png");
         regionBtnContinuar = cargarImagen("BackBot.png");
         regionBtnSalir = cargarImagen("BotonHome.png");
+        regionWin = cargarImagen("NiceJob.png");
+
+        //Efectos de sonido
+        //sonidoApagador = cargarEfecto("EncenderLuz.wav");
     }
 
     // Crea y regresa un font que carga desde un archivo .ttf
@@ -246,27 +268,29 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         Sprite btnShoot = new Sprite (ControlJuego.ANCHO_CAMARA - regionBtnShoot.getWidth()+100, regionBtnCollect.getHeight()-70, regionBtnShoot, actividadJuego.getVertexBufferObjectManager()){
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
-                if (pSceneTounchEvent.isActionDown()){
+                if (pSceneTounchEvent.isActionDown() && !gameWin && !gameOver){
                     disparar();
                 }
                 return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
             }
         };
-        attachChild(btnShoot);
-        registerTouchArea(btnShoot);
+        spriteBtnShoot = btnShoot;
+        attachChild(spriteBtnShoot);
+        registerTouchArea(spriteBtnShoot);
 
         //Crear botón COLLECT y agregarlo a la escena
         Sprite btnCollect = new Sprite (regionBtnCollect.getWidth()-100,  regionBtnCollect.getHeight()-70, regionBtnCollect, actividadJuego.getVertexBufferObjectManager()){
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
-                if (pSceneTounchEvent.isActionDown()){
+                if (pSceneTounchEvent.isActionDown() && !gameWin && !gameOver){
                     recolectarPilas();
                 }
                 return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
             }
         };
-        attachChild(btnCollect);
-        registerTouchArea(btnCollect);
+        spriteBtnCollect = btnCollect;
+        attachChild(spriteBtnCollect);
+        registerTouchArea(spriteBtnCollect);
 
         // Crea el botón de PAUSA y lo agrega a la escena
         Sprite btnPausa = new Sprite(ControlJuego.ANCHO_CAMARA - regionBtnPausa.getWidth()+21, ControlJuego.ALTO_CAMARA - regionBtnPausa.getHeight()-30, regionBtnPausa, actividadJuego.getVertexBufferObjectManager()) {
@@ -394,7 +418,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             bateriaActual = spriteBateria0;
             bateriaPasada = spriteBateria1;
         }
-        if (tiempo >= 34f && !gameOver){
+        if (tiempo >= 34f && !gameOver && !gameWin){
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
             luz.animate(100, 4);
             attachChild(luz);
@@ -404,6 +428,14 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
                         public void onTimePassed(TimerHandler pTimerHandler) {
                             actividadJuego.getEngine().unregisterUpdateHandler(pTimerHandler);
                             perdiste();
+                        }
+                    }));
+            actividadJuego.getEngine().registerUpdateHandler(new TimerHandler(2.7f,
+                    new ITimerCallback() {
+                        @Override
+                        public void onTimePassed(TimerHandler pTimerHandler) {
+                            actividadJuego.getEngine().unregisterUpdateHandler(pTimerHandler);
+                            finJuegoPerdedor();
                         }
                     }));
             gameOver = true;
@@ -466,13 +498,84 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     }
 
     private void finJuegoPerdedor(){
-        // Crea el botón de CONTINUE y lo agrega a la escena
-        Sprite btnContinuar = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnReanudar.getWidth(), ControlJuego.ALTO_CAMARA/4,
+        // Crea el botón de Retry y lo agrega a la escena
+        Sprite btnRetry = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnRetry.getWidth(), ControlJuego.ALTO_CAMARA/4,
                 regionBtnReanudar, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
                     reiniciarJuego();
+                    return true;
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        attachChild(btnRetry);
+        registerTouchArea(btnRetry);
+        AlphaModifier aparecer = new AlphaModifier(3, 0, 1);
+        btnRetry.registerEntityModifier(aparecer);
+
+        // Crea el botón de SALIR y lo agrega a la escena
+        Sprite btnSalir = new Sprite(ControlJuego.ANCHO_CAMARA/2 - regionBtnSalir.getWidth(), ControlJuego.ALTO_CAMARA/4, regionBtnSalir, actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionDown()) {
+                    onBackKeyPressed();
+                    return true;
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        attachChild(btnSalir);
+        registerTouchArea(btnSalir);
+        AlphaModifier aparecer2 = new AlphaModifier(3, 0, 1);
+        btnSalir.registerEntityModifier(aparecer2);
+    }
+
+    private void reiniciarJuego() {
+        admEscenas.liberarEscenaNvl1();
+        admEscenas.crearEscenaNvl1();
+        admEscenas.setEscena(TipoEscena.ESCENA_NVL1);
+    }
+
+    private void ganaste(){
+        //sonidoApagador.play();
+        detachChild(spriteFondoSombra);
+        detachChild(bateriaActual);
+        detachChild(spriteBtnShoot);
+        detachChild(spriteBtnCollect);
+
+        Sprite spriteGanaste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2 + 100, regionWin, actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionUp()) {
+                    onBackKeyPressed();
+                }
+                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
+        registerTouchArea(spriteGanaste);
+        attachChild(spriteGanaste);
+        ScaleModifier agrandar2 = new ScaleModifier(3, spriteGanaste.getScaleX()/3, spriteGanaste.getScaleX(), spriteGanaste.getScaleY()/3, spriteGanaste.getScaleY());
+        spriteGanaste.registerEntityModifier(agrandar2);
+    }
+
+    private void checarScore(){
+        if (score == 40 & !gameWin){
+            gameWin = true;
+            ganaste();
+            finJuegoGanador();
+        }
+    }
+
+    private void finJuegoGanador(){
+        // Crea el botón de CONTINUE y lo agrega a la escena
+        Sprite btnContinuar = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnContinuar.getWidth(), ControlJuego.ALTO_CAMARA/4,
+                regionBtnContinuar, actividadJuego.getVertexBufferObjectManager()) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionDown()) {
+                    pasarSigNivel();
                     return true;
                 }
                 return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
@@ -499,69 +602,6 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         registerTouchArea(btnSalir);
         AlphaModifier aparecer2 = new AlphaModifier(3, 0, 1);
         btnSalir.registerEntityModifier(aparecer2);
-    }
-
-    private void reiniciarJuego() {
-        admEscenas.liberarEscenaNvl1();
-        admEscenas.crearEscenaNvl1();
-        admEscenas.setEscena(TipoEscena.ESCENA_NVL1);
-    }
-
-    private void ganaste(){
-        Sprite spriteGanaste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2 + 200, regionGO, actividadJuego.getVertexBufferObjectManager()) {
-            @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pSceneTouchEvent.isActionUp()) {
-                    onBackKeyPressed();
-                }
-                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
-            }
-        };
-        registerTouchArea(spriteGanaste);
-        attachChild(spriteGanaste);
-        ScaleModifier agrandar = new ScaleModifier(3, spriteGanaste.getScaleX()/3, spriteGanaste.getScaleX(), spriteGanaste.getScaleY()/3, spriteGanaste.getScaleY());
-        spriteGanaste.registerEntityModifier(agrandar);
-    }
-
-    private void checarScore(){
-        if (score >= 2000){
-            ganaste();
-        }
-    }
-
-    private void finJuegoGanador(){
-        // Crea el botón de CONTINUE y lo agrega a la escena
-        Sprite btnContinuar = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnContinuar.getWidth(), ControlJuego.ALTO_CAMARA/4,
-                regionBtnContinuar, actividadJuego.getVertexBufferObjectManager()) {
-            @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pSceneTouchEvent.isActionDown()) {
-                    pasarSigNivel();
-                    return true;
-                }
-                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
-            }
-        };
-        attachChild(btnContinuar);
-        registerTouchArea(btnContinuar);
-        AlphaModifier aparecer = new AlphaModifier(3, 0, 100);
-        btnContinuar.registerEntityModifier(aparecer);
-
-        // Crea el botón de SALIR y lo agrega a la escena
-        Sprite btnSalir = new Sprite(ControlJuego.ANCHO_CAMARA/2 - regionBtnSalir.getWidth(), ControlJuego.ALTO_CAMARA/4,
-                regionBtnSalir, actividadJuego.getVertexBufferObjectManager()) {
-            @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pSceneTouchEvent.isActionDown()) {
-                    onBackKeyPressed();
-                    return true;
-                }
-                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
-            }
-        };
-        attachChild(btnSalir);
-        registerTouchArea(btnSalir);
-        btnSalir.registerEntityModifier(aparecer);
     }
 
     private void pasarSigNivel(){
@@ -614,6 +654,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         perderPila();
         actualizarPeluches();
         actualizarMonstruos();
+        checarScore();
 
     }
 
@@ -651,11 +692,12 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     @Override public void onAccelerationChanged(AccelerationData pAccelerationData) {
         float dx = pAccelerationData.getX();
-        float nx = spriteFondo.getX() - dx*5;  // Nueva posición de la habitacion
-        float nxs = spriteFondoSombra.getX() + dx*5;
-        float dy = pAccelerationData.getY()+6;
-        float ny = spriteFondoSombra.getY() - dy; //nueva posición del fondo negro
+        float nx = spriteFondo.getX() - dx*5;  // Nueva posicion de la habitacion
+        float nxs = spriteFondoSombra.getX() + dx*10;
+        float dy = pAccelerationData.getY()*5+35;
+        float ny = spriteFondoSombra.getY() - dy; //nueva posicion del fondo negro
         //Log.i("acelerometro", "dy=" + dy);
+
 
         if (dx < 0) {
             // Izquierda
@@ -758,6 +800,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionOsito = null;
         regionBtnSalir.getTexture().unload();
         regionBtnSalir = null;
+        regionBtnRetry.getTexture().unload();
+        regionBtnRetry = null;
         regionBtnContinuar.getTexture().unload();
         regionBtnContinuar = null;
         fontMonster.getTexture().unload();
