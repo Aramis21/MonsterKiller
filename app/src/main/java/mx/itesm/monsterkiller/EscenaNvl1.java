@@ -149,6 +149,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     // Efectos de sonido
     private Sound sonidoApagador;
+    private Sound sonidoGrito;
+    private Sound sonidoLanzar;
 
 
     @Override
@@ -206,7 +208,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionWin = cargarImagen("NiceJob.png");
 
         //Efectos de sonido
-        //sonidoApagador = cargarEfecto("EncenderLuz.wav");
+        sonidoApagador = cargarEfecto("Audio/EncenderLuz.wav");
+        sonidoGrito = cargarEfecto("Audio/Grito.mp3");
+        sonidoLanzar = cargarEfecto("Audio/LanzarPeluche.mp3");
     }
 
     // Crea y regresa un font que carga desde un archivo .ttf
@@ -269,6 +273,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
                 if (pSceneTounchEvent.isActionDown() && !gameWin && !gameOver){
+                    sonidoLanzar.play();
                     disparar();
                 }
                 return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
@@ -359,7 +364,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     }
 
     private void crearPilas(){
-        if (tiempo >= 15f && !pila1Visible){
+        if (tiempo >= 15f && !pila1Visible && !gameWin && !gameOver){
             spriteFondo.attachChild(spritePila1);
             pila1Visible = true;
         }
@@ -422,6 +427,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
             luz.animate(100, 4);
             attachChild(luz);
+            sonidoGrito.play();
             actividadJuego.getEngine().registerUpdateHandler(new TimerHandler(1.8f,
                     new ITimerCallback() {
                         @Override
@@ -533,13 +539,15 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     }
 
     private void reiniciarJuego() {
+        guardarMarcadorAlto();
         admEscenas.liberarEscenaNvl1();
         admEscenas.crearEscenaNvl1();
         admEscenas.setEscena(TipoEscena.ESCENA_NVL1);
     }
 
     private void ganaste(){
-        //sonidoApagador.play();
+        guardarMarcadorAlto();
+        sonidoApagador.play();
         detachChild(spriteFondoSombra);
         detachChild(bateriaActual);
         detachChild(spriteBtnShoot);
@@ -576,6 +584,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
                     pasarSigNivel();
+                    guardarMarcadorAlto();
                     return true;
                 }
                 return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);

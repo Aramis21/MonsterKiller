@@ -77,13 +77,14 @@ public class MapaNiveles extends EscenaBase {
 
     private void marcadorAlto() {
         // Obtener de las preferencias el marcador mayor
-        SharedPreferences preferencias = actividadJuego.getSharedPreferences("Best cor", Context.MODE_PRIVATE);
+        SharedPreferences preferencias = actividadJuego.getSharedPreferences("marcadorAlto", Context.MODE_PRIVATE);
         puntos = preferencias.getInt("puntos", 0);
     }
 
     private void agregarMenu() {
         // Crea el objeto que representa el menú
         menu = new MenuScene(actividadJuego.camara);
+        marcadorAlto();
 
         // Centrado en la pantalla
         menu.setPosition(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2);
@@ -95,7 +96,7 @@ public class MapaNiveles extends EscenaBase {
             estrella5 = regionGray5;
         }
 
-        if (puntos>= 80){
+        if (puntos>= 20){
             estrella2 = regionStar2;
             estrella3 = regionGray3;
             estrella4 = regionGray4;

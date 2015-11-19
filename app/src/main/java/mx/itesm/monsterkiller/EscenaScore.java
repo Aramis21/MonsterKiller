@@ -63,9 +63,9 @@ public class EscenaScore extends EscenaOpciones {
 
     private void agregarMarcadorAlto() {
         // Obtener de las preferencias el marcador mayor
-        SharedPreferences preferencias = actividadJuego.getSharedPreferences("Best cor", Context.MODE_PRIVATE);
+        SharedPreferences preferencias = actividadJuego.getSharedPreferences("marcadorAlto", Context.MODE_PRIVATE);
         int puntos = preferencias.getInt("puntos", 0);
-        int actual = preferencias.getInt("actual", 0);
+        int actual = preferencias.getInt("score", 0);
 
         txtMarcador = new Text(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2 + 150, fontMonster,"Best score: "+ puntos, actividadJuego.getVertexBufferObjectManager());
         attachChild(txtMarcador);
