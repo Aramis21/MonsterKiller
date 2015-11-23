@@ -53,6 +53,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private ArrayList<Monstruos> listaMonst;
     private TiledTextureRegion regionMonstruo1;
     private TiledTextureRegion regionMonstruo2;
+    private TiledTextureRegion regionMonstruo3;
 
     //pilas
     private ITextureRegion regionPila;
@@ -176,6 +177,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         //Monstruos
         regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
         regionMonstruo2 = cargarImagenMosaico("Monster2.png", 969, 301, 1, 5);
+        regionMonstruo3 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
 
         //Osito
         regionOsito = cargarImagen("Conejo.png");
@@ -196,7 +198,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionOjo = cargarImagenMosaico("Ojo3.png", 270, 97, 1, 4);
 
         //Btn retry
-        regionBtnRetry = cargarImagen("BtnRetry.png");
+        regionBtnRetry = cargarImagen("BackBot.png");
 
         //luz apagada
         regionLuzApagada = cargarImagenMosaico("FinLuz.png", 2560, 801, 1, 2);
@@ -325,6 +327,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         AnimatedSprite spriteOjo = cargarAnimatedSprite(670, 500, regionOjo);
         spriteOjo.animate(250);
         escenaPausa.attachChild(spriteOjo);
+
+        // Reproduce música de fondo
+        actividadJuego.reproducirMusica("Audio/Marty Gots a Plan.mp3",true);
     }
 
     private void agregarTexto() {
@@ -353,7 +358,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private void agregarMonstruos(){
 
         AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, 300, regionMonstruo1);
-        Monstruos monstruo = new Monstruos(monster, 2);
+        Monstruos monstruo = new Monstruos(monster, 3);
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
@@ -361,6 +366,11 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         Monstruos monstruo2 = new Monstruos(monster2, 1);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
+
+        AnimatedSprite monster3 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo3);
+        Monstruos monstruo3 = new Monstruos(monster3, 2);
+        listaMonst.add(monstruo3);
+        spriteFondo.attachChild(monstruo3.getSprite());
     }
 
     private void crearPilas(){
@@ -427,6 +437,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
             luz.animate(100, 4);
             attachChild(luz);
+            actividadJuego.detenerMusica();
             sonidoGrito.play();
             actividadJuego.getEngine().registerUpdateHandler(new TimerHandler(1.8f,
                     new ITimerCallback() {
@@ -505,8 +516,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     private void finJuegoPerdedor(){
         // Crea el botón de Retry y lo agrega a la escena
-        Sprite btnRetry = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnRetry.getWidth(), ControlJuego.ALTO_CAMARA/4,
-                regionBtnReanudar, actividadJuego.getVertexBufferObjectManager()) {
+        Sprite btnRetry = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnRetry.getWidth(), ControlJuego.ALTO_CAMARA/4, regionBtnRetry, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
@@ -578,7 +588,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     private void finJuegoGanador(){
         // Crea el botón de CONTINUE y lo agrega a la escena
-        Sprite btnContinuar = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnContinuar.getWidth(), ControlJuego.ALTO_CAMARA/4,
+        Sprite btnContinuar = new Sprite(ControlJuego.ANCHO_CAMARA/2 + regionBtnContinuar.getWidth(), ControlJuego.ALTO_CAMARA/3,
                 regionBtnContinuar, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -596,7 +606,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         btnContinuar.registerEntityModifier(aparecer);
 
         // Crea el botón de SALIR y lo agrega a la escena
-        Sprite btnSalir = new Sprite(ControlJuego.ANCHO_CAMARA/2 - regionBtnSalir.getWidth(), ControlJuego.ALTO_CAMARA/4,
+        Sprite btnSalir = new Sprite(ControlJuego.ANCHO_CAMARA/2 - regionBtnSalir.getWidth(), ControlJuego.ALTO_CAMARA/3,
                 regionBtnSalir, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -670,7 +680,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private void actualizarMonstruos() {
         for (int k = listaMonst.size() - 1; k >= 0; k--) {
             Monstruos monstruo = listaMonst.get(k);
-            monstruo.movimiento();
+            monstruo.movimiento(this);
         }
     }
 
@@ -815,5 +825,9 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionBtnContinuar = null;
         fontMonster.getTexture().unload();
         fontMonster = null;
+    }
+
+    public Sprite getSpriteFondo() {
+        return spriteFondo;
     }
 }

@@ -3,6 +3,7 @@ package mx.itesm.monsterkiller;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.andengine.audio.sound.Sound;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.ScaleModifier;
@@ -29,11 +30,17 @@ public class EscenaScore extends EscenaOpciones {
     //marcador anterior
     private Text txtAnterior;
 
+    // Efectos de sonido
+    private Sound sonidoSplat;
+
     public void cargarRecursos() {
         regionFondo = cargarImagen("FondoScore.png");
 
         // Marcador
         fontMonster = cargarFont("Fonts/Alice and the Wicked Monster.ttf",140,0xFFD5EDF7,"Best cor La:0123456789");
+
+        //Efectos de sonido
+        sonidoSplat = cargarEfecto("Audio/Splat.mp3");
     }
 
     @Override
@@ -45,7 +52,7 @@ public class EscenaScore extends EscenaOpciones {
                     public void onTimePassed(TimerHandler pTimerHandler) {
                         actividadJuego.getEngine().unregisterUpdateHandler(pTimerHandler);
                         spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
-                        ScaleModifier agrandar = new ScaleModifier(0.77f, 0, spriteFondo.getScaleX(), 0, spriteFondo.getScaleY());
+                        ScaleModifier agrandar = new ScaleModifier(0.7f, 0, spriteFondo.getScaleX(), 0, spriteFondo.getScaleY());
                         attachChild(spriteFondo);
                         spriteFondo.registerEntityModifier(agrandar);
                     }
@@ -56,6 +63,7 @@ public class EscenaScore extends EscenaOpciones {
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
                         actividadJuego.getEngine().unregisterUpdateHandler(pTimerHandler);
+                        sonidoSplat.play();
                         agregarMarcadorAlto();
                     }
                 }));

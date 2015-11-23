@@ -210,6 +210,8 @@ public class MapaNiveles extends EscenaBase {
     public void liberarEscena() {
         this.detachSelf();
         this.dispose();
+
+        liberarRecursos();
     }
 
     @Override

@@ -1,5 +1,7 @@
 package mx.itesm.monsterkiller;
 
+import android.util.Log;
+
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.AnimatedSprite;
@@ -16,7 +18,6 @@ public class Monstruos {
     private int DX = -5;
     private int DY = -6;
     private int DXX = -10;
-    private int DYY = -12;
     private int acumulador = 0;
 
 
@@ -38,7 +39,7 @@ public class Monstruos {
         this.spriteMonster = sprite;
     }
 
-    public void movimiento() {
+    public void movimiento(EscenaBase escena) {
         if (tipo == 1){
             spriteMonster.setX(spriteMonster.getX()+ DX);
             acumulador = acumulador + 3;
@@ -105,10 +106,13 @@ public class Monstruos {
                 DY= DY*(-1);
             }
             if (spriteMonster.getX()< 1900 && spriteMonster.getX()> 600 && spriteMonster.getY() < 480 && spriteMonster.getY() > 220) {
+                Log.i("cumplio cond 1", "cond 1");
                 if (acumulador >= 400) {
-                    spriteMonster.setX(spriteMonster.getX() + (DXX * 60));
-                    spriteMonster.setY(spriteMonster.getY() + (DY * 20));
-                    acumulador = 0;
+                    ((EscenaNvl1)escena).getSpriteFondo().detachChild(spriteMonster);
+                }
+                if (acumulador >= 900) {
+                    ((EscenaNvl1)escena).getSpriteFondo().attachChild(spriteMonster);
+                    acumulador=0;
                 }
             }
         }

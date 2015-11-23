@@ -1,9 +1,29 @@
 package mx.itesm.monsterkiller;
 
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.texture.region.ITextureRegion;
+
 /**
  * Created by Aramis on 09/11/15.
  */
 public class EscenaLogros extends EscenaOpciones {
+
+    //region fondo
+    private ITextureRegion regionFondo;
+
+    //sprite fondo
+    private Sprite spriteFondo;
+
+    public void cargarRecursos() {
+        regionFondo = cargarImagen("FondoLogros.jpg");
+    }
+
+    @Override
+    public void crearEscena(){
+
+        spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
+        attachChild(spriteFondo);
+    }
 
     @Override
     public TipoEscena onBackKeyPressed() {

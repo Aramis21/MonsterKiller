@@ -64,16 +64,10 @@ public class EscenaMenu extends EscenaBase {
         //agregarFondoMenu();
         // Mostrar opciones de menú
         agregarMenu();
+
+        actividadJuego.reproducirMusica("Audio/Sneaky Snitch.mp3",true);
     }
 
-    /*
-    private void agregarFondoMenu() {
-        Rectangle cuadro = new Rectangle(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2,
-                0.75f*ControlJuego.ANCHO_CAMARA, 0.75f*ControlJuego.ALTO_CAMARA, actividadJuego.getVertexBufferObjectManager());
-        cuadro.setColor(0.8f, 0.8f, 0.8f, 0.4f);
-        attachChild(cuadro);
-    }
-    */
 
     private void agregarMenu() {
         // Crea el objeto que representa el menú

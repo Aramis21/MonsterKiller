@@ -1,6 +1,9 @@
 package mx.itesm.monsterkiller;
 
 import android.view.KeyEvent;
+
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -19,8 +22,7 @@ import java.io.IOException;
 Esta clase representa el Juego Principal. Muestra la escena de Splash y luego hace el cambio
 a la primer escena que se quiera mostrar
  */
-public class ControlJuego extends SimpleBaseGameActivity
-{
+public class ControlJuego extends SimpleBaseGameActivity {
     // Dimensiones de la cámara. Se ajustará (escalará) a cualquier pantalla física.
     public static final int ANCHO_CAMARA = 1280;
     public static final int ALTO_CAMARA = 800;
@@ -28,6 +30,11 @@ public class ControlJuego extends SimpleBaseGameActivity
     protected Camera camara;
     // El administrador de escenas (se encarga de cambiar las escenas)
     private AdministradorEscenas admEscenas;
+
+    // MUSICA DE FONDO, los efectos de sonido se cargan en cada escena
+    private Music musica;
+
+    int sound;
 
     /*
     Se crea la configuración del Engine.
@@ -103,5 +110,55 @@ public class ControlJuego extends SimpleBaseGameActivity
         if (admEscenas!=null) {
             System.exit(0);
         }
+    }
+
+    // Reproducir música de fondo
+    public void reproducirMusica(String archivo, boolean loop) {
+        if (sound == 1){
+            if (musica!=null) {
+                musica.stop();
+                musica.release();
+                musica = null;
+            }
+            // Carga el archivo mp3
+            try {
+                musica = MusicFactory.createMusicFromAsset(getMusicManager(),
+                        this, archivo);
+                musica.setLooping(loop);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            musica.play();
+        }
+
+    }
+
+    public void detenerMusica() {
+
+        if (sound ==0){
+            if (musica!=null) {
+                musica.stop();
+                musica.release();
+                musica = null;
+            }
+        }
+    }
+
+    // Ciclo de vida del juego
+    @Override
+    public synchronized void onResumeGame() {
+        if(musica != null && !musica.isPlaying()){
+            musica.play();
+        }
+        super.onResumeGame();
+    }
+
+    @Override
+    public synchronized void onPauseGame() {
+        if(musica != null && musica.isPlaying()){
+            musica.pause();
+        }
+        super.onPauseGame();
     }
 }

@@ -88,6 +88,7 @@ public class EscenaOpciones extends EscenaBase {
                 if (pSceneTouchEvent.isActionDown()) {
                     // Cambia el índice entre 0 y 1 ed manera alternada
                     btnMusic.setCurrentTileIndex((btnMusic.getCurrentTileIndex()+1)%2);
+                    actividadJuego.sound=btnMusic.getCurrentTileIndex();
                 }
                 // 0-NORMAL, 1-PRESIONADO
                 Log.i("Musica", "" + btnMusic.getCurrentTileIndex());
