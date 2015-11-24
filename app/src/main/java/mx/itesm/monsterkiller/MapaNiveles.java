@@ -239,4 +239,8 @@ public class MapaNiveles extends EscenaBase {
         regionStar5.getTexture().unload();
         regionStar5 = null;
     }
+
+    public Sprite getSpriteFondo() {
+        return spriteFondo;
+    }
 }
