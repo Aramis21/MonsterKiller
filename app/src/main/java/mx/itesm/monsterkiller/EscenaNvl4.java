@@ -54,6 +54,9 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
     private TiledTextureRegion regionMonstruo1;
     private TiledTextureRegion regionMonstruo2;
     private TiledTextureRegion regionMonstruo3;
+    private TiledTextureRegion regionMonstruo4;
+    private TiledTextureRegion regionMonstruo5;
+    private TiledTextureRegion regionMonstruo6;
 
     //pilas
     private ITextureRegion regionPila;
@@ -179,6 +182,9 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
         regionMonstruo2 = cargarImagenMosaico("Monster2.png", 969, 301, 1, 5);
         regionMonstruo3 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
+        regionMonstruo4 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
+        regionMonstruo5 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
+        regionMonstruo6 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
 
         //Osito
         regionOsito = cargarImagen("Conejo.png");
@@ -373,6 +379,21 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         Monstruos monstruo3 = new Monstruos(monster3, 2, -7, -8);
         listaMonst.add(monstruo3);
         spriteFondo.attachChild(monstruo3.getSprite());
+
+        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo4);
+        Monstruos monstruo4 = new Monstruos(monster4, 3, -5, -8);
+        listaMonst.add(monstruo4);
+        spriteFondo.attachChild(monstruo4.getSprite());
+
+        AnimatedSprite monster5 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo5);
+        Monstruos monstruo5 = new Monstruos(monster5, 3, -10, -8);
+        listaMonst.add(monstruo5);
+        spriteFondo.attachChild(monstruo5.getSprite());
+
+        AnimatedSprite monster6 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo6);
+        Monstruos monstruo6 = new Monstruos(monster5, 3, -10, -8);
+        listaMonst.add(monstruo6);
+        spriteFondo.attachChild(monstruo6.getSprite());
     }
 
     private void crearPilas(){
@@ -397,37 +418,37 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
     }
 
     private void perderPila(){
-        if (tiempo <= 10f){
+        if (tiempo <= 4f){
         }
-        if (tiempo > 10f && tiempo <=15f && !bat4Visible){
+        if (tiempo > 4f && tiempo <=9f && !bat4Visible){
             eliminarSprite(spriteBateria5); //detachChild(spriteBateria5);
             attachChild(spriteBateria4);
             bat4Visible = true;
             bateriaActual = spriteBateria4;
             bateriaPasada = spriteBateria5;
         }
-        if (tiempo > 15f && tiempo <=20f && !bat3Visible){
+        if (tiempo > 9f && tiempo <=14f && !bat3Visible){
             eliminarSprite(spriteBateria4); //detachChild(spriteBateria4);
             attachChild(spriteBateria3);
             bat3Visible = true;
             bateriaActual = spriteBateria3;
             bateriaPasada = spriteBateria4;
         }
-        if (tiempo > 20f && tiempo <=25f && !bat2Visible){
+        if (tiempo > 14f && tiempo <=19f && !bat2Visible){
             eliminarSprite(spriteBateria3); //detachChild(spriteBateria3);
             attachChild(spriteBateria2);
             bat2Visible = true;
             bateriaActual = spriteBateria2;
             bateriaPasada = spriteBateria3;
         }
-        if (tiempo >25f && tiempo <= 30f && !bat1Visible){
+        if (tiempo >19f && tiempo <= 24f && !bat1Visible){
             eliminarSprite(spriteBateria2); //detachChild(spriteBateria2);
             attachChild(spriteBateria1);
             bat1Visible = true;
             bateriaActual = spriteBateria1;
             bateriaPasada = spriteBateria2;
         }
-        if (tiempo >30f && tiempo <=34f && !bat0Visible){
+        if (tiempo >24f && tiempo <=29f && !bat0Visible){
             eliminarSprite(spriteBateria1);
             //detachChild(spriteBateria1);
             attachChild(spriteBateria0);
@@ -435,7 +456,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
             bateriaActual = spriteBateria0;
             bateriaPasada = spriteBateria1;
         }
-        if (tiempo >= 34f && !gameOver && !gameWin){
+        if (tiempo >= 29f && !gameOver && !gameWin){
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
             luz.animate(100, 4);
             attachChild(luz);
@@ -582,7 +603,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
     }
 
     private void checarScore(){
-        if (score == 40 & !gameWin){
+        if (score == 120 & !gameWin){
             gameWin = true;
             ganaste();
             finJuegoGanador();
@@ -802,6 +823,14 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         regionBateria5 = null;
         regionMonstruo2.getTexture().unload();
         regionMonstruo2=null;
+        regionMonstruo3.getTexture().unload();
+        regionMonstruo3=null;
+        regionMonstruo4.getTexture().unload();
+        regionMonstruo4=null;
+        regionMonstruo5.getTexture().unload();
+        regionMonstruo5=null;
+        regionMonstruo6.getTexture().unload();
+        regionMonstruo6=null;
         regionLuzApagada.getTexture().unload();
         regionLuzApagada = null;
         regionGO.getTexture().unload();

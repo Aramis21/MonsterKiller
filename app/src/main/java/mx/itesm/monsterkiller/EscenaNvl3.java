@@ -411,37 +411,37 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
     }
 
     private void perderPila(){
-        if (tiempo <= 10f){
+        if (tiempo <= 6f){
         }
-        if (tiempo > 10f && tiempo <=15f && !bat4Visible){
+        if (tiempo > 6f && tiempo <=11f && !bat4Visible){
             eliminarSprite(spriteBateria5); //detachChild(spriteBateria5);
             attachChild(spriteBateria4);
             bat4Visible = true;
             bateriaActual = spriteBateria4;
             bateriaPasada = spriteBateria5;
         }
-        if (tiempo > 15f && tiempo <=20f && !bat3Visible){
+        if (tiempo > 11f && tiempo <=16f && !bat3Visible){
             eliminarSprite(spriteBateria4); //detachChild(spriteBateria4);
             attachChild(spriteBateria3);
             bat3Visible = true;
             bateriaActual = spriteBateria3;
             bateriaPasada = spriteBateria4;
         }
-        if (tiempo > 20f && tiempo <=25f && !bat2Visible){
+        if (tiempo > 16f && tiempo <=21f && !bat2Visible){
             eliminarSprite(spriteBateria3); //detachChild(spriteBateria3);
             attachChild(spriteBateria2);
             bat2Visible = true;
             bateriaActual = spriteBateria2;
             bateriaPasada = spriteBateria3;
         }
-        if (tiempo >25f && tiempo <= 30f && !bat1Visible){
+        if (tiempo >21f && tiempo <= 26f && !bat1Visible){
             eliminarSprite(spriteBateria2); //detachChild(spriteBateria2);
             attachChild(spriteBateria1);
             bat1Visible = true;
             bateriaActual = spriteBateria1;
             bateriaPasada = spriteBateria2;
         }
-        if (tiempo >30f && tiempo <=34f && !bat0Visible){
+        if (tiempo >26f && tiempo <=31f && !bat0Visible){
             eliminarSprite(spriteBateria1);
             //detachChild(spriteBateria1);
             attachChild(spriteBateria0);
@@ -449,7 +449,7 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
             bateriaActual = spriteBateria0;
             bateriaPasada = spriteBateria1;
         }
-        if (tiempo >= 34f && !gameOver && !gameWin){
+        if (tiempo >= 31f && !gameOver && !gameWin){
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
             luz.animate(100, 4);
             attachChild(luz);
@@ -596,7 +596,7 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
     }
 
     private void checarScore(){
-        if (score == 40 & !gameWin){
+        if (score == 100 & !gameWin){
             gameWin = true;
             ganaste();
             finJuegoGanador();
@@ -816,6 +816,12 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
         regionBateria5 = null;
         regionMonstruo2.getTexture().unload();
         regionMonstruo2=null;
+        regionMonstruo3.getTexture().unload();
+        regionMonstruo3=null;
+        regionMonstruo4.getTexture().unload();
+        regionMonstruo4=null;
+        regionMonstruo5.getTexture().unload();
+        regionMonstruo5=null;
         regionLuzApagada.getTexture().unload();
         regionLuzApagada = null;
         regionGO.getTexture().unload();

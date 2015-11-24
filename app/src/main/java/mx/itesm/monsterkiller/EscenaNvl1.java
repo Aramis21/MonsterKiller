@@ -561,7 +561,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     }
 
     private void checarScore(){
-        if (score == 40 & !gameWin){
+        if (score == 60 & !gameWin){
             gameWin = true;
             ganaste();
             finJuegoGanador();
@@ -808,6 +808,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         regionBtnContinuar = null;
         fontMonster.getTexture().unload();
         fontMonster = null;
+        regionMonstruo3.getTexture().unload();
+        regionMonstruo3 = null;
     }
 
     public Sprite getSpriteFondo() {
