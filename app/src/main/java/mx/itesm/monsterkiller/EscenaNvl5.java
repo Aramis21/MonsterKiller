@@ -152,6 +152,7 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
     private Sound sonidoApagador;
     private Sound sonidoGrito;
     private Sound sonidoLanzar;
+    private Sound sonidoRugido;
 
 
     @Override
@@ -213,6 +214,7 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
         sonidoApagador = cargarEfecto("Audio/EncenderLuz.wav");
         sonidoGrito = cargarEfecto("Audio/Grito.mp3");
         sonidoLanzar = cargarEfecto("Audio/LanzarPeluche.mp3");
+        sonidoRugido = cargarEfecto("Audio/Monstruo.mp3");
     }
 
     // Crea y regresa un font que carga desde un archivo .ttf
@@ -444,6 +446,7 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
                         @Override
                         public void onTimePassed(TimerHandler pTimerHandler) {
                             actividadJuego.getEngine().unregisterUpdateHandler(pTimerHandler);
+                            sonidoRugido.play();
                             perdiste();
                         }
                     }));

@@ -159,6 +159,7 @@ public class EscenaMenu extends EscenaBase {
 
     @Override
     public void liberarEscena() {
+        actividadJuego.detenerMusica();
         this.detachSelf();      // La escena se deconecta del engine
         this.dispose();         // Libera la memoria
         liberarRecursos();

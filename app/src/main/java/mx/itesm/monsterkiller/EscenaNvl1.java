@@ -151,6 +151,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private Sound sonidoApagador;
     private Sound sonidoGrito;
     private Sound sonidoLanzar;
+    private Sound sonidoRugido;
 
 
     @Override
@@ -176,7 +177,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         //Monstruos
         regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
         regionMonstruo2 = cargarImagenMosaico("Monster2.png", 969, 301, 1, 5);
-        regionMonstruo3 = cargarImagenMosaico("Monster1.png", 800,  198, 1, 6);
+        regionMonstruo3 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
 
         //Osito
         regionOsito = cargarImagen("Conejo.png");
@@ -212,6 +213,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         sonidoApagador = cargarEfecto("Audio/EncenderLuz.wav");
         sonidoGrito = cargarEfecto("Audio/Grito.mp3");
         sonidoLanzar = cargarEfecto("Audio/LanzarPeluche.mp3");
+        sonidoRugido = cargarEfecto("Audio/Monstruo.mp3");
     }
 
     // Crea y regresa un font que carga desde un archivo .ttf
@@ -428,16 +430,17 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             bateriaPasada = spriteBateria1;
         }
         if (tiempo >= 34f && !gameOver && !gameWin){
+            actividadJuego.detenerMusica();
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
             luz.animate(100, 4);
             attachChild(luz);
-            actividadJuego.detenerMusica();
             sonidoGrito.play();
             actividadJuego.getEngine().registerUpdateHandler(new TimerHandler(1.8f,
                     new ITimerCallback() {
                         @Override
                         public void onTimePassed(TimerHandler pTimerHandler) {
                             actividadJuego.getEngine().unregisterUpdateHandler(pTimerHandler);
+                            sonidoRugido.play();
                             perdiste();
                         }
                     }));
@@ -469,7 +472,6 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
                     tiempo = tiempo - 5;
                     detachChild(bateriaActual);
                     detachChild(spritePila1);
-                    //attachChild(bateriaPasada);
                     bat0Visible = bat1Visible = bat2Visible = bat3Visible = bat4Visible = false;
                     Log.i("PILA", "recolecta 1");
                 }
@@ -477,7 +479,6 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         }
 
     }
-
 
     private void perdiste(){
         Sprite spritePerdiste = new Sprite(ControlJuego.ANCHO_CAMARA/2,ControlJuego.ALTO_CAMARA/2 + 100, regionGO, actividadJuego.getVertexBufferObjectManager()) {
@@ -755,6 +756,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     public void liberarRecursos() {
         //Detiene el acelerometro
         actividadJuego.getEngine().disableAccelerationSensor(actividadJuego);
+        actividadJuego.detenerMusica();
 
         regionFondo.getTexture().unload();
         regionFondo = null;

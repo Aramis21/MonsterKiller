@@ -15,7 +15,7 @@ public class EscenaCreditos extends EscenaBase {
 
     @Override
     public void cargarRecursos() {
-        regionFondo = cargarImagen("CreditF.jpg");
+        regionFondo = cargarImagen("FondoCredits.jpg");
     }
 
     @Override

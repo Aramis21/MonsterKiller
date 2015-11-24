@@ -64,24 +64,24 @@ public class EscenaLogros extends EscenaOpciones {
         }
 
         if (puntos>= 20){
-            regtrofeo1 = regionTrofeo1;
+            regtrofeo1 = regionTrofeoG1;
             regtrofeo2 = regionTrofeoG2;
             regtrofeo3 = regionTrofeoG3;
-            regtrofeo4 = regionTrofeoG4;
+            regtrofeo4 = regionTrofeo4;
         }
 
         if (puntos >= 120){
-            regtrofeo1 = regionTrofeo1;
-            regtrofeo2 = regionTrofeo2;
-            regtrofeo3 = regionTrofeoG3;
-            regtrofeo4 = regionTrofeoG4;
+            regtrofeo1 = regionTrofeoG1;
+            regtrofeo2 = regionTrofeoG2;
+            regtrofeo3 = regionTrofeo3;
+            regtrofeo4 = regionTrofeo4;
 
         }
         if (puntos >= 160){
-            regtrofeo1 = regionTrofeo1;
+            regtrofeo1 = regionTrofeoG1;
             regtrofeo2 = regionTrofeo2;
             regtrofeo3 = regionTrofeo3;
-            regtrofeo4 = regionTrofeoG4;
+            regtrofeo4 = regionTrofeo4;
 
         }
         if (puntos >= 200){
