@@ -129,8 +129,22 @@ public class EscenaLogros extends EscenaOpciones {
 
     @Override
     public void liberarRecursos() {
-        //regionFondo.getTexture().unload();
-        //regionFondo = null;
+        regionTrofeoG1.getTexture().unload();
+        regionTrofeoG1 = null;
+        regionTrofeoG2.getTexture().unload();
+        regionTrofeoG2 = null;
+        regionTrofeoG3.getTexture().unload();
+        regionTrofeoG3 = null;
+        regionTrofeoG4.getTexture().unload();
+        regionTrofeoG4 = null;
+        regionTrofeo1.getTexture().unload();
+        regionTrofeo1 = null;
+        regionTrofeo2.getTexture().unload();
+        regionTrofeo2 = null;
+        regionTrofeo3.getTexture().unload();
+        regionTrofeo3 = null;
+        regionTrofeo4.getTexture().unload();
+        regionTrofeo4 = null;
     }
 
 

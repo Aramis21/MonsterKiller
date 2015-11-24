@@ -54,6 +54,7 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
     private TiledTextureRegion regionMonstruo1;
     private TiledTextureRegion regionMonstruo2;
     private TiledTextureRegion regionMonstruo3;
+    private TiledTextureRegion regionMonstruo4;
 
     //pilas
     private ITextureRegion regionPila;
@@ -178,6 +179,7 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
         regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
         regionMonstruo2 = cargarImagenMosaico("Monster2.png", 969, 301, 1, 5);
         regionMonstruo3 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
+        regionMonstruo4 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
 
         //Osito
         regionOsito = cargarImagen("Conejo.png");
@@ -358,19 +360,24 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
     private void agregarMonstruos(){
 
         AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, 300, regionMonstruo1);
-        Monstruos monstruo = new Monstruos(monster, 3);
+        Monstruos monstruo = new Monstruos(monster, 2, -7, -8);
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
         AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(250*Math.random())+100, regionMonstruo2);
-        Monstruos monstruo2 = new Monstruos(monster2, 1);
+        Monstruos monstruo2 = new Monstruos(monster2, 1, -7, -8);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
 
         AnimatedSprite monster3 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo3);
-        Monstruos monstruo3 = new Monstruos(monster3, 2);
+        Monstruos monstruo3 = new Monstruos(monster3, 2, -9, -7);
         listaMonst.add(monstruo3);
         spriteFondo.attachChild(monstruo3.getSprite());
+
+        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo4);
+        Monstruos monstruo4 = new Monstruos(monster4, 2, -5,-8);
+        listaMonst.add(monstruo4);
+        spriteFondo.attachChild(monstruo4.getSprite());
     }
 
     private void crearPilas(){

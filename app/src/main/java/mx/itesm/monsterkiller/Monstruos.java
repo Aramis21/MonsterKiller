@@ -15,20 +15,22 @@ public class Monstruos {
 
 
 
-    private int DX = -5;
-    private int DY = -6;
-    private int DXX = -10;
-    private int acumulador = 0;
+    private int DX;
+    private int DY;
+    private int tipo;
 
+    private int acumulador = 0;
 
     private AnimatedSprite spriteMonster;
 
-    private int tipo;
 
-    public Monstruos(AnimatedSprite sprite, int tipo) {
+
+    public Monstruos(AnimatedSprite sprite, int tipo, int DX, int DY) {
         this.spriteMonster = sprite;
         this.spriteMonster.animate(200);
         this.tipo = tipo;
+        this.DX = DX;
+        this.DY = DY;
     }
 
     public AnimatedSprite getSprite(){
@@ -88,16 +90,16 @@ public class Monstruos {
         }
 
         if (tipo == 3){
-            spriteMonster.setX(spriteMonster.getX()+ DXX);
+            spriteMonster.setX(spriteMonster.getX()+ DX);
             spriteMonster.setY(spriteMonster.getY()+ DY);
             acumulador = acumulador + 4;
             if (spriteMonster.getX()>2550){
                 spriteMonster.setFlippedHorizontal(false);
-                DXX = DXX*(-1);
+                DX = DX*(-1);
             }
             if (spriteMonster.getX()<100 ){
                 spriteMonster.setFlippedHorizontal(true);
-                DXX = DXX*(-1);
+                DX = DX*(-1);
             }
             if (spriteMonster.getY()> 600){
                 DY = DY*(-1);

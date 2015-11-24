@@ -110,7 +110,6 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     //banderas de pilas
     private boolean pila1Visible = false;
-    private boolean pila2Visible = false;
 
     //banderas de game over
     private boolean gameOver = false;
@@ -177,7 +176,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         //Monstruos
         regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
         regionMonstruo2 = cargarImagenMosaico("Monster2.png", 969, 301, 1, 5);
-        regionMonstruo3 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
+        regionMonstruo3 = cargarImagenMosaico("Monster1.png", 800,  198, 1, 6);
 
         //Osito
         regionOsito = cargarImagen("Conejo.png");
@@ -242,8 +241,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         attachChild(spriteFondo);
 
         //Pilas
-        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
-        spritePila2 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
+        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(200*Math.random())+100, regionPila);
         crearPilas();
 
         //Monstruos
@@ -358,29 +356,25 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private void agregarMonstruos(){
 
         AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, 300, regionMonstruo1);
-        Monstruos monstruo = new Monstruos(monster, 3);
+        Monstruos monstruo = new Monstruos(monster, 2, -5, -6);
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
         AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(250*Math.random())+100, regionMonstruo2);
-        Monstruos monstruo2 = new Monstruos(monster2, 1);
+        Monstruos monstruo2 = new Monstruos(monster2, 1, -5, -6);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
 
         AnimatedSprite monster3 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo3);
-        Monstruos monstruo3 = new Monstruos(monster3, 2);
+        Monstruos monstruo3 = new Monstruos(monster3, 2, -7, -8);
         listaMonst.add(monstruo3);
         spriteFondo.attachChild(monstruo3.getSprite());
     }
 
     private void crearPilas(){
-        if (tiempo >= 15f && !pila1Visible && !gameWin && !gameOver){
+        if (tiempo >= 18f && !pila1Visible && !gameWin && !gameOver){
             spriteFondo.attachChild(spritePila1);
             pila1Visible = true;
-        }
-        if (tiempo >= 20f && !pila2Visible){
-            spriteFondo.attachChild(spritePila2);
-            pila2Visible = true;
         }
     }
 
@@ -467,7 +461,6 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     private void recolectarPilas(){
         float px1 = spriteFondo.getX() + spritePila1.getX() - spriteFondo.getWidth()/2;
-        float px2 = spriteFondo.getX() + spritePila2.getX() - spriteFondo.getWidth()/2;
 
         if (spritePila1.hasParent()) {
             if (spriteFondoSombra.getX() >= (px1 - 200) && spriteFondoSombra.getX() <= (px1 + 200) && spriteFondoSombra.getY() >= (spritePila1.getY() - 200) && spriteFondoSombra.getY() <= (spritePila1.getY() + 200)) {
@@ -482,19 +475,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
                 }
             }
         }
-        if (spritePila2.hasParent()) {
-            if (spriteFondoSombra.getX() >= (px2 - 200) && spriteFondoSombra.getX() <= (px2 + 200) && spriteFondoSombra.getY() >= (spritePila2.getY() - 200) && spriteFondoSombra.getY() <= (spritePila2.getY() + 200)) {
-                spriteFondo.detachChild(spritePila2);
-                if (tiempo > 15) {
-                    tiempo = tiempo - 5;
-                    detachChild(bateriaActual);
-                    detachChild(spritePila2);
-                    bat0Visible = bat1Visible = bat2Visible = bat3Visible = bat4Visible = false;
-                    //attachChild(bateriaPasada);
-                    Log.i("PILA", "recolecta 2");
-                }
-            }
-        }
+
     }
 
 
