@@ -106,7 +106,6 @@ public class Monstruos {
                 DY= DY*(-1);
             }
             if (spriteMonster.getX()< 1900 && spriteMonster.getX()> 600 && spriteMonster.getY() < 480 && spriteMonster.getY() > 220) {
-                Log.i("cumplio cond 1", "cond 1");
                 if (acumulador >= 400) {
                     ((EscenaNvl1)escena).getSpriteFondo().detachChild(spriteMonster);
                 }

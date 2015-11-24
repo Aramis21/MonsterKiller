@@ -53,7 +53,7 @@ public class MapaNiveles extends EscenaBase {
 
     @Override
     public void cargarRecursos() {
-        regionFondo = cargarImagen("FondoNivelespt1.jpg");
+        regionFondo = cargarImagen("Niveles1.jpg");
 
         regionStar1 = cargarImagen("niv1.png");
         regionStar2 = cargarImagen("niv2.png");
@@ -142,11 +142,11 @@ public class MapaNiveles extends EscenaBase {
         menu.setBackgroundEnabled(false);   // Completamente transparente
 
         // Ubicar las opciones DENTRO del menú. El centro del menú es (0,0)
-        opcion1.setPosition(190, -210);
-        opcion2.setPosition(-170,-100);
-        opcion3.setPosition(-80, 112);
-        opcion4.setPosition(200, 130);
-        opcion5.setPosition(270, -30);
+        opcion1.setPosition(215, -210);
+        opcion2.setPosition(-170,-70);
+        opcion3.setPosition(-80, 150);
+        opcion4.setPosition(250, 170);
+        opcion5.setPosition(270, -10);
 
         // Registra el Listener para atender las opciones
         menu.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {

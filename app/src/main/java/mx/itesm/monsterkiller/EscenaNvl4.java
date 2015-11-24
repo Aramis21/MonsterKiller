@@ -167,12 +167,12 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         regionBtnCollect = cargarImagen("BotCollect.png");
 
         //bateria
-        regionBateria5 = cargarImagen("Llena.png");
-        regionBateria4 = cargarImagen("Llena2.png");
-        regionBateria3 = cargarImagen("Media.png");
-        regionBateria2 = cargarImagen("media2.png");
-        regionBateria1 = cargarImagen("Muerta.png");
-        regionBateria0 = cargarImagen("Empty.png");
+        regionBateria5 = cargarImagen("Pila5.png");
+        regionBateria4 = cargarImagen("Pila4.png");
+        regionBateria3 = cargarImagen("Pila3.png");
+        regionBateria2 = cargarImagen("Pila2.png");
+        regionBateria1 = cargarImagen("Pila1.png");
+        regionBateria0 = cargarImagen("Pila0.png");
 
         //Monstruos
         regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
