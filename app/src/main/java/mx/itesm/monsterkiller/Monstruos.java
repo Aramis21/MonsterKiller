@@ -109,10 +109,10 @@ public class Monstruos {
             }
             if (spriteMonster.getX()< 1900 && spriteMonster.getX()> 600 && spriteMonster.getY() < 480 && spriteMonster.getY() > 220) {
                 if (acumulador >= 400) {
-                    ((EscenaNvl1)escena).getSpriteFondo().detachChild(spriteMonster);
+                    escena.getSpriteFondo().detachChild(spriteMonster);
                 }
                 if (acumulador >= 900) {
-                    ((EscenaNvl1)escena).getSpriteFondo().attachChild(spriteMonster);
+                    escena.getSpriteFondo().attachChild(spriteMonster);
                     acumulador=0;
                 }
             }

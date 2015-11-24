@@ -97,7 +97,7 @@ public class EscenaOpciones extends EscenaBase {
         };
         // El estado inicial del botón se lee desde las preferencias o se toma un valor por default
         // en este demo, siempre inicia prendido
-        btnMusic.setCurrentTileIndex(1);
+        btnMusic.setCurrentTileIndex(actividadJuego.sound);
         registerTouchArea(btnMusic);
         attachChild(btnMusic);
     }
@@ -180,5 +180,8 @@ public class EscenaOpciones extends EscenaBase {
         regionBtnLogros = null;
     }
 
+    public Sprite getSpriteFondo() {
+        return spriteFondo;
+    }
 
 }

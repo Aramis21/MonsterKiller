@@ -248,8 +248,8 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
         attachChild(spriteFondo);
 
         //Pilas
-        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
-        spritePila2 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
+        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(150*Math.random())+80, regionPila);
+        spritePila2 = cargarSprite((int)(2400*Math.random())+200, (int)(150*Math.random())+80, regionPila);
         crearPilas();
 
         //Monstruos
@@ -368,7 +368,7 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(250*Math.random())+100, regionMonstruo2);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+50, regionMonstruo2);
         Monstruos monstruo2 = new Monstruos(monster2, 1, -8, -5);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
@@ -378,12 +378,12 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
         listaMonst.add(monstruo3);
         spriteFondo.attachChild(monstruo3.getSprite());
 
-        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo4);
-        Monstruos monstruo4 = new Monstruos(monster4, 3, -5, -8);
+        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+50, regionMonstruo4);
+        Monstruos monstruo4 = new Monstruos(monster4, 1, -5, -8);
         listaMonst.add(monstruo4);
         spriteFondo.attachChild(monstruo4.getSprite());
 
-        AnimatedSprite monster5 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo5);
+        AnimatedSprite monster5 = cargarAnimatedSprite((int)(2500*Math.random())+100, 350, regionMonstruo5);
         Monstruos monstruo5 = new Monstruos(monster5, 3, -10, -8);
         listaMonst.add(monstruo5);
         spriteFondo.attachChild(monstruo5.getSprite());
@@ -709,7 +709,7 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
         // Regresar al menú principal
         admEscenas.crearEscenaMenu();
         admEscenas.setEscena(TipoEscena.ESCENA_MENU);
-        admEscenas.liberarEscenaNvl1();
+        admEscenas.liberarEscenaNvl3();
         return null;
     }
 

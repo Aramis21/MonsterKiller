@@ -34,7 +34,7 @@ public class ControlJuego extends SimpleBaseGameActivity {
     // MUSICA DE FONDO, los efectos de sonido se cargan en cada escena
     private Music musica;
 
-    int sound;
+    int sound = 1;
 
     /*
     Se crea la configuración del Engine.
@@ -136,13 +136,12 @@ public class ControlJuego extends SimpleBaseGameActivity {
 
     public void detenerMusica() {
 
-        if (sound ==0){
-            if (musica!=null) {
-                musica.stop();
-                musica.release();
-                musica = null;
-            }
+        if (musica != null) {
+            musica.stop();
+            musica.release();
+            musica = null;
         }
+
     }
 
     // Ciclo de vida del juego

@@ -184,7 +184,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         regionMonstruo3 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
         regionMonstruo4 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
         regionMonstruo5 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
-        regionMonstruo6 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
+        regionMonstruo6 = cargarImagenMosaico("Monster4.png", 1165, 216, 1, 7);
 
         //Osito
         regionOsito = cargarImagen("Conejo.png");
@@ -250,8 +250,8 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         attachChild(spriteFondo);
 
         //Pilas
-        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
-        spritePila2 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
+        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(150*Math.random())+80, regionPila);
+        spritePila2 = cargarSprite((int)(2400*Math.random())+200, (int)(150*Math.random())+80, regionPila);
         crearPilas();
 
         //Monstruos
@@ -370,7 +370,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(250*Math.random())+100, regionMonstruo2);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+50, regionMonstruo2);
         Monstruos monstruo2 = new Monstruos(monster2, 1, -5, -6);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
@@ -391,7 +391,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         spriteFondo.attachChild(monstruo5.getSprite());
 
         AnimatedSprite monster6 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo6);
-        Monstruos monstruo6 = new Monstruos(monster5, 3, -10, -8);
+        Monstruos monstruo6 = new Monstruos(monster6, 3, -10, -8);
         listaMonst.add(monstruo6);
         spriteFondo.attachChild(monstruo6.getSprite());
     }
@@ -649,6 +649,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
 
     private void pasarSigNivel(){
         admEscenas.liberarEscenaNvl4();
+
         admEscenas.crearEscenaNvl5();
         admEscenas.setEscena(TipoEscena.ESCENA_NVL5);
     }
@@ -716,7 +717,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         // Regresar al menú principal
         admEscenas.crearEscenaMenu();
         admEscenas.setEscena(TipoEscena.ESCENA_MENU);
-        admEscenas.liberarEscenaNvl1();
+        admEscenas.liberarEscenaNvl4();
         return null;
     }
 
