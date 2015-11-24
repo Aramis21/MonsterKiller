@@ -49,9 +49,5 @@ public class EscenaCreditos extends EscenaBase {
         regionFondo.getTexture().unload();
         regionFondo = null;
     }
-
-    public Sprite getSpriteFondo() {
-        return spriteFondo;
-    }
 }
 

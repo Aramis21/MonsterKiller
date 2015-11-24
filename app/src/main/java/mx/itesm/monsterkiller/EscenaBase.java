@@ -133,6 +133,5 @@ public abstract class EscenaBase extends Scene {
     public abstract TipoEscena getTipoEscena(); // Regresa el tipo de escena
     public abstract void liberarEscena();   // Libera los elementos de la escena
     public abstract void liberarRecursos(); // Libera imágenes/audio/música/videos/etc.
-    public abstract Sprite getSpriteFondo();
 }
 

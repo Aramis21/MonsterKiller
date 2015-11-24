@@ -53,7 +53,7 @@ public class EscenaMenu extends EscenaBase {
     @Override
     public void crearEscena() {
         // Creamos el sprite de manera óptima
-        spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, ControlJuego.ALTO_CAMARA / 2, regionFondo);
+        spriteFondo = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionFondo);
 
         // Crea el fondo de la pantalla
         SpriteBackground fondo = new SpriteBackground(1,1,1,spriteFondo);
@@ -169,9 +169,5 @@ public class EscenaMenu extends EscenaBase {
     public void liberarRecursos() {
         regionFondo.getTexture().unload();
         regionFondo = null;
-    }
-
-    public Sprite getSpriteFondo() {
-        return spriteFondo;
     }
 }

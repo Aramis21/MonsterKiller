@@ -84,8 +84,4 @@ public class EscenaInstrucciones extends EscenaBase {
         regionOjo.getTexture().unload();
         regionOjo = null;
     }
-
-    public Sprite getSpriteFondo() {
-        return spriteFondo;
-    }
 }

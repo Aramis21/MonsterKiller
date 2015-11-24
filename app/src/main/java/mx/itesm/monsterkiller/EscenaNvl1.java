@@ -243,7 +243,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         attachChild(spriteFondo);
 
         //Pilas
-        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(150*Math.random())+80, regionPila);
+        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(200*Math.random())+100, regionPila);
         crearPilas();
 
         //Monstruos
@@ -362,7 +362,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+50, regionMonstruo2);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(250*Math.random())+100, regionMonstruo2);
         Monstruos monstruo2 = new Monstruos(monster2, 1, -5, -6);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());

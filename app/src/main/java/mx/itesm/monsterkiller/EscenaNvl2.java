@@ -246,7 +246,8 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
         attachChild(spriteFondo);
 
         //Pilas
-        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(150*Math.random())+80, regionPila);
+        spritePila1 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
+        spritePila2 = cargarSprite((int)(2400*Math.random())+200, (int)(300*Math.random())+100, regionPila);
         crearPilas();
 
         //Monstruos
@@ -365,7 +366,7 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+50, regionMonstruo2);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(250*Math.random())+100, regionMonstruo2);
         Monstruos monstruo2 = new Monstruos(monster2, 1, -7, -8);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
@@ -385,6 +386,10 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
         if (tiempo >= 15f && !pila1Visible && !gameWin && !gameOver){
             spriteFondo.attachChild(spritePila1);
             pila1Visible = true;
+        }
+        if (tiempo >= 20f && !pila2Visible){
+            spriteFondo.attachChild(spritePila2);
+            pila2Visible = true;
         }
     }
 
@@ -472,6 +477,7 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
 
     private void recolectarPilas(){
         float px1 = spriteFondo.getX() + spritePila1.getX() - spriteFondo.getWidth()/2;
+        float px2 = spriteFondo.getX() + spritePila2.getX() - spriteFondo.getWidth()/2;
 
         if (spritePila1.hasParent()) {
             if (spriteFondoSombra.getX() >= (px1 - 200) && spriteFondoSombra.getX() <= (px1 + 200) && spriteFondoSombra.getY() >= (spritePila1.getY() - 200) && spriteFondoSombra.getY() <= (spritePila1.getY() + 200)) {
@@ -486,7 +492,19 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
                 }
             }
         }
-
+        if (spritePila2.hasParent()) {
+            if (spriteFondoSombra.getX() >= (px2 - 200) && spriteFondoSombra.getX() <= (px2 + 200) && spriteFondoSombra.getY() >= (spritePila2.getY() - 200) && spriteFondoSombra.getY() <= (spritePila2.getY() + 200)) {
+                spriteFondo.detachChild(spritePila2);
+                if (tiempo > 15) {
+                    tiempo = tiempo - 5;
+                    detachChild(bateriaActual);
+                    detachChild(spritePila2);
+                    bat0Visible = bat1Visible = bat2Visible = bat3Visible = bat4Visible = false;
+                    //attachChild(bateriaPasada);
+                    Log.i("PILA", "recolecta 2");
+                }
+            }
+        }
     }
 
 
@@ -684,7 +702,7 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
         // Regresar al menú principal
         admEscenas.crearEscenaMenu();
         admEscenas.setEscena(TipoEscena.ESCENA_MENU);
-        admEscenas.liberarEscenaNvl2();
+        admEscenas.liberarEscenaNvl1();
         return null;
     }
 

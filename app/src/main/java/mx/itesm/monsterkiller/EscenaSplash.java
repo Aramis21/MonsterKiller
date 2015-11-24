@@ -70,8 +70,4 @@ public class EscenaSplash extends EscenaBase
         regionFondo.getTexture().unload();
         regionFondo = null;
     }
-
-    public Sprite getSpriteFondo() {
-        return spriteFondo;
-    }
 }
