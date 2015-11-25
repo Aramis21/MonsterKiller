@@ -398,27 +398,27 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
 
-        AnimatedSprite monster3 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo3);
+        AnimatedSprite monster3 = cargarAnimatedSprite((int)(2400*Math.random())+100, 200, regionMonstruo3);
         Monstruos monstruo3 = new Monstruos(monster3, 2, -9, -10);
         listaMonst.add(monstruo3);
         spriteFondo.attachChild(monstruo3.getSprite());
 
-        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo4);
+        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2400*Math.random())+200, 200, regionMonstruo4);
         Monstruos monstruo4 = new Monstruos(monster4, 3, -7, -8);
         listaMonst.add(monstruo4);
         spriteFondo.attachChild(monstruo4.getSprite());
 
-        AnimatedSprite monster5 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo5);
+        AnimatedSprite monster5 = cargarAnimatedSprite((int)(2400*Math.random())+200, 200, regionMonstruo5);
         Monstruos monstruo5 = new Monstruos(monster5, 4, -6, -7);
         listaMonst.add(monstruo5);
         spriteFondo.attachChild(monstruo5.getSprite());
 
-        AnimatedSprite monster6 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo6);
+        AnimatedSprite monster6 = cargarAnimatedSprite((int)(2400*Math.random())+100, 200, regionMonstruo6);
         Monstruos monstruo6 = new Monstruos(monster6, 3, -9, -10);
         listaMonst.add(monstruo6);
         spriteFondo.attachChild(monstruo6.getSprite());
 
-        AnimatedSprite monster7 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo7);
+        AnimatedSprite monster7 = cargarAnimatedSprite((int)(2400*Math.random())+300, 200, regionMonstruo7);
         Monstruos monstruo7 = new Monstruos(monster7, 3, -8, -9);
         listaMonst.add(monstruo7);
         spriteFondo.attachChild(monstruo7.getSprite());

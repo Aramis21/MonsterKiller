@@ -755,7 +755,7 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
         float nx = spriteFondo.getX() - dx*5;  // Nueva posicion de la habitacion
         float nxs = spriteFondoSombra.getX() + dx*10;
         float dy = pAccelerationData.getY()*5+35;
-        float ny = spriteFondoSombra.getY() - dy; //nueva posicion del fondo negro
+        float ny = spriteFondoSombra.getY() + dy; //nueva posicion del fondo negro
         //Log.i("acelerometro", "dy=" + dy);
 
 
@@ -784,7 +784,7 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
             }
         }
 
-        if (dy > 0) {
+        if (dy < 0) {
             if (ny > 200) {
                 spriteFondoSombra.setY(ny);
             }

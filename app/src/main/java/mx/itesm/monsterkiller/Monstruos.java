@@ -45,11 +45,11 @@ public class Monstruos {
         if (tipo == 1){
             spriteMonster.setX(spriteMonster.getX()+ DX);
             acumulador = acumulador + 3;
-            if (spriteMonster.getX()>2550) {
+            if (spriteMonster.getX()>2300) {
                 spriteMonster.setFlippedHorizontal(false);
                 DX = DX*(-1);
             }
-            if (spriteMonster.getX()<100 ){
+            if (spriteMonster.getX()<200 ){
                 spriteMonster.setFlippedHorizontal(true);
                 DX = DX*(-1);
             }
@@ -66,13 +66,13 @@ public class Monstruos {
             spriteMonster.setX(spriteMonster.getX()+ DX);
             spriteMonster.setY(spriteMonster.getY()+ DY);
             acumulador = acumulador + 2;
-            if (spriteMonster.getX()>2550){
+            if (spriteMonster.getX()>2300){
                 spriteMonster.setFlippedHorizontal(false);
                 Log.i("sprite monster", "x=" + spriteMonster.getX());
                 Log.i("sprite monster", "x=" +spriteMonster.getX());
                 DX = DX*(-1);
             }
-            if (spriteMonster.getX()<100 ){
+            if (spriteMonster.getX()<200 ){
                 spriteMonster.setFlippedHorizontal(true);
                 DX = DX*(-1);
             }
@@ -95,11 +95,11 @@ public class Monstruos {
             spriteMonster.setX(spriteMonster.getX()+ DX);
             spriteMonster.setY(spriteMonster.getY()+ DY);
             acumulador = acumulador + 4;
-            if (spriteMonster.getX()>2550){
+            if (spriteMonster.getX()>2300){
                 spriteMonster.setFlippedHorizontal(false);
                 DX = DX*(-1);
             }
-            if (spriteMonster.getX()<100 ){
+            if (spriteMonster.getX()<200 ){
                 spriteMonster.setFlippedHorizontal(true);
                 DX = DX*(-1);
             }
@@ -123,11 +123,11 @@ public class Monstruos {
         if (tipo == 4){
             spriteMonster.setX(spriteMonster.getX()+ DX);
             acumulador = acumulador + 3;
-            if (spriteMonster.getX()>2550) {
+            if (spriteMonster.getX()>2300) {
                 spriteMonster.setFlippedHorizontal(false);
                 DX = DX*(-1);
             }
-            if (spriteMonster.getX()<100 ){
+            if (spriteMonster.getX()<200 ){
                 spriteMonster.setFlippedHorizontal(true);
                 DX = DX*(-1);
             }
