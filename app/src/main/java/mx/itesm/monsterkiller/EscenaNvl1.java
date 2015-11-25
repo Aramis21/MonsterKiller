@@ -378,17 +378,17 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
     private void agregarMonstruos(){
 
-        AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, 300, regionMonstruo1);
+        AnimatedSprite monster = cargarAnimatedSprite((int)(2400*Math.random())+90, 300, regionMonstruo1);
         Monstruos monstruo = new Monstruos(monster, 2, -5, -6);
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+80, regionMonstruo2);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2400*Math.random())+90, (int)(200*Math.random())+80, regionMonstruo2);
         Monstruos monstruo2 = new Monstruos(monster2, 1, -5, -1);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
 
-        AnimatedSprite monster3 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo3);
+        AnimatedSprite monster3 = cargarAnimatedSprite((int)(2400*Math.random())+90, 200, regionMonstruo3);
         Monstruos monstruo3 = new Monstruos(monster3, 2, -7, -8);
         listaMonst.add(monstruo3);
         spriteFondo.attachChild(monstruo3.getSprite());

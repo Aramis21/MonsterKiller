@@ -45,18 +45,18 @@ public class Monstruos {
         if (tipo == 1){
             spriteMonster.setX(spriteMonster.getX()+ DX);
             acumulador = acumulador + 3;
-            if (spriteMonster.getX()>2300) {
+            if (spriteMonster.getX()>2550) {
                 spriteMonster.setFlippedHorizontal(false);
                 DX = DX*(-1);
             }
-            if (spriteMonster.getX()<200 ){
+            if (spriteMonster.getX()<100 ){
                 spriteMonster.setFlippedHorizontal(true);
                 DX = DX*(-1);
             }
 
             if (spriteMonster.getX()< 1900 && spriteMonster.getX()>600) {
                 if (acumulador >= 150) {
-                    spriteMonster.setX(spriteMonster.getX() + (DX * 60));
+                    spriteMonster.setX(Math.min(spriteMonster.getX() + (DX * 60), 2549));
                     acumulador = 0;
                 }
             }
@@ -66,13 +66,13 @@ public class Monstruos {
             spriteMonster.setX(spriteMonster.getX()+ DX);
             spriteMonster.setY(spriteMonster.getY()+ DY);
             acumulador = acumulador + 2;
-            if (spriteMonster.getX()>2300){
+            if (spriteMonster.getX()>2550){
                 spriteMonster.setFlippedHorizontal(false);
                 Log.i("sprite monster", "x=" + spriteMonster.getX());
                 Log.i("sprite monster", "x=" +spriteMonster.getX());
                 DX = DX*(-1);
             }
-            if (spriteMonster.getX()<200 ){
+            if (spriteMonster.getX()<100 ){
                 spriteMonster.setFlippedHorizontal(true);
                 DX = DX*(-1);
             }
@@ -84,7 +84,7 @@ public class Monstruos {
             }
             if (spriteMonster.getX()< 1900 && spriteMonster.getX()> 600 && spriteMonster.getY() < 400 && spriteMonster.getY() > 200) {
                 if (acumulador >= 200) {
-                    spriteMonster.setX(spriteMonster.getX() + (DX * 60));
+                    spriteMonster.setX(Math.min(spriteMonster.getX() + (DX * 60), 2549));
                     spriteMonster.setY(spriteMonster.getY() + (DY * 20));
                     acumulador = 0;
                 }
@@ -95,11 +95,11 @@ public class Monstruos {
             spriteMonster.setX(spriteMonster.getX()+ DX);
             spriteMonster.setY(spriteMonster.getY()+ DY);
             acumulador = acumulador + 4;
-            if (spriteMonster.getX()>2300){
+            if (spriteMonster.getX()>2550){
                 spriteMonster.setFlippedHorizontal(false);
                 DX = DX*(-1);
             }
-            if (spriteMonster.getX()<200 ){
+            if (spriteMonster.getX()<100 ){
                 spriteMonster.setFlippedHorizontal(true);
                 DX = DX*(-1);
             }
@@ -123,11 +123,11 @@ public class Monstruos {
         if (tipo == 4){
             spriteMonster.setX(spriteMonster.getX()+ DX);
             acumulador = acumulador + 3;
-            if (spriteMonster.getX()>2300) {
+            if (spriteMonster.getX()>2550) {
                 spriteMonster.setFlippedHorizontal(false);
                 DX = DX*(-1);
             }
-            if (spriteMonster.getX()<200 ){
+            if (spriteMonster.getX()<100 ){
                 spriteMonster.setFlippedHorizontal(true);
                 DX = DX*(-1);
             }

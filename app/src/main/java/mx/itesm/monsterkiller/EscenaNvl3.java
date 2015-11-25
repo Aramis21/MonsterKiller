@@ -386,27 +386,27 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
 
     private void agregarMonstruos(){
 
-        AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, 300, regionMonstruo1);
+        AnimatedSprite monster = cargarAnimatedSprite((int)(2400*Math.random())+90, 300, regionMonstruo1);
         Monstruos monstruo = new Monstruos(monster, 2, -9, -10);
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+80, regionMonstruo2);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2400*Math.random())+90, (int)(200*Math.random())+80, regionMonstruo2);
         Monstruos monstruo2 = new Monstruos(monster2, 1, -9, -1);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
 
-        AnimatedSprite monster3 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo3);
+        AnimatedSprite monster3 = cargarAnimatedSprite((int)(2400*Math.random())+90, 200, regionMonstruo3);
         Monstruos monstruo3 = new Monstruos(monster3, 2, -10, -8);
         listaMonst.add(monstruo3);
         spriteFondo.attachChild(monstruo3.getSprite());
 
-        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+80, regionMonstruo4);
+        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2400*Math.random())+90, (int)(200*Math.random())+80, regionMonstruo4);
         Monstruos monstruo4 = new Monstruos(monster4, 1, -5, -1);
         listaMonst.add(monstruo4);
         spriteFondo.attachChild(monstruo4.getSprite());
 
-        AnimatedSprite monster5 = cargarAnimatedSprite((int)(2500*Math.random())+100, 350, regionMonstruo5);
+        AnimatedSprite monster5 = cargarAnimatedSprite((int)(2400*Math.random())+90, 350, regionMonstruo5);
         Monstruos monstruo5 = new Monstruos(monster5, 3, -9, -10);
         listaMonst.add(monstruo5);
         spriteFondo.attachChild(monstruo5.getSprite());
