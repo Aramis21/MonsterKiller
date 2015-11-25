@@ -707,7 +707,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             // Nuevo valor mayor, guardarlo
             editor.putInt("puntos", score);
         }
-        editor.putInt("actual", score);
+        editor.putInt("score", score);
         editor.commit();
     }
 

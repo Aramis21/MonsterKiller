@@ -148,7 +148,6 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
 
     //Fin del juego
     private ITextureRegion regionGO;
-    private ITextureRegion regionBtnContinuar;
     private ITextureRegion regionBtnSalir;
     private ITextureRegion regionWin;
 
@@ -215,7 +214,6 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
 
         //Fin
         regionGO = cargarImagen("GameOver.png");
-        regionBtnContinuar = cargarImagen("BackBot.png");
         regionBtnSalir = cargarImagen("BotonHome.png");
         regionWin = cargarImagen("NiceJob.png");
 
@@ -640,8 +638,7 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
     private void finJuegoGanador(){
 
         // Crea el botón de SALIR y lo agrega a la escena
-        Sprite btnSalir = new Sprite(ControlJuego.ANCHO_CAMARA/2 - regionBtnSalir.getWidth(), ControlJuego.ALTO_CAMARA/3,
-                regionBtnSalir, actividadJuego.getVertexBufferObjectManager()) {
+        Sprite btnSalir = new Sprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/3, regionBtnSalir, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
@@ -734,7 +731,7 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
             // Nuevo valor mayor, guardarlo
             editor.putInt("puntos", score);
         }
-        editor.putInt("actual", score);
+        editor.putInt("score", score);
         editor.commit();
     }
 
@@ -860,8 +857,6 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
         regionBtnSalir = null;
         regionBtnRetry.getTexture().unload();
         regionBtnRetry = null;
-        regionBtnContinuar.getTexture().unload();
-        regionBtnContinuar = null;
         fontMonster.getTexture().unload();
         fontMonster = null;
     }

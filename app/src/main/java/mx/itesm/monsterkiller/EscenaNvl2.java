@@ -208,7 +208,7 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
 
         //Fin
         regionGO = cargarImagen("GameOver.png");
-        regionBtnContinuar = cargarImagen("BackBot.png");
+        regionBtnContinuar = cargarImagen("BotNext.png");
         regionBtnSalir = cargarImagen("BotonHome.png");
         regionWin = cargarImagen("NiceJob.png");
 
@@ -718,7 +718,7 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
             // Nuevo valor mayor, guardarlo
             editor.putInt("puntos", score);
         }
-        editor.putInt("actual", score);
+        editor.putInt("score", score);
         editor.commit();
     }
 

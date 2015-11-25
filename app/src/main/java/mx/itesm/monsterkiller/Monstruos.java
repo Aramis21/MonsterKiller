@@ -68,6 +68,8 @@ public class Monstruos {
             acumulador = acumulador + 2;
             if (spriteMonster.getX()>2550){
                 spriteMonster.setFlippedHorizontal(false);
+                Log.i("sprite monster", "x=" + spriteMonster.getX());
+                Log.i("sprite monster", "x=" +spriteMonster.getX());
                 DX = DX*(-1);
             }
             if (spriteMonster.getX()<100 ){

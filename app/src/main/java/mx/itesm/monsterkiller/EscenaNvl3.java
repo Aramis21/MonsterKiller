@@ -211,7 +211,7 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
 
         //Fin
         regionGO = cargarImagen("GameOver.png");
-        regionBtnContinuar = cargarImagen("BackBot.png");
+        regionBtnContinuar = cargarImagen("BotNext.png");
         regionBtnSalir = cargarImagen("BotonHome.png");
         regionWin = cargarImagen("NiceJob.png");
 
@@ -394,7 +394,7 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
         spriteFondo.attachChild(monstruo2.getSprite());
 
         AnimatedSprite monster3 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo3);
-        Monstruos monstruo3 = new Monstruos(monster3, 2, -11, -8);
+        Monstruos monstruo3 = new Monstruos(monster3, 2, -10, -8);
         listaMonst.add(monstruo3);
         spriteFondo.attachChild(monstruo3.getSprite());
 
@@ -743,7 +743,7 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
             // Nuevo valor mayor, guardarlo
             editor.putInt("puntos", score);
         }
-        editor.putInt("actual", score);
+        editor.putInt("score", score);
         editor.commit();
     }
 
