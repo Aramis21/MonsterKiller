@@ -111,7 +111,6 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
 
     //banderas de pilas
     private boolean pila1Visible = false;
-    private boolean pila2Visible = false;
 
     //banderas de game over
     private boolean gameOver = false;
@@ -322,10 +321,28 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
         escenaPausa = new CameraScene(actividadJuego.camara);
         Sprite fondoPausa = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionPausa);
         escenaPausa.attachChild(fondoPausa);
-        Sprite botonHome = cargarSprite(regionPausa.getWidth()-100, regionPausa.getHeight()-200, regionBtnHome);
+        Sprite botonHome = new Sprite (regionPausa.getWidth()-100, regionPausa.getHeight()-200, regionBtnHome, actividadJuego.getVertexBufferObjectManager()){
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
+                if (pSceneTounchEvent.isActionDown() && !gameWin && !gameOver){
+                    onBackKeyPressed();
+                }
+                return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
         escenaPausa.attachChild(botonHome);
-        Sprite botonReanudar = cargarSprite(regionPausa.getWidth() - 100, regionPausa.getHeight() - 430, regionBtnReanudar);
+        escenaPausa.registerTouchArea(botonHome);
+        Sprite botonReanudar = new Sprite (regionPausa.getWidth() - 100, regionPausa.getHeight() - 430, regionBtnReanudar, actividadJuego.getVertexBufferObjectManager()){
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
+                if (pSceneTounchEvent.isActionDown() && !gameWin && !gameOver){
+                    reiniciarJuego();
+                }
+                return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
         escenaPausa.attachChild(botonReanudar);
+        escenaPausa.registerTouchArea(botonReanudar);
         escenaPausa.setBackgroundEnabled(false);
         AnimatedSprite spriteOjo = cargarAnimatedSprite(670, 500, regionOjo);
         spriteOjo.animate(250);
@@ -429,7 +446,7 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
             bateriaActual = spriteBateria1;
             bateriaPasada = spriteBateria2;
         }
-        if (tiempo >28f && tiempo <=32f && !bat0Visible){
+        if (tiempo >28f && tiempo <=32.1f && !bat0Visible){
             eliminarSprite(spriteBateria1);
             //detachChild(spriteBateria1);
             attachChild(spriteBateria0);
@@ -437,7 +454,7 @@ public class EscenaNvl2 extends EscenaBase implements IAccelerationListener {
             bateriaActual = spriteBateria0;
             bateriaPasada = spriteBateria1;
         }
-        if (tiempo >= 32f && !gameOver && !gameWin){
+        if (tiempo >= 32.1f && !gameOver && !gameWin){
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
             luz.animate(100, 4);
             attachChild(luz);

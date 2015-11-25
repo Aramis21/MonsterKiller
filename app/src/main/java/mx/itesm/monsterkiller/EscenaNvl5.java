@@ -161,7 +161,7 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
 
     @Override
     public void cargarRecursos() {
-        regionFondo = cargarImagen("CuartoTV.png");
+        regionFondo = cargarImagen("CuartoCocina.png");
         regionFondoSombra = cargarImagen("Sombra.png");
 
         //pila
@@ -329,10 +329,28 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
         escenaPausa = new CameraScene(actividadJuego.camara);
         Sprite fondoPausa = cargarSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionPausa);
         escenaPausa.attachChild(fondoPausa);
-        Sprite botonHome = cargarSprite(regionPausa.getWidth()-100, regionPausa.getHeight()-200, regionBtnHome);
+        Sprite botonHome = new Sprite (regionPausa.getWidth()-100, regionPausa.getHeight()-200, regionBtnHome, actividadJuego.getVertexBufferObjectManager()){
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
+                if (pSceneTounchEvent.isActionDown() && !gameWin && !gameOver){
+                    onBackKeyPressed();
+                }
+                return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
         escenaPausa.attachChild(botonHome);
-        Sprite botonReanudar = cargarSprite(regionPausa.getWidth() - 100, regionPausa.getHeight() - 430, regionBtnReanudar);
+        escenaPausa.registerTouchArea(botonHome);
+        Sprite botonReanudar = new Sprite (regionPausa.getWidth() - 100, regionPausa.getHeight() - 430, regionBtnReanudar, actividadJuego.getVertexBufferObjectManager()){
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTounchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY){
+                if (pSceneTounchEvent.isActionDown() && !gameWin && !gameOver){
+                    reiniciarJuego();
+                }
+                return super.onAreaTouched(pSceneTounchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
+            }
+        };
         escenaPausa.attachChild(botonReanudar);
+        escenaPausa.registerTouchArea(botonReanudar);
         escenaPausa.setBackgroundEnabled(false);
         AnimatedSprite spriteOjo = cargarAnimatedSprite(670, 500, regionOjo);
         spriteOjo.animate(250);
@@ -393,12 +411,12 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
         spriteFondo.attachChild(monstruo5.getSprite());
 
         AnimatedSprite monster6 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo6);
-        Monstruos monstruo6 = new Monstruos(monster5, 3, -10, -8);
+        Monstruos monstruo6 = new Monstruos(monster6, 3, -10, -8);
         listaMonst.add(monstruo6);
         spriteFondo.attachChild(monstruo6.getSprite());
 
         AnimatedSprite monster7 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo7);
-        Monstruos monstruo7 = new Monstruos(monster5, 3, -10, -8);
+        Monstruos monstruo7 = new Monstruos(monster7, 3, -10, -8);
         listaMonst.add(monstruo7);
         spriteFondo.attachChild(monstruo7.getSprite());
     }
@@ -455,7 +473,7 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
             bateriaActual = spriteBateria1;
             bateriaPasada = spriteBateria2;
         }
-        if (tiempo >23f && tiempo <=28f && !bat0Visible){
+        if (tiempo >23f && tiempo <=28.1f && !bat0Visible){
             eliminarSprite(spriteBateria1);
             //detachChild(spriteBateria1);
             attachChild(spriteBateria0);
@@ -463,7 +481,7 @@ public class EscenaNvl5 extends EscenaBase implements IAccelerationListener {
             bateriaActual = spriteBateria0;
             bateriaPasada = spriteBateria1;
         }
-        if (tiempo >= 28f && !gameOver && !gameWin){
+        if (tiempo >= 28.1f && !gameOver && !gameWin){
             AnimatedSprite luz = cargarAnimatedSprite(ControlJuego.ANCHO_CAMARA/2, ControlJuego.ALTO_CAMARA/2, regionLuzApagada);
             luz.animate(100, 4);
             attachChild(luz);

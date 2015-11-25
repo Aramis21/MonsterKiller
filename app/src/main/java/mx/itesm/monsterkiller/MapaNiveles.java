@@ -96,28 +96,28 @@ public class MapaNiveles extends EscenaBase {
             estrella5 = regionGray5;
         }
 
-        if (puntos>= 20){
+        if (puntos>= 60){
             estrella2 = regionStar2;
             estrella3 = regionGray3;
             estrella4 = regionGray4;
             estrella5 = regionGray5;
         }
 
-        if (puntos >= 120){
+        if (puntos >= 80){
             estrella2 = regionStar2;
             estrella3 = regionStar3;
             estrella4 = regionGray4;
             estrella5 = regionGray5;
 
         }
-        if (puntos >= 160){
+        if (puntos >= 100){
             estrella2 = regionStar2;
             estrella3 = regionStar3;
             estrella4 = regionStar4;
             estrella5 = regionGray5;
 
         }
-        if (puntos >= 200){
+        if (puntos >= 120){
             estrella2 = regionStar2;
             estrella3 = regionStar3;
             estrella4 = regionStar4;
