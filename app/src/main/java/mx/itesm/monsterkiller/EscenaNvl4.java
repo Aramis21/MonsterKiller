@@ -156,6 +156,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
     private Sound sonidoGrito;
     private Sound sonidoLanzar;
     private Sound sonidoRugido;
+    private Sound sonidoGolpe;
 
 
     @Override
@@ -182,7 +183,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         regionMonstruo1 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
         regionMonstruo2 = cargarImagenMosaico("Monster2.png", 969, 301, 1, 5);
         regionMonstruo3 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
-        regionMonstruo4 = cargarImagenMosaico("Monster1.png", 800, 198, 1, 6);
+        regionMonstruo4 = cargarImagenMosaico("Monster2.png", 969, 301, 1, 5);
         regionMonstruo5 = cargarImagenMosaico("Monster3.png", 1052, 120, 1, 7);
         regionMonstruo6 = cargarImagenMosaico("Monster4.png", 1165, 216, 1, 7);
 
@@ -221,6 +222,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         sonidoGrito = cargarEfecto("Audio/Grito.mp3");
         sonidoLanzar = cargarEfecto("Audio/LanzarPeluche.mp3");
         sonidoRugido = cargarEfecto("Audio/Monstruo.mp3");
+        sonidoGolpe = cargarEfecto("Audio/Golpe.mp3");
     }
 
     // Crea y regresa un font que carga desde un archivo .ttf
@@ -384,22 +386,22 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
     private void agregarMonstruos(){
 
         AnimatedSprite monster = cargarAnimatedSprite((int)(2500*Math.random())+100, 300, regionMonstruo1);
-        Monstruos monstruo = new Monstruos(monster, 2, -5, -6);
+        Monstruos monstruo = new Monstruos(monster, 2, -7, -8);
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+50, regionMonstruo2);
-        Monstruos monstruo2 = new Monstruos(monster2, 1, -5, -6);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+80, regionMonstruo2);
+        Monstruos monstruo2 = new Monstruos(monster2, 1, -7, -8);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
 
         AnimatedSprite monster3 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo3);
-        Monstruos monstruo3 = new Monstruos(monster3, 2, -7, -8);
+        Monstruos monstruo3 = new Monstruos(monster3, 2, -9, -10);
         listaMonst.add(monstruo3);
         spriteFondo.attachChild(monstruo3.getSprite());
 
-        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo4);
-        Monstruos monstruo4 = new Monstruos(monster4, 3, -5, -8);
+        AnimatedSprite monster4 = cargarAnimatedSprite((int)(2500*Math.random())+80, 200, regionMonstruo4);
+        Monstruos monstruo4 = new Monstruos(monster4, 4, -5, -6);
         listaMonst.add(monstruo4);
         spriteFondo.attachChild(monstruo4.getSprite());
 
@@ -409,7 +411,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
         spriteFondo.attachChild(monstruo5.getSprite());
 
         AnimatedSprite monster6 = cargarAnimatedSprite((int)(2500*Math.random())+100, 200, regionMonstruo6);
-        Monstruos monstruo6 = new Monstruos(monster6, 3, -10, -8);
+        Monstruos monstruo6 = new Monstruos(monster6, 3, -6, -7);
         listaMonst.add(monstruo6);
         spriteFondo.attachChild(monstruo6.getSprite());
     }
@@ -688,6 +690,7 @@ public class EscenaNvl4 extends EscenaBase implements IAccelerationListener {
             for (int k = listaMonst.size() - 1; k >= 0; k--) {
                 Monstruos monstruo = listaMonst.get(k);
                 if (osito.collidesWith(monstruo.getSprite())) {
+                    sonidoGolpe.play();
                     // Lo destruye
                     spriteFondo.detachChild(monstruo.getSprite());
                     listaMonst.remove(monstruo);

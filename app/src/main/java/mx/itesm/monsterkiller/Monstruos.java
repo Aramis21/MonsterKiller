@@ -80,7 +80,7 @@ public class Monstruos {
             if (spriteMonster.getY()<100){
                 DY= DY*(-1);
             }
-            if (spriteMonster.getX()< 1900 && spriteMonster.getX()> 600 && spriteMonster.getY() < 480 && spriteMonster.getY() > 220) {
+            if (spriteMonster.getX()< 1900 && spriteMonster.getX()> 600 && spriteMonster.getY() < 400 && spriteMonster.getY() > 200) {
                 if (acumulador >= 200) {
                     spriteMonster.setX(spriteMonster.getX() + (DX * 60));
                     spriteMonster.setY(spriteMonster.getY() + (DY * 20));
@@ -107,11 +107,34 @@ public class Monstruos {
             if (spriteMonster.getY()<100){
                 DY= DY*(-1);
             }
-            if (spriteMonster.getX()< 1900 && spriteMonster.getX()> 600 && spriteMonster.getY() < 480 && spriteMonster.getY() > 220) {
+            if (spriteMonster.getX()< 1900 && spriteMonster.getX()> 600 && spriteMonster.getY() < 400 && spriteMonster.getY() > 200) {
                 if (acumulador >= 400) {
                     escena.getSpriteFondo().detachChild(spriteMonster);
                 }
                 if (acumulador >= 900) {
+                    escena.getSpriteFondo().attachChild(spriteMonster);
+                    acumulador=0;
+                }
+            }
+        }
+
+        if (tipo == 4){
+            spriteMonster.setX(spriteMonster.getX()+ DX);
+            acumulador = acumulador + 3;
+            if (spriteMonster.getX()>2550) {
+                spriteMonster.setFlippedHorizontal(false);
+                DX = DX*(-1);
+            }
+            if (spriteMonster.getX()<100 ){
+                spriteMonster.setFlippedHorizontal(true);
+                DX = DX*(-1);
+            }
+
+            if (spriteMonster.getX()< 1900 && spriteMonster.getX()>600) {
+                if (acumulador >= 150) {
+                    escena.getSpriteFondo().detachChild(spriteMonster);
+                }
+                if (acumulador >= 210) {
                     escena.getSpriteFondo().attachChild(spriteMonster);
                     acumulador=0;
                 }

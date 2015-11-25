@@ -151,6 +151,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
     private Sound sonidoGrito;
     private Sound sonidoLanzar;
     private Sound sonidoRugido;
+    private Sound sonidoGolpe;
 
 
     @Override
@@ -204,7 +205,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
 
         //Fin
         regionGO = cargarImagen("GameOver.png");
-        regionBtnContinuar = cargarImagen("BackBot.png");
+        regionBtnContinuar = cargarImagen("BotNext.png");
         regionBtnSalir = cargarImagen("BotonHome.png");
         regionWin = cargarImagen("NiceJob.png");
 
@@ -213,6 +214,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         sonidoGrito = cargarEfecto("Audio/Grito.mp3");
         sonidoLanzar = cargarEfecto("Audio/LanzarPeluche.mp3");
         sonidoRugido = cargarEfecto("Audio/Monstruo.mp3");
+        sonidoGolpe = cargarEfecto("Audio/Golpe.mp3");
     }
 
     // Crea y regresa un font que carga desde un archivo .ttf
@@ -379,8 +381,8 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
         listaMonst.add(monstruo);
         spriteFondo.attachChild(monstruo.getSprite());
 
-        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+50, regionMonstruo2);
-        Monstruos monstruo2 = new Monstruos(monster2, 1, -5, -6);
+        AnimatedSprite monster2 = cargarAnimatedSprite((int)(2500*Math.random())+100, (int)(200*Math.random())+80, regionMonstruo2);
+        Monstruos monstruo2 = new Monstruos(monster2, 1, -5, -1);
         listaMonst.add(monstruo2);
         spriteFondo.attachChild(monstruo2.getSprite());
 
@@ -644,6 +646,7 @@ public class EscenaNvl1 extends EscenaBase implements IAccelerationListener {
             for (int k = listaMonst.size() - 1; k >= 0; k--) {
                 Monstruos monstruo = listaMonst.get(k);
                 if (osito.collidesWith(monstruo.getSprite())) {
+                    sonidoGolpe.play();
                     // Lo destruye
                     spriteFondo.detachChild(monstruo.getSprite());
                     listaMonst.remove(monstruo);
