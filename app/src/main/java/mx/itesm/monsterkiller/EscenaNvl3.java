@@ -311,7 +311,8 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
         Sprite btnPausa = new Sprite(ControlJuego.ANCHO_CAMARA - regionBtnPausa.getWidth()+21, ControlJuego.ALTO_CAMARA - regionBtnPausa.getHeight()-30, regionBtnPausa, actividadJuego.getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pSceneTouchEvent.isActionDown()) {
+                if (pSceneTouchEvent.isActionDown()  && !gameWin && !gameOver
+                        ) {
                     pausarJuego();
                 }
                 return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
@@ -366,19 +367,21 @@ public class EscenaNvl3 extends EscenaBase implements IAccelerationListener {
     }
 
     private void disparar(){
-        Sprite spriteOsito = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, 0, regionOsito);
-        attachChild(spriteOsito);
-        JumpModifier disparo = new JumpModifier(1, spriteOsito.getX(), spriteFondoSombra.getX(), spriteOsito.getY(), spriteFondoSombra.getY(), 10);
-        ScaleModifier pequeño = new ScaleModifier(1, spriteOsito.getScaleX(), spriteOsito.getScaleX()/5, spriteOsito.getScaleY(), spriteOsito.getScaleY()/5);
-        ParallelEntityModifier paralelo = new ParallelEntityModifier(disparo, pequeño) { // dos modificadores en paralelo, (saltar y rotar)
-            @Override
-            protected void onModifierFinished(IEntity pItem) {  // Cuando termina el salto
-                unregisterEntityModifier(this);
-                super.onModifierFinished(pItem);
-            }
-        };
-        spriteOsito.registerEntityModifier(paralelo);
-        listaPeluches.add(spriteOsito);
+        if (listaPeluches.size() < 2){
+            Sprite spriteOsito = cargarSprite(ControlJuego.ANCHO_CAMARA / 2, 0, regionOsito);
+            attachChild(spriteOsito);
+            JumpModifier disparo = new JumpModifier(1, spriteOsito.getX(), spriteFondoSombra.getX(), spriteOsito.getY(), spriteFondoSombra.getY(), 10);
+            ScaleModifier pequeño = new ScaleModifier(1, spriteOsito.getScaleX(), spriteOsito.getScaleX()/5, spriteOsito.getScaleY(), spriteOsito.getScaleY()/5);
+            ParallelEntityModifier paralelo = new ParallelEntityModifier(disparo, pequeño) { // dos modificadores en paralelo, (saltar y rotar)
+                @Override
+                protected void onModifierFinished(IEntity pItem) {  // Cuando termina el salto
+                    unregisterEntityModifier(this);
+                    super.onModifierFinished(pItem);
+                }
+            };
+            spriteOsito.registerEntityModifier(paralelo);
+            listaPeluches.add(spriteOsito);
+        }
     }
 
     private void agregarMonstruos(){

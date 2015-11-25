@@ -163,7 +163,7 @@ public class MapaNiveles extends EscenaBase {
                         break;
 
                     case NIVEL_2:
-                        if (puntos==60){
+                        if (puntos>=60){
                             admEscenas.crearEscenaNvl2();
                             admEscenas.setEscena(TipoEscena.ESCENA_NVL2);
                             admEscenas.liberarEscenaNiveles();
@@ -171,7 +171,7 @@ public class MapaNiveles extends EscenaBase {
                         break;
 
                     case NIVEL_3:
-                        if (puntos==80){
+                        if (puntos>=80){
                             admEscenas.crearEscenaNvl3();
                             admEscenas.setEscena(TipoEscena.ESCENA_NVL3);
                             admEscenas.liberarEscenaNiveles();
@@ -179,14 +179,14 @@ public class MapaNiveles extends EscenaBase {
                         break;
 
                     case NIVEL_4:
-                        if (puntos==100){
+                        if (puntos>=100){
                             admEscenas.crearEscenaNvl4();
                             admEscenas.setEscena(TipoEscena.ESCENA_NVL4);
                             admEscenas.liberarEscenaNiveles();
                         }
                         break;
                     case NIVEL_5:
-                        if (puntos==120){
+                        if (puntos>=120){
                             admEscenas.crearEscenaNvl5();
                             admEscenas.setEscena(TipoEscena.ESCENA_NVL5);
                             admEscenas.liberarEscenaNiveles();
